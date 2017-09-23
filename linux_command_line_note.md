@@ -260,6 +260,15 @@ cd /usr/bin;         whereis -u -M /usr/man/man1 -S /usr/src -f *
 
 ```
 
+
+```sh
+## locate reads one or more databases prepared by updatedb(8) and writes file names matching at least one of the PATTERNs to standard output, one per line.
+locate -i 'BASHRC'
+locate 'bashrc'
+locate -b '\bashrc'
+
+```
+
 ```sh
 chown test a.txt  b.txt
 chown -R test workspace
