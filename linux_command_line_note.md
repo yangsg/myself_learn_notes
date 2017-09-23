@@ -311,6 +311,54 @@ find . -perm -664
 
 ```
 
+
+```sh
+## useradd [-u uid] [-g login-init-group] [-G supplementary-groups] [-mM] [-c comment] [-d home-dir-with-absolute-path] [-s shell] accountName
+##  -m, --create-home   #(联想: mkdir)
+##  -M, --no-create-home
+##  -e, --expiredate EXPIRE_DATE  #The date on which the user account will be disabled. The date is specified in the format YYYY-MM-DD.
+##  -f, --inactive INACTIVE       #The number of days after a password expires until the account is permanently disabled. A value of 0 disables the account as soon as the password has expired, and a value of -1 disables the feature.
+##  -r, --system  #Create a system account.
+
+## UID:
+## 0  root(system administrator)
+## 1~499  system account,  1~99 distribution system account, 100~499 customized system account
+## 500~65535  regular account
+
+man useradd
+useradd user01
+useradd -m user01
+useradd -m -g initGroup01 user01
+useradd -m  -d  /home/user01  user01
+useradd -G  group01,group02,group03 user01
+useradd -d /www -M webmaster
+useradd -M -s /sbin/nologin  noLoginUser01  #https://superuser.com/questions/77617/how-can-i-create-a-non-login-user
+su  noLoginUser01 -s /bin/bash  -c "date"
+useradd -m -e 2017-10-10 user01    # echo $(($(date --date="2017/10/10" +%s)/86400+1))
+useradd -r systemAccount01
+
+cat /etc/login.defs
+cat /etc/default/useradd
+
+userdel  user01
+userdel -r  user01  #-r, --remove  Files in the user's home directory will be removed along with the home directory itself and the user's mail spool. Files located in other file systems will have to be searched for and deleted manually.
+
+
+```
+```text
+FILES
+       /etc/passwd
+       /etc/shadow
+       /etc/group
+       /etc/gshadow
+       /etc/default/useradd
+       /etc/skel/
+       /etc/login.defs
+           Shadow password suite configuration.
+
+```
+
+
 ```sh
 chown test a.txt  b.txt
 chown -R test workspace
