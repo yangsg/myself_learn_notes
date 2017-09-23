@@ -679,7 +679,7 @@ ls /tmp/vbirding && echo "exist" || echo "not exist"   #假定式
 ## tr col join paste expand unexpand
 
 ## cut - remove sections from each line of files
-echo $PATH | cut -d ':' -f 5
+echo $PATH | cut -d ':' -f 5           #N      N'th byte, character or field, counted from 1
 echo $PATH | cut -d ':' -f 3,5
 echo $PATH | cut -d ':' -f 3-5
 echo $PATH | cut -d ':' -f 3-
