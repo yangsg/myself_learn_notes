@@ -579,7 +579,7 @@ history -w
 
 ```
 
-```
+```text
 命令运行的顺序可以这样看：
 1.  以相对/绝对路径运行命令，例如『 /bin/ls 』或『 ./ls 』；
 2.  由 alias 找到该命令来运行；
@@ -589,6 +589,15 @@ history -w
 
 ```
 
+```sh
+## Execute commands from a file in the current shell.
+
+help source
+help .
+source ~/.bashrc    #~/.bashrc是取得login或non-login shell时都会读取的文件
+source /etc/profile
+
+```
 
 
 
