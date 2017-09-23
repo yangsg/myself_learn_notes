@@ -556,6 +556,19 @@ echo "${var[1]}, ${var[2]}, ${var[3]}}"  #一般来说，建议直接以${数组
 ```
 
 
+
+```sh
+## Define or display aliases.
+
+help  alias
+alias
+alias ll='ls -l --color=auto'
+\rm a.txt
+unalias ll
+
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
