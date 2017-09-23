@@ -163,6 +163,11 @@ nl -b a -n rz -w 3 /etc/issue
 ```
 
 
+```sh
+less /etc/man.config    #有了less命令，可以彻底忘记功能局限的more命令了
+less -R  a.txt          #可用于显示一些具有颜色控制字符的文件(显示出颜色)
+
+```
 
 ```sh
 basename /usr/bin/sort          #Output "sort"   #man basename
