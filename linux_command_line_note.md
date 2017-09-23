@@ -349,6 +349,7 @@ lsb_release –a  # yum install epel-release; yum install redhat-lsb
 
 
 ```sh
+## df - report file system disk space usage
 ## 由于 df 主要读取的数据几乎都是针对一整个文件系统，因此读取的范围主要是在 Superblock 内的信息， 所以这个命令显示结果的速度非常的快速！
 df    #df的全名为disk free (see wikipedia)
 df -h
@@ -358,6 +359,16 @@ df –ih
 
 ```
 
+```sh
+## du - estimate file space usage
+du -s dir01    #常用，du的全名为disk usage
+du -a dir01
+du -h dir01
+du -h a.txt  #注意du和ls –l中所谓文件大小概念上的差异
+ls -l a.txt
+
+
+```
 
 
 
