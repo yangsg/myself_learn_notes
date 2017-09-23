@@ -748,6 +748,13 @@ Edit: ThePower is correct, these terms originate from the days of line printers,
 ```
 
 
+```sh
+## col - filter reverse line feeds from input
+
+man foo | col -b > foo.mantxt
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
