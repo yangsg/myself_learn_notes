@@ -635,6 +635,33 @@ cat > catfile << "eof"
 
 ```
 
+```sh
+## 特殊的文件/dev/null /dev/zero
+
+NAME
+       null, zero - data sink
+
+DESCRIPTION
+       Data written to a null or zero special file is discarded.
+
+       Reads from the null special file always return end of file (i.e., read(2) returns 0), whereas reads from zero always return bytes containing zero (\0 characters).
+
+       null and zero are typically created by:
+
+              mknod -m 666 /dev/null c 1 3
+              mknod -m 666 /dev/zero c 1 5
+              chown root:root /dev/null /dev/zero
+
+FILES
+       /dev/null
+       /dev/zero
+
+NOTES
+       If these devices are not writable and readable for all users, many programs will act strangely.
+
+
+```
+
 
 * install some useful tools
 ```sh
