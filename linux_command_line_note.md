@@ -360,7 +360,7 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 term screen-256color
 ```
 
-* 阿里开源镜像(centos7) http://mirrors.aliyun.com/
+* 阿里开源镜像(centos7) https://mirrors.aliyun.com/
 ```sh
 ##  --- for centos base --
 ## step 1: back up
