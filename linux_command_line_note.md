@@ -448,6 +448,18 @@ dos2unix a.txt -c iso b.txt   #Convert and replace a.txt in ascii conversion mod
 dos2unix -c mac a.txt         #Convert a.txt from Mac to Unix format. equivalent to `mac2unix a.txt`
 ```
 
+```sh
+##  iconv - convert text from one character encoding to another
+iconv --help
+iconv -f ISO-8859-15 -t UTF-8 < input.txt > output.txt   #Convert text from the ISO 8859-15 character encoding to UTF-8
+echo abc ß α € àḃç | iconv -f UTF-8 -t ASCII//TRANSLIT   #The next example converts from UTF-8 to ASCII, transliterating when possible
+
+iconv -f UTF-8 -t GB2312 a.txt.utf8 -o a.txt.big5
+iconv -f utf8 -t big5 vi.utf8 | iconv -f big5 -t gb2312 | iconv -f gb2312 -t utf8 -o vi.gb.utf8  #将繁体的 utf8转换为简体的utf8
+
+```
+
+
 
 * install some useful tools
 ```sh
