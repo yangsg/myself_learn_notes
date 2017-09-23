@@ -327,6 +327,15 @@ chmod -R a-x dir01 #-R, --recursive
 ```
 
 
+```sh
+## (Unix Name) print system information
+uname -a    #man uname
+uname -r
+
+```
+
+
+
 
 * install some useful tools
 ```sh
