@@ -142,6 +142,18 @@ cp -t dir01 a.txt b.txt #-t, --target-directory=DIRECTORY copy all SOURCE argume
 
 ```
 
+
+```sh
+cat /etc/issue
+cat -A /etc/xinetd.d/rsync # ^I -> [Tab], $ -> ‘\n’(linux), ^M$ -> ‘\r\n’(windows)
+cat -n /etc/issue
+cat -b /etc/issue  # number nonempty output lines
+
+tac /etc/issue
+tac /etc/issue | cat –A  #tac没有cat那么多选项，不过可以通过|管道+cat来解决
+```
+
+
 ```sh
 basename /usr/bin/sort          #Output "sort"   #man basename
 basename include/stdio.h .h     #Output "stdio"
