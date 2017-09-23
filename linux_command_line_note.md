@@ -763,6 +763,15 @@ join -t ':' -1 4 /etc/passwd  -2 3 /etc/group
 
 ```
 
+```sh
+##  paste - merge lines of files
+
+paste /etc/passwd  /etc/shadow
+cat /etc/group |  paste /etc/passwd  /etc/shadow  - | head -n 3
+
+
+```
+
 
 * install some useful tools
 ```sh
