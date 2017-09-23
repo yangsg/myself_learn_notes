@@ -256,7 +256,7 @@ type cd
 ## locate the binary, source, and manual page files for a command
 whereis passwd
 whereis -m passwd
-whereis -u -M /usr/man/man1 -S /usr/src -f *
+cd /usr/bin;         whereis -u -M /usr/man/man1 -S /usr/src -f *
 
 ```
 
