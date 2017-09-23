@@ -142,6 +142,13 @@ cp -t dir01 a.txt b.txt #-t, --target-directory=DIRECTORY copy all SOURCE argume
 
 ```
 
+```sh
+basename /usr/bin/sort          #Output "sort"   #man basename
+basename include/stdio.h .h     #Output "stdio"
+
+dirname /usr/bin/sort           #Output "/usr/bin"
+dirname stdio.h                 #Output "."
+```
 
 
 * install some useful tools
