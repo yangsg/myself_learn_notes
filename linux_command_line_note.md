@@ -64,7 +64,7 @@ exit   #[ctrl + d]
 
 ```
 ls
-Rs -1         #across -x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C
+ls -1         #across -x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C
 ls -l
 ls -ld dir01  #list directories themselves, not their contents
 ls -l --full-time
