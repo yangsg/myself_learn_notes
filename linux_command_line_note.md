@@ -199,6 +199,25 @@ od -t cdCxCoC a.txt
 ```
 
 
+```sh
+touch -d "2 days ago" a.txt  #touch可以改变mtime、atime,但无法将ctime改变为指定值
+ls -l --full-time a.txt; ls -l --time=atime --full-time a.txt; ls -l --time=ctime --full-time a.txt;
+
+```
+
+```sh
+help umask
+umask       #output: 0002 (Displaying the current mask)
+umask -S    #output: u=rwx,g=rwx,o=rx
+umask 002   #一般账号umask通常为002，见/etc/bashrc
+umask 022   #root及系统账号umask通常为022
+##default regular file permision:      -rw-rw-rw-
+##default regular directory permision: drwxrwxrwx
+## 创建文件时：(-rw-rw-rw-) - (-----w--w-) ==> -rw-r--r--
+## 创建目录时：(drwxrwxrwx) - (d----w--w-) ==> drwxr-xr-x
+```
+
+
 
 
 ```sh
