@@ -2,6 +2,29 @@
 * 鸟哥的 Linux 私房菜  http://cn.linux.vbird.org/linux_basic/linux_basic.php
 * nixCraft             https://www.cyberciti.biz/faq/
 
+
+* help man info
+```
+##help: Display information about builtin commands.
+help help
+help
+help for
+help cd
+less --help
+
+man man       # hotkey is similar to vim editor
+man bash | col -b > bash.mantxt
+man 5 man
+man –k man    #-k     Equivalent to apropos.
+man –f man    #-f     Equivalent to whatis.  The whatis database is created using the command /usr/sbin/makewhatis
+man null
+
+info info     # hotkey is similar to emaca editor
+info date     # is more detail than `man date`
+info date     #date +"%Y-%m-%d %T %z" #example
+
+```
+
 ```bash
 man shutdown
 shutdown -h now  #equivalent to `shutdown -h +0` #立刻关机
