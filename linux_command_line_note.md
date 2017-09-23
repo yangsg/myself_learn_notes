@@ -170,6 +170,21 @@ less -R  a.txt          #可用于显示一些具有颜色控制字符的文件(
 ```
 
 ```sh
+head /etc/man.config
+head -n 20 /etc/man.config
+head -n -20 /etc/man.config
+
+tail /etc/man.config
+tail -n 20 /etc/man.config
+tail -n +100 /etc/man.config
+tail -f /var/log/messages                #按[ctrl]+c结束
+head -n 20 /etc/man.config | tail -n 10  #显示/etc/man.config的第11到20行
+
+```
+
+
+
+```sh
 basename /usr/bin/sort          #Output "sort"   #man basename
 basename include/stdio.h .h     #Output "stdio"
 
