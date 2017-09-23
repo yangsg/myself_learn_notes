@@ -772,6 +772,44 @@ cat /etc/group |  paste /etc/passwd  /etc/shadow  - | head -n 3
 
 ```
 
+```sh
+## expand - convert tabs to spaces
+## unexpand - convert spaces to tabs
+
+```
+
+
+```sh
+## split - split a file into pieces
+
+cd /tmp; split -b 300k /etc/termcap  termcap
+cat termcap* >> termcapback
+
+
+
+```
+
+
+```sh
+## xargs - build and execute command lines from standard input
+
+man xargs
+
+```
+
+
+```text
+##  关于减号 - 的用途
+管线命令在 bash 的连续的处理程序中是相当重要的！另外，在 log file 的分析当中也是相当重要的一环， 所以请特别留意！另外，在管线命令当中，常常会使用到前一个命令的 stdout 作为这次的 stdin ， 某些命令需要用到文件名 (例如 tar) 来进行处理时，该 stdin 与 stdout 可以利用减号 "-" 来替代， 举例来说：
+
+tar -cvf - /home | tar -xvf -
+
+上面这个例子是说：『我将 /home 里面的文件给他打包，但打包的数据不是纪录到文件，而是传送到 stdout； 经过管线后，将 tar -cvf - /home 传送给后面的 tar -xvf - 』。后面的这个 - 则是取用前一个命令的 stdout， 因此，我们就不需要使用 file 了！这是很常见的例子喔！注意注意！
+
+```
+
+
+
 
 * install some useful tools
 ```sh
