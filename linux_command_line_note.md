@@ -568,6 +568,29 @@ unalias ll
 
 ```
 
+```sh
+## Display or manipulate the history list.
+
+history
+history  20
+history -a myhist_file
+history -w myhist_file
+history -w
+
+```
+
+```
+命令运行的顺序可以这样看：
+1.  以相对/绝对路径运行命令，例如『 /bin/ls 』或『 ./ls 』；
+2.  由 alias 找到该命令来运行；
+3.  由 bash 内建的 (builtin) 命令来运行；
+4.  透过 $PATH 这个变量的顺序搜寻到的第一个命令来运行。
+如果想要了解命令搜寻的顺序，其实透过 type -a ls 也可以查询的到啦
+
+```
+
+
+
 
 * install some useful tools
 ```sh
