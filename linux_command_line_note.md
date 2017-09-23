@@ -107,6 +107,20 @@ readlink  dir01_link   #readlink - print resolved symbolic links or canonical fi
 
 
 ```sh
+mkdir -m 711 dir  # ls -ld dir
+mkdir -m u=rwx,g=rwx dir_a
+mkdir -p dir01/dir02/dir03/dir04
+```
+
+```sh
+rmdir dir01
+rmdir -p dir01/dir02/dir03/dir04
+```
+
+
+
+
+```sh
 cp a.txt b.txt #这种行为会复制(cp)执行者的属性与权限
 cp a.txt b.txt dir01
 cp -t dir01 a.txt b.txt #-t, --target-directory=DIRECTORY copy all SOURCE arguments into DIRECTORY
