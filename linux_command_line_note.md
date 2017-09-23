@@ -83,6 +83,16 @@ cat /proc/filesystems  #系统目前已加载到内存中支持的文件系统�
 
 ```
 
+```sh
+cd
+cd .
+cd ..
+cd ~
+cd ~test
+cd /usr/src
+cd ../lib
+cd -  #change directory to previous working directory
+```
 
 ```sh
 cp a.txt b.txt #这种行为会复制(cp)执行者的属性与权限
