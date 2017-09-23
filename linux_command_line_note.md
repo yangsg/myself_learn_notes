@@ -726,6 +726,28 @@ ls -l / | tee -a ~/homefile | less
 
 ```
 
+
+```sh
+##  tr - translate or delete characters
+
+man tr  # info tr
+cat a.txt | tr -s '\n'   # Convert each sequence of repeated newlines to a single newline
+echo 'hello       world     yes   I         know'  | tr -s ' '
+echo 'hello       world     yes   I         know'  | tr -s ' ' '-'
+echo 'hello       world     yes   I         know'  | tr -t ' ' '-'
+cat a.txt | tr -d '\0'  #Remove all zero bytes
+
+echo 'a b c' | tr  -cs '[:alnum:]'  '[\n*]'
+
+```
+
+```text
+## http://stackoverflow.com/questions/10638382/what-is-a-reverse-line-feed
+A reverse line feed makes the cursor go back up to the previous line. A regular line feed makes the cursor go to the next line.
+Edit: ThePower is correct, these terms originate from the days of line printers, "feed" meaning to feed the paper through the printer, in this case by one line, and reverse line feed moving the paper backwards by one line.
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
