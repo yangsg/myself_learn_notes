@@ -220,9 +220,21 @@ umask 022   #root及系统账号umask通常为022
 ##  Each program (technically called a process) has its own mask, and is able to change its settings using a function call. When the process is a shell, the mask is set with the umask command.
 ##  https://en.wikipedia.org/wiki/File_system_permissions
 
-
 ```
 
+```sh
+chattr +i a.txt    # immutable
+chattr -i a.txt
+chattr +a logfile  # append only
+
+lsattr a.txt
+lsattr -d dir01
+lsattr -R dir01
+lsattr -a dir01
+lsattr -aR dir01
+
+
+```
 
 
 
