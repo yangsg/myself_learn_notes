@@ -337,8 +337,9 @@ su  noLoginUser01 -s /bin/bash  -c "date"
 useradd -m -e 2017-10-10 user01    # echo $(($(date --date="2017/10/10" +%s)/86400+1))
 useradd -r systemAccount01
 
-cat /etc/login.defs
+useradd -D
 cat /etc/default/useradd
+cat /etc/login.defs
 
 userdel  user01
 userdel -r  user01  #-r, --remove  Files in the user's home directory will be removed along with the home directory itself and the user's mail spool. Files located in other file systems will have to be searched for and deleted manually.
