@@ -253,6 +253,14 @@ type cd
 ```
 
 ```sh
+## locate the binary, source, and manual page files for a command
+whereis passwd
+whereis -m passwd
+whereis -u -M /usr/man/man1 -S /usr/src -f *
+
+```
+
+```sh
 chown test a.txt  b.txt
 chown -R test workspace
 chown -R test:test workspace
