@@ -97,12 +97,19 @@ cd -  #change directory to previous working directory
 ```sh
 cd  /home/test
 mkdir dir01
-ln -s  dir01  dir01_link
+ln -s  dir01  dir01_link    #注意：创建symbolic link文件必须加-s，因为默认是创建hard link
 cd dir01_link
 pwd         #output: /home/test/dir01_link
 pwd -P      #output: /home/test/dir01
 
 readlink  dir01_link   #readlink - print resolved symbolic links or canonical file names
+
+
+
+## ln - make links between files
+ln -s  dir01  dir01_link    #注意：创建symbolic link文件必须加-s，因为默认是创建hard link
+ln a.txt a.txt_hardlink #hard link的限制:不能跨文件系统；不能连接到目录
+
 ```
 
 
