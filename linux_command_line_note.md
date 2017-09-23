@@ -611,6 +611,31 @@ stty erase ^h
 ```
 
 
+
+```sh
+##  (redirect)数据重定向；
+stdin  0
+stdout 1
+stderr 2
+<
+<<    #here document
+>     #If the file does not exist it is created; if it does exist it is truncated to zero size.
+>>    #append
+2>
+2>>
+&>    #stdout and stderr
+&>>
+
+
+find /home -name .bashrc > list_right 2> list_error
+find /home -name .bashrc 2> /dev/null
+find /home -name .bashrc  &> list_right_with_error
+cat > catfile < ~/.bashrc
+cat > catfile << "eof"
+
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
