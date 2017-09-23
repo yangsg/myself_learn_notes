@@ -339,6 +339,12 @@ chmod -R a-x dir01 #-R, --recursive
 uname -a    #man uname
 uname -r
 
+
+##  FSG lsb_release v2.0 prints certain LSB (Linux Standard Base) and Distribution information.
+
+yum provides lsb_release   #search which package contains the lsb_release command
+lsb_release –a  # yum install epel-release; yum install redhat-lsb
+
 ```
 
 
