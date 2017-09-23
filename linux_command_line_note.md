@@ -84,6 +84,14 @@ cat /proc/filesystems  #系统目前已加载到内存中支持的文件系统�
 ```
 
 
+```sh
+cp a.txt b.txt #这种行为会复制(cp)执行者的属性与权限
+cp a.txt b.txt dir01
+cp -t dir01 a.txt b.txt #-t, --target-directory=DIRECTORY copy all SOURCE arguments into DIRECTORY
+
+
+```
+
 
 
 * install some useful tools
