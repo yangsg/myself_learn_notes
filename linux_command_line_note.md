@@ -36,3 +36,21 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 term screen-256color
 ```
 
+* 阿里开源镜像(centos7) http://mirrors.aliyun.com/
+```bash
+##  --- for centos base --
+## step 1: back up
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+## step 2: download XXX.repo file
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+## step 3: clean and make cache
+yum clean all
+yum makecache
+
+##  --- for epel--
+mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup
+mv /etc/yum.repos.d/epel-testing.repo /etc/yum.repos.d/epel-testing.repo.backup
+
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+```
+
