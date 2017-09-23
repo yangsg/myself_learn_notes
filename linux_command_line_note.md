@@ -387,6 +387,16 @@ gzip -c file2 >> foo.gz
 ```
 
 
+```sh
+bzip2 -c a.txt > a.txt.bz2 #压缩，这种方式的好处是自己定义目标文件名而不是按默认的规则，和gzip用法类似
+bzip2 a.txt  #压缩
+bzip2 -z a.txt #压缩
+bzip2 -k a.txt #压缩，保留input文件,即a.txt
+bzip2 -d a.txt.bz2 #解压
+bzip2 -dk a.txt.bz2 #解压，保留input文件, 即a.txt.bz2
+bzcat a.txt.bz2
+
+```
 
 
 
