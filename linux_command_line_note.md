@@ -62,6 +62,30 @@ exit   #[ctrl + d]
 
 ```
 
+```
+ls
+Rs -1         #across -x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C
+ls -l
+ls -ld dir01  #list directories themselves, not their contents
+ls -l --full-time
+ls -al --time-style=+"%Y-%m-%d %T %z"
+ls --color=auto
+
+##删除不规则文件名的一个例子：
+ls –li
+find . -inum 52771 -exec rm -i {} \;
+
+
+ls -lid / /. /..
+
+ls -l /lib/modules/$(uname -r)/kernel/fs #查看你的Linux支持的文件系统有哪些
+cat /proc/filesystems  #系统目前已加载到内存中支持的文件系统有
+
+```
+
+
+
+
 * install some useful tools
 ```
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
