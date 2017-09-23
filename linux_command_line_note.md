@@ -472,6 +472,57 @@ type -a ls
 ```
 
 
+* ----variable----
+```sh
+echo $PATH
+echo ${PATH}
+version=$(uname -r)
+
+PATH=$PATH:/home/bin
+PATH="$PATH":/home/bin
+PATH=${PATH}:/home/bin
+
+export PATH
+unset myname
+
+cd /lib/modules/`uname -r`/kernel
+cd /lib/modules/$(uname -r)/kernel   #推荐这种写法，因为括号容易分辨，不像反单引号那样容易与引号混淆
+
+echo "hello\"world"
+echo hello\"world
+
+ls -l  `locate crontab`
+echo `locate crontab`
+
+work=~/workspace
+cd $work
+
+printenv
+env
+declare -i number=$RANDOM*10/32768 ; echo $number #man bash
+
+## bash中不只有环境变量，还有一些与bash操作接口有关的变量，以及用户自己定义的变量存在。
+
+
+## Set or unset values of shell options and positional parameters.
+set
+echo $-   #output: himBH
+
+export
+export JAVA_HOME=/usr/java/jdk1.5.0_07/bin/java
+export JAVA_HOME
+
+## 环境变量与自定义变量的差异在于该变量是否会被子进程所继续引用
+
+```
+
+```sh
+locale
+locale -a
+
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
