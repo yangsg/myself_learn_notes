@@ -25,6 +25,30 @@ info date     #date +"%Y-%m-%d %T %z" #example
 
 ```
 
+```
+echo $LANG
+echo -e  'a\tb'
+locale
+LANG=en_US.UTF-8
+
+
+cal
+cal 2017
+cal 2 2017
+cal 21 2 2017
+
+
+date
+date +"%Y-%m-%d %T %z"  #same as date +"%Y-%m-%d %H:%M:%S %z"
+date -u +"%Y-%m-%d %T %z" # -u ：print or set Coordinated Universal Time
+date -s "2016-10-23 14:46:58"
+date -s "2016-10-29 14:46:58 +0800"
+date --set='+2 minutes'  # To set the system clock forward by two minutes
+date --set='-5 minutes'
+
+
+```
+
 ```bash
 man shutdown
 shutdown -h now  #equivalent to `shutdown -h +0` #立刻关机
@@ -33,6 +57,8 @@ shutdown -h +10    #系统再过十分钟后自动关机
 shutdown -r now    #系统立刻重新启动
 shutdown -r +30 'The system will reboot'   #再过三十分钟系统会重新启动，并显示后面的讯息给所有在在线的使用者
 shutdown -k now 'This system will reboot'  #仅发出警告信件的参数！系统并不会关机啦！吓唬人！
+
+exit   #[ctrl + d]
 
 ```
 
