@@ -224,7 +224,7 @@ umask 022   #root及系统账号umask通常为022
 
 ```sh
 chattr +i a.txt    # immutable
-chattr -i a.txt
+chattr -i a.txt    #The operator '+' causes the selected attributes to be added to the existing attributes of the files; '-' causes them to be removed
 chattr +a logfile  # append only
 
 lsattr a.txt
