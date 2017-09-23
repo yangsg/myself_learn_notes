@@ -155,6 +155,16 @@ tac /etc/issue | cat –A  #tac没有cat那么多选项，不过可以通过|管
 
 
 ```sh
+nl /etc/issue
+nl -b a /etc/issue
+nl -b a -n rz  /etc/issue
+nl -b a -n rz -w 3 /etc/issue
+
+```
+
+
+
+```sh
 basename /usr/bin/sort          #Output "sort"   #man basename
 basename include/stdio.h .h     #Output "stdio"
 
