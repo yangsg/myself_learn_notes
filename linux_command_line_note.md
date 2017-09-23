@@ -671,6 +671,7 @@ echo $?   # 显示命令回传码
 ls /tmp/abc || mkdir /tmp/abc && touch /tmp/abc/hehe
 ls /tmp/vbirding && echo "exist" || echo "not exist"   #假定式
 
+```
 
 
 ```text
