@@ -673,6 +673,12 @@ ls /tmp/vbirding && echo "exist" || echo "not exist"   #假定式
 
 ```
 
+```text
+## 管道命令：|
+ 其实这个管线命令『 | 』仅能处理经由前面一个命令传来的正确信息，也就是 standard output 的信息，对于 stdandard error 并没有直接处理的能力。
+每个管线后面接的第一个数据必定是『命令』喔！而且这个命令必须要能够接受 standard input 的数据才行
+
+```
 
 ```sh
 ## cut grep      sort uniq wc           tee 双向重定向
@@ -707,15 +713,12 @@ cat /etc/passwd | sort -t ':' -k 3 -n
 last | cut -d ' ' -f1 | sort | uniq
 last | cut -d ' ' -f1 | sort | uniq -c
 
-```
 
-
-```text
-## 管道命令：|
- 其实这个管线命令『 | 』仅能处理经由前面一个命令传来的正确信息，也就是 standard output 的信息，对于 stdandard error 并没有直接处理的能力。
-每个管线后面接的第一个数据必定是『命令』喔！而且这个命令必须要能够接受 standard input 的数据才行
+last | grep [a-zA-Z] | grep -v 'wtmp' | wc -l
 
 ```
+
+
 
 
 * install some useful tools
