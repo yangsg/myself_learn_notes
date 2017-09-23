@@ -370,6 +370,24 @@ ls -l a.txt
 
 ```
 
+```sh
+## 解压windows上的zip文件用unzip,相应压缩软件为zip.针对windows的rar有unrar
+man gzip
+gzip a.txt  #a.txt will be replaced by a.txt.gz by default
+gzip -c a.txt > a.txt.gz #压缩且保留源文件
+gzip -d a.txt.gz #解压
+gzip -cd old.gz | gzip > new.gz  #If you want to recompress concatenated files to get better compression, do
+cat a.txt b.txt | gzip > entire.gz
+zcat a.txt.gz
+
+##  Multiple compressed files can be concatenated. In this case, gunzip will extract all members at once. For example:
+gzip -c file1  > foo.gz
+gzip -c file2 >> foo.gz
+
+```
+
+
+
 
 
 * install some useful tools
