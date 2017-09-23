@@ -4,7 +4,7 @@
 
 
 * help man info  --help
-```
+```sh
 ##help: Display information about builtin commands.
 help help
 help
@@ -49,7 +49,7 @@ date --set='-5 minutes'
 
 ```
 
-```bash
+```sh
 man shutdown
 shutdown -h now  #equivalent to `shutdown -h +0` #立刻关机
 shutdown -h 20:25  #系统在今天的 20:25 分会关机，若在21:25才下达此指令，则隔天才关机
