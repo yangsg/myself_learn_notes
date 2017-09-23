@@ -697,6 +697,13 @@ grep -nC 2 '5' a.txt
 ```
 
 
+```sh
+cat /etc/passwd | sort
+cat /etc/passwd | sort -t ':' -k 3
+cat /etc/passwd | sort -t ':' -k 3 -n
+
+```
+
 
 ```text
 ## 管道命令：|
