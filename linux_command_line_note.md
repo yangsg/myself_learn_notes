@@ -95,6 +95,18 @@ cd -  #change directory to previous working directory
 ```
 
 ```sh
+cd  /home/test
+mkdir dir01
+ln -s  dir01  dir01_link
+cd dir01_link
+pwd         #output: /home/test/dir01_link
+pwd -P      #output: /home/test/dir01
+
+readlink  dir01_link   #readlink - print resolved symbolic links or canonical file names
+```
+
+
+```sh
 cp a.txt b.txt #这种行为会复制(cp)执行者的属性与权限
 cp a.txt b.txt dir01
 cp -t dir01 a.txt b.txt #-t, --target-directory=DIRECTORY copy all SOURCE arguments into DIRECTORY
