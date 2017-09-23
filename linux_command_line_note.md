@@ -103,3 +103,8 @@ mv /etc/yum.repos.d/epel-testing.repo /etc/yum.repos.d/epel-testing.repo.backup
 wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
 ```
 
+#hotkeys
+[ctrl + c]
+[ctrl + d]
+[tab][tab]
+
