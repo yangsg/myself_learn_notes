@@ -427,6 +427,27 @@ tar -jcv -f /backups/backup-system-20091130.tar.bz2 \
 ```
 
 
+```sh
+man unix2dos
+unix2dos a.txt  #Convert and replace a.txt
+unix2dos a.txt b.txt     #Convert and replace a.txt. Convert and replace b.txt.
+unix2dos -n a.txt e.txt  #Convert a.txt and write to e.txt.
+
+unix2dos a.txt -c iso b.txt   #Convert and replace a.txt in ASCII conversion mode.  Convert and replace b.txt in ISO conversion mode.
+unix2dos -c mac a.txt         #Convert a.txt from Unix to Mac format. equivalent to `unix2mac a.txt`
+unix2dos -k a.txt             #Convert and replace a.txt while keeping original date stamp.
+
+
+
+man dos2unix
+dos2unix a.txt  #Convert and replace a.txt
+dos2unix a.txt b.txt   #Convert and replace a.txt. Convert and replace b.txt
+dos2unix -n a.txt e.txt   #Convert a.txt and write to e.txt
+
+dos2unix a.txt -c iso b.txt   #Convert and replace a.txt in ascii conversion mode. Convert and replace b.txt in ISO conversion mode
+dos2unix -c mac a.txt         #Convert a.txt from Mac to Unix format. equivalent to `mac2unix a.txt`
+```
+
 
 * install some useful tools
 ```sh
