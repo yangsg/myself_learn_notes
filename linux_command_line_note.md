@@ -719,7 +719,12 @@ last | grep [a-zA-Z] | grep -v 'wtmp' | wc -l
 ```
 
 
+```sh
+## tee可以让standard output转存一份到文件内并将同样的数据继续送到屏幕去处理。
+ls -l /home  |  tee ~/homefile |  less
+ls -l / | tee -a ~/homefile | less
 
+```
 
 * install some useful tools
 ```sh
