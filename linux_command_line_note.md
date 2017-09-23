@@ -215,6 +215,12 @@ umask 022   #root及系统账号umask通常为022
 ##default regular directory permision: drwxrwxrwx
 ## 创建文件时：(-rw-rw-rw-) - (-----w--w-) ==> -rw-r--r--
 ## 创建目录时：(drwxrwxrwx) - (d----w--w-) ==> drwxr-xr-x
+
+##  https://en.wikipedia.org/wiki/Umask
+##  Each program (technically called a process) has its own mask, and is able to change its settings using a function call. When the process is a shell, the mask is set with the umask command.
+##  https://en.wikipedia.org/wiki/File_system_permissions
+
+
 ```
 
 
