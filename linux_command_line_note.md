@@ -281,6 +281,19 @@ find . -inum 52771 -exec rm -i '{}' \;
 
 find / -mtime 0  #将过去系统上面 24 小时内有更动过内容 (mtime) 的文件列出
 
+                   4
+                 <--->
+                   -4|----|----|----|----|---->
+<-----|----|----|+4
+<-----|----|----|----|----|----|----|----|
+      7    6    5    4    3    2    1    now
+
+find /var -mtime +4     #  +4代表大於等於5天前的档名
+find /var -mtime -4     #  -4代表小於等於4天内的文件档名
+find /var -mtime 4      #  4则是代表4-5那一天的文件档名
+
+
+
 find /home -user test
 find / -nouser
 find /var -type s
