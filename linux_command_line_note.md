@@ -123,8 +123,15 @@ rm -r dir01
 rm -rf dir01
 rm -i a.txt
 \rm -i a.txt #在命令前加反斜杠，可以忽略掉alias的指定参数
+```
 
+```sh
+mv a.txt b.txt   #rename a.txt to b.txt
+mv a.txt dir01   #move a.txt into dir01
+mv a.txt b.txt dir01
+mv -t dir01  a.txt b.txt
 
+rename .htm .html *.htm       #man rename
 ```
 
 ```sh
