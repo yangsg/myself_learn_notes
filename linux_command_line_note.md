@@ -236,6 +236,12 @@ lsattr -aR dir01
 
 ```
 
+```sh
+file ~/.bashrc                      #determine file type
+file /usr/bin/passwd
+file /var/lib/mlocate/mlocate.db
+
+```
 
 
 ```sh
