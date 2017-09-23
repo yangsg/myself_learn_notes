@@ -25,7 +25,7 @@ info date     #date +"%Y-%m-%d %T %z" #example
 
 ```
 
-```
+```sh
 echo $LANG
 echo -e  'a\tb'
 locale
@@ -62,7 +62,7 @@ exit   #[ctrl + d]
 
 ```
 
-```
+```sh
 ls
 ls -1         #across -x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C
 ls -l
@@ -87,16 +87,16 @@ cat /proc/filesystems  #系统目前已加载到内存中支持的文件系统�
 
 
 * install some useful tools
-```
+```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
 
 ```
 
-```
+```sh
 yum install screen
 ```
 * ##~/.screenrc
-```
+```text
 hardstatus alwayslastline "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %Y-%m-%d %c"
 shell "bash"
 startup_message off
@@ -110,7 +110,7 @@ term screen-256color
 ```
 
 * 阿里开源镜像(centos7) http://mirrors.aliyun.com/
-```bash
+```sh
 ##  --- for centos base --
 ## step 1: back up
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
