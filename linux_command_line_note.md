@@ -674,6 +674,24 @@ ls /tmp/vbirding && echo "exist" || echo "not exist"   #假定式
 ```
 
 
+```sh
+## cut grep      sort uniq wc           tee 双向重定向
+## tr col join paste expand unexpand
+
+## cut - remove sections from each line of files
+echo $PATH | cut -d ':' -f 5
+echo $PATH | cut -d ':' -f 3,5
+echo $PATH | cut -d ':' -f 3-5
+echo $PATH | cut -d ':' -f 3-
+echo $PATH | cut -d ':' -f -5
+export | cut -c  12-
+
+
+```
+
+
+
+
 ```text
 ## 管道命令：|
  其实这个管线命令『 | 』仅能处理经由前面一个命令传来的正确信息，也就是 standard output 的信息，对于 stdandard error 并没有直接处理的能力。
