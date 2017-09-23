@@ -3,7 +3,7 @@
 * nixCraft             https://www.cyberciti.biz/faq/
 
 
-* help man info
+* help man info  --help
 ```
 ##help: Display information about builtin commands.
 help help
