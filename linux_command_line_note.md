@@ -348,6 +348,17 @@ lsb_release –a  # yum install epel-release; yum install redhat-lsb
 ```
 
 
+```sh
+## 由于 df 主要读取的数据几乎都是针对一整个文件系统，因此读取的范围主要是在 Superblock 内的信息， 所以这个命令显示结果的速度非常的快速！
+df    #df的全名为disk free (see wikipedia)
+df -h
+df –aT  #将系统内的所有特殊文件格式及名称都列出来(包括系统特有的/proc等文件系统)
+df -h /etc  #列出/etc下面可用的磁盘容量(df回自动分析该目录或文件所在分区，并将该分区的容量显示出来)
+df –ih
+
+```
+
+
 
 
 * install some useful tools
