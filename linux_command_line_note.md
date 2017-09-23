@@ -118,7 +118,14 @@ rmdir -p dir01/dir02/dir03/dir04
 ```
 
 
+```sh
+rm -r dir01
+rm -rf dir01
+rm -i a.txt
+\rm -i a.txt #在命令前加反斜杠，可以忽略掉alias的指定参数
 
+
+```
 
 ```sh
 cp a.txt b.txt #这种行为会复制(cp)执行者的属性与权限
