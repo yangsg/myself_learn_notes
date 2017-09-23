@@ -135,6 +135,14 @@ rename .htm .html *.htm       #man rename
 ```
 
 ```sh
+basename /usr/bin/sort          #Output "sort"   #man basename
+basename include/stdio.h .h     #Output "stdio"
+
+dirname /usr/bin/sort           #Output "/usr/bin"
+dirname stdio.h                 #Output "."
+```
+
+```sh
 cp a.txt b.txt #这种行为会复制(cp)执行者的属性与权限
 cp a.txt b.txt dir01
 cp -t dir01 a.txt b.txt #-t, --target-directory=DIRECTORY copy all SOURCE arguments into DIRECTORY
@@ -182,15 +190,16 @@ head -n 20 /etc/man.config | tail -n 10  #显示/etc/man.config的第11到20行
 
 ```
 
-
-
 ```sh
-basename /usr/bin/sort          #Output "sort"   #man basename
-basename include/stdio.h .h     #Output "stdio"
+od -t c /usr/bin/passwd
+od -t cxC /etc/issue
+od -t cdC /etc/issue
+od -t cdCxCoC a.txt
 
-dirname /usr/bin/sort           #Output "/usr/bin"
-dirname stdio.h                 #Output "."
 ```
+
+
+
 
 ```sh
 chown test a.txt  b.txt
