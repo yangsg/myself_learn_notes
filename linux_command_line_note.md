@@ -1,5 +1,6 @@
-鸟哥的 Linux 私房菜  http://cn.linux.vbird.org/linux_basic/linux_basic.php
-nixCraft             https://www.cyberciti.biz/faq/
+**useful online resource**
+* 鸟哥的 Linux 私房菜  http://cn.linux.vbird.org/linux_basic/linux_basic.php
+* nixCraft             https://www.cyberciti.biz/faq/
 
 ```bash
 man shutdown
