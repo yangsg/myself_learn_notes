@@ -12,3 +12,22 @@ shutdown -r +30 'The system will reboot'   #再过三十分钟系统会重新启
 shutdown -k now 'This system will reboot'  #仅发出警告信件的参数！系统并不会关机啦！吓唬人！
 
 ```
+
+
+```
+yum install screen
+```
+* ##~/.screenrc
+```
+hardstatus alwayslastline "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %Y-%m-%d %c"
+shell "bash"
+startup_message off
+vbell off
+altscreen on
+attrcolor b ".I"
+defbce "on"
+termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+term screen-256color
+```
+
