@@ -702,6 +702,11 @@ cat /etc/passwd | sort
 cat /etc/passwd | sort -t ':' -k 3
 cat /etc/passwd | sort -t ':' -k 3 -n
 
+
+##  因为uniq是比较相邻的行，所以通常需要先做sort处理
+last | cut -d ' ' -f1 | sort | uniq
+last | cut -d ' ' -f1 | sort | uniq -c
+
 ```
 
 
