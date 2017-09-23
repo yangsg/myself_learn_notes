@@ -150,6 +150,29 @@ dirname /usr/bin/sort           #Output "/usr/bin"
 dirname stdio.h                 #Output "."
 ```
 
+```sh
+chown test a.txt  b.txt
+chown -R test workspace
+chown -R test:test workspace
+chown --reference a.txt  b.txt    #change user and group of b.txt to the same as a.txt
+
+chgrp test workspace
+chgrp -R test workspace  #-R, --recursive
+chgrp -R test a.txt b.txt
+chgrp --reference a.txt  b.txt    #change group of b.txt to the same as a.txt
+
+```
+
+```sh
+chmod 644 .bashrc
+chmod u=rwx,go=rx .bashrc   #[ugoa]
+chmod a+w .bashrc
+chmod a-x .bashrc
+chmod -R a-x dir01 #-R, --recursive
+
+```
+
+
 
 * install some useful tools
 ```sh
