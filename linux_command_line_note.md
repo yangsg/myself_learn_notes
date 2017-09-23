@@ -460,6 +460,17 @@ iconv -f utf8 -t big5 vi.utf8 | iconv -f big5 -t gb2312 | iconv -f gb2312 -t utf
 ```
 
 
+```sh
+## Display information about command type.
+
+help type
+type ls
+type -t ls
+type -a ls
+
+#在命令前加”\”符号，表示执行原始的ls命令而不是其alias. 如”\ls”
+```
+
 
 * install some useful tools
 ```sh
