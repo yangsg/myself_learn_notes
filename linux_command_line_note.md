@@ -84,10 +84,10 @@ cat /proc/filesystems  #系统目前已加载到内存中支持的文件系统�
 ```
 
 ```sh
-cd
+cd        #cd $HOME
 cd .
 cd ..
-cd ~
+cd ~      #cd $HOME
 cd ~test
 cd /usr/src
 cd ../lib
