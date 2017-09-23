@@ -599,6 +599,16 @@ source /etc/profile
 
 ```
 
+```sh
+## (setting tty) stty - change and print terminal line settings
+
+tty    # teletypewriter
+
+stty -a
+stty erase ^h
+
+##终端机设置相关命令和文件：stty set  /ect/inputrc
+```
 
 
 * install some useful tools
