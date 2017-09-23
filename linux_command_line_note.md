@@ -243,6 +243,14 @@ file /var/lib/mlocate/mlocate.db
 
 ```
 
+```sh
+which ifconfig                   #hows the full path of (shell) commands. #It does this by searching for an executable or script in the directories listed in the environment variable PATH using the same algorithm as bash(1).
+which -a ifconfig
+which which
+which cd  #因为cd是bash builtin自带的，所以which cd找不到,但可以使用type命令
+type cd
+
+```
 
 ```sh
 chown test a.txt  b.txt
