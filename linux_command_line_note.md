@@ -662,6 +662,19 @@ NOTES
 
 ```
 
+```sh
+##  命令执行的判断依据 ; && ||
+##   类似程序中的复合语句或表达式
+
+sync; sync; shutdown -h now
+echo $?   # 显示命令回传码
+ls /tmp/abc || mkdir /tmp/abc && touch /tmp/abc/hehe
+ls /tmp/vbirding && echo "exist" || echo "not exist"   #假定式
+
+
+
+```
+
 
 * install some useful tools
 ```sh
