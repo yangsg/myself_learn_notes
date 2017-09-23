@@ -269,6 +269,28 @@ locate -b '\bashrc'
 
 ```
 
+
+
+```sh
+man find
+find /tmp -name core -type f -print0 | xargs -0 /bin/rm –f  #注意-name在-type前（优化），-print0
+find . -type f -exec file '{}' \; #这里的single quote和semicolon起转义作用，避免shell将其当做script punctuation.
+
+ls -li
+find . -inum 52771 -exec rm -i '{}' \;
+
+find / -mtime 0  #将过去系统上面 24 小时内有更动过内容 (mtime) 的文件列出
+
+find /home -user test
+find / -nouser
+find /var -type s
+find / -name passwd
+find / -size +1000k
+find / -perm +7000
+find . -perm -664
+
+```
+
 ```sh
 chown test a.txt  b.txt
 chown -R test workspace
