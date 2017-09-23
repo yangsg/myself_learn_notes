@@ -13,6 +13,11 @@ shutdown -k now 'This system will reboot'  #仅发出警告信件的参数！系
 
 ```
 
+* install some useful tools
+```
+yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
+
+```
 
 ```
 yum install screen
