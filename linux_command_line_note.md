@@ -19,7 +19,7 @@ man –k man    #-k     Equivalent to apropos.
 man –f man    #-f     Equivalent to whatis.  The whatis database is created using the command /usr/sbin/makewhatis
 man null
 
-info info     # hotkey is similar to emaca editor
+info info     # hotkey is similar to emacs editor
 info date     # is more detail than `man date`
 info date     #date +"%Y-%m-%d %T %z" #example
 
