@@ -399,6 +399,34 @@ bzcat a.txt.bz2
 ```
 
 
+```sh
+tar -zcvf dir01.tar.gz  dir01
+tar -ztvf dir01.tar.gz
+tar -zxvf dir01.tar.gz
+
+tar -jpcv -f etc.tar.bz2 /etc
+tar -jtv -f etc.tar.bz2
+tar -jpPcv -f etc.tar.bz2 /etc   #将文件(根)目录也备份下来
+tar -jxv -f dir01.tar.bz2
+tar -jxv -f dir01.tar.bz2  -C /tmp
+
+## 仅解开单一文件
+tar -jtv -f etc.tar.bz2 | grep 'shadow'
+tar -jxv -f etc.tar.bz2 etc/shadow
+
+
+tar -jcv  -f /root/system.tar.bz2 --exclude=/root/etc*  --exclude=/root/system.tar.bz2  /etc /root
+tar -jcv -f /root/etc.newer.then.passwd.tar.bz2  --newer-mtime="2008/09/29" /etc/*
+tar -cvf  - /etc | tar -xvf -
+
+
+tar -jcv -f /backups/backup-system-20091130.tar.bz2 \
+ --exclude=/root/*.bz2 --exclude=/root/*.gz --exclude=/home/loop* \
+ /etc /home /var/spool/mail /var/spool/cron /root
+
+```
+
+
 
 * install some useful tools
 ```sh
