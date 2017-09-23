@@ -755,6 +755,15 @@ man foo | col -b > foo.mantxt
 ```
 
 
+```sh
+##  join - join lines of two files on a common field
+
+##在join之前，你所需要处理的文件应该要事先经过排序(sort)处理
+join -t ':' -1 4 /etc/passwd  -2 3 /etc/group
+
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
