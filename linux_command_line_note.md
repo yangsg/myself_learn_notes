@@ -522,6 +522,39 @@ locale -a
 
 ```
 
+```sh
+read atest
+echo $atest
+read -p "Please keyin your name:"  -t 30 name
+echo $name
+
+
+```
+
+```sh
+注：typeset命令已经被废弃，请使declare用
+
+## Set variable values and attributes.
+## -r        to make NAMEs readonly(该变量不可被更改内容，也不能重设，如果你不小心将变量设置为”只读”，通常得要注销再登录才能复原该变量的类型了)
+
+help declare
+declare
+sum=100+200+50
+declare -i sum=100+200+50
+declare -x sum
+export | grep sum
+declare +x sum #让sum变成环境变量的自定义变量
+declare -p sum
+
+
+var[1]="small min"
+var[2]="big min"
+var[3]="nice min"
+echo "${var[1]}, ${var[2]}, ${var[3]}}"  #一般来说，建议直接以${数组}的方式来读取，会比较正确无误
+
+
+```
+
 
 * install some useful tools
 ```sh
