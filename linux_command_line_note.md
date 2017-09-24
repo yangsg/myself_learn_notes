@@ -397,6 +397,13 @@ groupmod -g 1010 group01
 groupmod -n  groupName01  group01  #rename 'group01' to 'groupName01'
 
 
+## CAVEATS
+##        You may not remove the primary group of any existing user. You must remove the user before you remove the group.
+##        You should manually check all file systems to ensure that no files remain owned by this group.
+
+groupdel group01
+
+
 
 ```
 ```text
