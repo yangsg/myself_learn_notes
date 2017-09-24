@@ -351,6 +351,7 @@ usermod    -G group01,group02  user01  #all of the supplementary groups that use
 usermod -e  2017-10-10  user01
 usermod -f  3           user01  # 3 days #-f, --inactive INACTIVE  #grep user01 /etc/shadow
 usermod -L  user01  #-L, --lock    #Note: if you wish to lock the account (not only access with a password), you should also set the EXPIRE_DATE to 1.
+chage -E 0 user01   #Use `chage -E 0 user` command instead for full account locking.
 usermod -U  user01  #-U, --unlock  #Note: if you wish to unlock the account (not only access with a password), you should also set the EXPIRE_DATE (for example to 99999, or to the EXPIRE value from /etc/default/useradd).
 
 
@@ -358,6 +359,17 @@ pkill -KILL -u  user01 # https://www.cyberciti.biz/faq/linux-logout-user-howto/
 find / -user user01
 userdel  user01
 userdel -r  user01  #-r, --remove  Files in the user's home directory will be removed along with the home directory itself and the user's mail spool. Files located in other file systems will have to be searched for and deleted manually.
+
+
+
+## passwd [-k] [-l] [-u [-f]] [-d] [-e] [-n mindays] [-x maxdays] [-w warndays] [-i inactivedays] [-S] [--stdin] [username]
+passwd -l user01   #-l, --lock  #Note that the account is not fully locked - the user can still log in by other means of authentication such as the ssh pub‐ lic key authentication. Use chage -E 0 user command instead for full account locking.
+echo "1234567" | passwd --stdin  user01  #--stdin  #This option is used to indicate that passwd should read the new password from standard input, which can be a pipe.  
+passwd -d  user01  #This is a quick way to delete a password for an account. It will set the named account passwordless. Available to root only.
+passwd -e  user01  #-e, --expire  #This is a quick way to expire a password for an account. The user will be forced to change the password during the next login attempt.  Available to root only
+passwd -n 3 -x 7 -w 2 -i 1  user01
+passwd -S user01  #-S, --status  #This will output a short information about the status of the password for a given account. Available to root user only.  
+
 
 
 ```
