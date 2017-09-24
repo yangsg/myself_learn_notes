@@ -342,9 +342,18 @@ man sudo
 sudo yum install tree    #same as `sudo -u root yum install screen`
 sudo -u user01 date      #run date command as user01
 sudo su -
+sudo -k                  #(kill) invalidates the user's cached credentials.
+sudo -K                  #-K与-k的区别是-k还有另一种使用方式，即接command: -k command
+
 ## https://askubuntu.com/questions/376199/sudo-su-vs-sudo-i-vs-sudo-bin-bash-when-does-it-matter-which-is-used
 ## https://serverfault.com/questions/619133/is-sudo-su-considered-a-bad-practice
 ## https://superuser.com/questions/105367/command-sudo-su
+
+## the default password prompt timeout for the sudoers security policy is 5 minutes.
+
+## https://apple.stackexchange.com/questions/10139/how-do-i-increase-sudo-password-remember-timeout
+## https://superuser.com/questions/827132/force-sudo-to-forget-password-immediately-after-exit-everytime
+## https://superuser.com/questions/559116/expect-and-sudo-timeout
 
 ##EXAMPLES
 ##     Note: the following examples assume a properly configured security policy.
