@@ -387,8 +387,31 @@ sudo -K                  #-K与-k的区别是-k还有另一种使用方式，即
 ##           $ sudo sh -c "cd /home ; du -s * | sort -rn > USAGE"
 
 
+## w - Show who is logged on and what they are doing.
+w
+
+## who - show who is logged on
+who
 
 
+## last, lastb - show listing of last logged in users
+last
+
+## lastlog - reports the most recent login of all users or of a given user
+lastlog
+
+
+## write - send a message to another user
+## write user [ttyname]
+write user01
+write user01 /dev/pts/4
+tty                        #tty - print the file name of the terminal connected to standard input
+
+## wall -- send a message to everybody's terminal.
+##  wall [-n] [ message ]
+## (write all)
+
+wall "I will shutdown my linux server..."
 
 ## id - print real and effective user and group IDs
 ## Print user and group information for the specified USER, or (when USER omitted) for the current user.
