@@ -313,6 +313,16 @@ find . -perm -664
 
 
 ```sh
+## groups - print the groups a user is in
+## SYNOPSIS
+##        groups [OPTION]... [USERNAME]...
+## DESCRIPTION
+##        Print group memberships for each USERNAME or, if no USERNAME is specified, for the current process (which may differ if the groups database has changed).
+groups                 #第一个输出的group为当前的effective group
+groups user01
+groups user01 user02
+
+
 ## useradd [-u uid] [-g login-init-group] [-G supplementary-groups] [-mM] [-c comment] [-d home-dir-with-absolute-path] [-s shell] accountName
 ##  -m, --create-home   #(联想: mkdir)
 ##  -M, --no-create-home
