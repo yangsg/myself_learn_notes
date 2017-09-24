@@ -373,7 +373,7 @@ passwd -n 3 -x 7 -w 2 -i 1  user01
 passwd -S user01  #-S, --status  #This will output a short information about the status of the password for a given account. Available to root user only.  
 
 
-
+chage -l user01  #-l, --list #Show account aging information.
 chage -d 2017-09-10 user01  #-d, --lastday LAST_DAY  #Set the number of days since January 1st, 1970 when the password was last changed. The date may also be expressed in the format YYYY-MM-DD (or the format more commonly used in your area). If the LAST_DAY is set to 0 the user is forced to change his password on the next log on.
 chage -d 0 user01  #If the LAST_DAY is set to 0 the user is forced to change his password on the next log on.
 chage -E 2017-10-10 user01  #-E, --expiredate EXPIRE_DATE
