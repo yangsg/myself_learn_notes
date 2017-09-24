@@ -500,6 +500,30 @@ chmod -R a-x dir01 #-R, --recursive
 
 ```
 
+```sh
+##   ACL ENTRIES
+##       The setfacl utility recognizes the following ACL entry formats (blanks inserted for clarity):
+##
+##       [d[efault]:] [u[ser]:]uid [:perms]
+##              Permissions of a named user. Permissions of the file owner if uid is empty.
+##       [d[efault]:] g[roup]:gid [:perms]
+##              Permissions of a named group. Permissions of the owning group if gid is empty.
+##       [d[efault]:] m[ask][:] [:perms]
+##              Effective rights mask
+##       [d[efault]:] o[ther][:] [:perms]
+##              Permissions of others.
+##
+##       Whitespace between delimiter characters and non-delimiter characters is ignored.
+##Proper ACL entries including permissions are used in modify and set operations. (options -m, -M, --set and --set-file).  Entries without the perms field are used for deletion of entries (options -x and -X).
+## For uid and gid you can specify either a name or a number.
+## The perms field is a combination of characters that indicate the permissions: read (r), write (w), execute (x), execute only if the file is a directory or already has execute permission for some user (X).  Alternatively, the perms field can be an octal digit (0-7).
+
+man acl      # there's no book explaining the acl clearly. so the only best way to learn acl and setfacl is to read the manual page.
+man setfacl
+
+```
+
+
 
 ```sh
 ## (Unix Name) print system information
