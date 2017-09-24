@@ -442,6 +442,12 @@ gpasswd -A  user01,user02  group01  #-A, --administrators user,...  #Set the lis
 gpasswd -M  user01,user02  group01  #-M, --members user,...  #Set the list of group members.
 
 
+## chsh - change your login shell
+chsh -l                   #cat /etc/shells
+chsh -s /bin/bash         #change login shell of the current user (普通用户可以使用此命令修改自己的login shell)
+chsh -s /bin/bash user01  #change login shell of user01
+
+
 ```
 ```text
 FILES
