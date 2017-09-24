@@ -404,6 +404,13 @@ groupmod -n  groupName01  group01  #rename 'group01' to 'groupName01'
 groupdel group01
 
 
+## gpasswd [-A user01,user02...] [-M user03,user04...] [-a user05] [-d user06] groupname
+gpasswd  group01  #gpasswd called by a group administrator with a group name only prompts for the new password of the group. If a password is set the members can still use newgrp(1) without a password, and non-members must supply the password.
+gpasswd -a user01  group01  #-a, --add user  #Add the user to the named group.
+gpasswd -d user01  group01  #-d, --delete user #Remove the user from the named group.
+gpasswd -A  user01,user02  group01  #-A, --administrators user,...  #Set the list of administrative users.
+gpasswd -M  user01,user02  group01  #-M, --members user,...  #Set the list of group members.
+
 
 ```
 ```text
