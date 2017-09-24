@@ -341,6 +341,10 @@ man sudo
 
 sudo yum install tree    #same as `sudo -u root yum install screen`
 sudo -u user01 date      #run date command as user01
+sudo su -
+## https://askubuntu.com/questions/376199/sudo-su-vs-sudo-i-vs-sudo-bin-bash-when-does-it-matter-which-is-used
+## https://serverfault.com/questions/619133/is-sudo-su-considered-a-bad-practice
+## https://superuser.com/questions/105367/command-sudo-su
 
 ##EXAMPLES
 ##     Note: the following examples assume a properly configured security policy.
