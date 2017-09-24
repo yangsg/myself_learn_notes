@@ -541,10 +541,27 @@ chmod -R a-x dir01 #-R, --recursive
 ##       *   If a Default ACL contains named user entries or named group entries, and no mask entry exists, a mask entry containing the same permissions as the default Default ACL's group  entry
 ##           is  added.  Unless  the  -n  option  is given, the permissions of the mask entry are further adjusted to include the union of all permissions affected by the mask entry. (See the -n
 ##           option description).
+##
+##EXAMPLES
+##       Granting an additional user read access
+##              setfacl -m u:lisa:r file
+##
+##       Revoking write access from all groups and all named users (using the effective rights mask)
+##              setfacl -m m::rx file
+##
+##       Removing a named group entry from a file's ACL
+##              setfacl -x g:staff file
+##
+##       Copying the ACL of one file to another
+##              getfacl file1 | setfacl --set-file=- file2
+##
+##       Copying the access ACL into the Default ACL
+##              getfacl --access dir | setfacl -d -M- dir
 
 
 
 
+## ACL_MASK        The ACL_MASK entry denotes the maximum access rights that can be granted by entries of type ACL_USER, ACL_GROUP_OBJ, or ACL_GROUP.
 
 man acl      # there's no book explaining the acl clearly. so the only best way to learn acl and setfacl is to read the manual page.
 man setfacl
