@@ -66,6 +66,7 @@ exit   #[ctrl + d]
 ls
 ls -1         #across -x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C
 ls -l
+## -rw-rwxr--+ 1 user01 user01 0 Sep 25 01:41 a.txt    #If the ACL has an ACL_MASK entry, the group permissions correspond to the permissions of the ACL_MASK entry.  Otherwise, if the ACL has no ACL_MASK entry, the group permissions correspond to the permissions of the ACL_GROUP_OBJ entry. for more details, see `man acl' and `man setfacl`
 ls -ld dir01  #list directories themselves, not their contents
 ls -l --full-time
 ls -al --time-style=+"%Y-%m-%d %T %z"
@@ -565,6 +566,9 @@ chmod -R a-x dir01 #-R, --recursive
 
 man acl      # there's no book explaining the acl clearly. so the only best way to learn acl and setfacl is to read the manual page.
 man setfacl
+setfacl -b a.txt   #-b, --remove-all  #Remove all extended ACL entries. The base ACL entries of the owner, group and others are retained.
+setfacl -k dir01   #-k, --remove-default  #Remove the Default ACL. If no Default ACL exists, no warnings are issued.
+
 
 ```
 
