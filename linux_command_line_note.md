@@ -413,6 +413,18 @@ tty                        #tty - print the file name of the terminal connected 
 
 wall "I will shutdown my linux server..."
 
+## mesg - control write access to your terminal
+##SYNOPSIS
+##       mesg [y|n]
+
+mesg
+mesg y
+mesg n   #这个 mesg 的功能对 root 传送来的讯息没有抵挡的能力！
+
+
+
+
+
 ## id - print real and effective user and group IDs
 ## Print user and group information for the specified USER, or (when USER omitted) for the current user.
 id
