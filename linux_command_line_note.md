@@ -355,6 +355,7 @@ usermod -U  user01  #-U, --unlock  #Note: if you wish to unlock the account (not
 
 
 pkill -KILL -u  user01 # https://www.cyberciti.biz/faq/linux-logout-user-howto/
+find / -user user01
 userdel  user01
 userdel -r  user01  #-r, --remove  Files in the user's home directory will be removed along with the home directory itself and the user's mail spool. Files located in other file systems will have to be searched for and deleted manually.
 
