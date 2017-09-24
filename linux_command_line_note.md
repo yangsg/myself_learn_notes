@@ -514,9 +514,37 @@ chmod -R a-x dir01 #-R, --recursive
 ##              Permissions of others.
 ##
 ##       Whitespace between delimiter characters and non-delimiter characters is ignored.
-##Proper ACL entries including permissions are used in modify and set operations. (options -m, -M, --set and --set-file).  Entries without the perms field are used for deletion of entries (options -x and -X).
+## Proper ACL entries including permissions are used in modify and set operations. (options -m, -M, --set and --set-file).  Entries without the perms field are used for deletion of entries (options -x and -X).
 ## For uid and gid you can specify either a name or a number.
 ## The perms field is a combination of characters that indicate the permissions: read (r), write (w), execute (x), execute only if the file is a directory or already has execute permission for some user (X).  Alternatively, the perms field can be an octal digit (0-7).
+
+
+##   AUTOMATICALLY CREATED ENTRIES
+##       Initially,  files  and directories contain only the three base ACL entries for the owner, the group, and others. There are some rules that need to be satisfied in order for an ACL to be valid:
+##
+##       *   The three base entries cannot be removed. There must be exactly one entry of each of these base entry types.
+##
+##       *   Whenever an ACL contains named user entries or named group objects, it must also contain an effective rights mask.
+##
+##       *   Whenever an ACL contains any Default ACL entries, the three Default ACL base entries (default owner, default group, and default others) must also exist.
+##
+##       *   Whenever a Default ACL contains named user entries or named group objects, it must also contain a default effective rights mask.
+##
+##       To help the user ensure these rules, setfacl creates entries from existing entries under the following conditions:
+##
+##       *   If an ACL contains named user or named group entries, and no mask entry exists, a mask entry containing the same permissions as the group entry is created. Unless the -n  option  is
+##           given, the permissions of the mask entry are further adjusted to include the union of all permissions affected by the mask entry. (See the -n option description).
+##
+##       *   If  a  Default  ACL  entry  is  created, and the Default ACL contains no owner, owning group, or others entry, a copy of the ACL owner, owning group, or others entry is added to the
+##           Default ACL.
+##
+##       *   If a Default ACL contains named user entries or named group entries, and no mask entry exists, a mask entry containing the same permissions as the default Default ACL's group  entry
+##           is  added.  Unless  the  -n  option  is given, the permissions of the mask entry are further adjusted to include the union of all permissions affected by the mask entry. (See the -n
+##           option description).
+
+
+
+
 
 man acl      # there's no book explaining the acl clearly. so the only best way to learn acl and setfacl is to read the manual page.
 man setfacl
