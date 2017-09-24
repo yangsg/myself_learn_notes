@@ -319,6 +319,7 @@ find . -perm -664
 ##  -e, --expiredate EXPIRE_DATE  #The date on which the user account will be disabled. The date is specified in the format YYYY-MM-DD.
 ##  -f, --inactive INACTIVE       #The number of days after a password expires until the account is permanently disabled. A value of 0 disables the account as soon as the password has expired, and a value of -1 disables the feature.
 ##  -r, --system  #Create a system account.
+## -o, --non-unique  #Allow the creation of a user account with a duplicate (non-unique) UID. This option is only valid in combination with the -u option.
 
 ## UID:
 ## 0  root(system administrator)
@@ -389,6 +390,12 @@ chage -W 2  user01 #-W, --warndays WARN_DAYS
 ## groupadd [-g gid] [-r]  groupName
 groupadd  group01
 groupadd -r  group01  #-r, --system  #Create a system group.
+
+## groupmod [-g gid] [-o] [-n newName] group
+## -o, --non-unique  #When used with the -g option, allow to change the group GID to a non-unique value.
+groupmod -g 1010 group01
+groupmod -n  groupName01  group01  #rename 'group01' to 'groupName01'
+
 
 
 ```
