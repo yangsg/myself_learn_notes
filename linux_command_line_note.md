@@ -374,6 +374,18 @@ passwd -S user01  #-S, --status  #This will output a short information about the
 
 
 
+chage -d 2017-09-10 user01  #-d, --lastday LAST_DAY  #Set the number of days since January 1st, 1970 when the password was last changed. The date may also be expressed in the format YYYY-MM-DD (or the format more commonly used in your area). If the LAST_DAY is set to 0 the user is forced to change his password on the next log on.
+chage -d 0 user01  #If the LAST_DAY is set to 0 the user is forced to change his password on the next log on.
+chage -E 2017-10-10 user01  #-E, --expiredate EXPIRE_DATE
+chage -E 0 user01  #-E, --expiredate EXPIRE_DATE  #Use `chage -E 0 user` command instead for full account locking.
+chage -E -1 user01  #Passing the number -1 as the EXPIRE_DATE will remove an account expiration date.
+chage -I 3  user01  #-I, --inactive INACTIVE_days
+chage -I -1  user01 #Passing the number -1 as the INACTIVE will remove an account's inactivity.
+chage -m -1  user01  #-m, --mindays MIN_DAYS  #Set the minimum number of days between password changes to MIN_DAYS. A value of zero for this field indicates that the user may change his/her password at any time.
+chage -M 7  user01 #-M, --maxdays MAX_DAYS #Passing the number -1 as MAX_DAYS will remove checking a password's validity.
+chage -W 2  user01 #-W, --warndays WARN_DAYS
+
+
 ```
 ```text
 FILES
