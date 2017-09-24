@@ -341,6 +341,18 @@ useradd -D
 cat /etc/default/useradd
 cat /etc/login.defs
 
+
+## usermod [-c comment] [-g login-init-group-name-or-number] [-e expiredate] [-f inactiveDays] [-LU] [-s shell] accountName
+## -d, --home HOME_DIR  #If the -m option is given, the contents of the current home directory will be moved to the new home directory, which is created if it does not already exist. If the current home directory does not exist the new home directory will not be created.
+## -m, --move-home   #This option is only valid in combination with the -d (or --home) option. If the current home directory does not exist the new home directory will not be created. #usermod will try to adapt the ownership of the files and to copy the modes, ACL and extended attributes, but manual changes might be needed afterwards.
+
+usermod -a -G group01,group02  user01  #append user01 to these groups: {group01, group02}  #-a, --append
+usermod    -G group01,group02  user01  #all of the supplementary groups that user01 joined is only the two: group01,group02
+usermod -e  2017-10-10  user01
+usermod -f  3           user01  # 3 days #-f, --inactive INACTIVE  #grep user01 /etc/shadow
+
+
+pkill -KILL -u  user01 # https://www.cyberciti.biz/faq/linux-logout-user-howto/
 userdel  user01
 userdel -r  user01  #-r, --remove  Files in the user's home directory will be removed along with the home directory itself and the user's mail spool. Files located in other file systems will have to be searched for and deleted manually.
 
