@@ -350,6 +350,8 @@ usermod -a -G group01,group02  user01  #append user01 to these groups: {group01,
 usermod    -G group01,group02  user01  #all of the supplementary groups that user01 joined is only the two: group01,group02
 usermod -e  2017-10-10  user01
 usermod -f  3           user01  # 3 days #-f, --inactive INACTIVE  #grep user01 /etc/shadow
+usermod -L  user01  #-L, --lock    #Note: if you wish to lock the account (not only access with a password), you should also set the EXPIRE_DATE to 1.
+usermod -U  user01  #-U, --unlock  #Note: if you wish to unlock the account (not only access with a password), you should also set the EXPIRE_DATE (for example to 99999, or to the EXPIRE value from /etc/default/useradd).
 
 
 pkill -KILL -u  user01 # https://www.cyberciti.biz/faq/linux-logout-user-howto/
