@@ -329,6 +329,54 @@ su - user01 -c "date"    #run the date command as user01
 su  -s /bin/bash -c "/path/to/your/script"  noLoginUser01  #run a command as a no-login user
 exit
 
+
+## https://en.wikipedia.org/wiki/Sudo
+## sudo, sudoedit — execute a command as another user
+## (superuser do) (substitute user do) (switch user do)
+
+visudo       #edit /etc/sudoers through `visudo` command
+/etc/sudoers
+man sudoers
+man sudo
+
+sudo yum install tree    #same as `sudo -u root yum install screen`
+sudo -u user01 date      #run date command as user01
+
+##EXAMPLES
+##     Note: the following examples assume a properly configured security policy.
+##
+##     To get a file listing of an unreadable directory:
+##
+##           $ sudo ls /usr/local/protected
+##
+##     To list the home directory of user yaz on a machine where the file system holding ~yaz is not exported as root:
+##
+##           $ sudo -u yaz ls ~yaz
+##
+##     To edit the index.html file as user www:
+##
+##           $ sudo -u www vi ~www/htdocs/index.html
+##
+##     To view system logs only accessible to root and users in the adm group:
+##
+##           $ sudo -g adm view /var/log/syslog
+##
+##     To run an editor as jim with a different primary group:
+##
+##           $ sudo -u jim -g audio vi ~jim/sound.txt
+##
+##     To shut down a machine:
+##
+##           $ sudo shutdown -r +15 "quick reboot"
+##
+##     To make a usage listing of the directories in the /home partition.  Note that this runs the commands in a sub-shell to make the cd and file redirection work.
+##
+##           $ sudo sh -c "cd /home ; du -s * | sort -rn > USAGE"
+
+
+
+
+
 ## id - print real and effective user and group IDs
 ## Print user and group information for the specified USER, or (when USER omitted) for the current user.
 id
