@@ -760,6 +760,7 @@ export | cut -c  12-
 ```
 
 ```sh
+alias grep='grep --color=auto'
 last | grep root
 last | grep -v root
 grep -nC 2 '5' a.txt
