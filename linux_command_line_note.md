@@ -364,7 +364,7 @@ userdel -r  user01  #-r, --remove  Files in the user's home directory will be re
 
 ## passwd [-k] [-l] [-u [-f]] [-d] [-e] [-n mindays] [-x maxdays] [-w warndays] [-i inactivedays] [-S] [--stdin] [username]
 passwd -l user01   #-l, --lock  #Note that the account is not fully locked - the user can still log in by other means of authentication such as the ssh pub‐ lic key authentication. Use chage -E 0 user command instead for full account locking.
-chage -E 0 user01  #-E, --expiredate EXPIRE_DATE
+chage -E 0 user01  #-E, --expiredate EXPIRE_DATE  #Use `chage -E 0 user` command instead for full account locking.
 passwd -u user01  #-u, --unlock
 echo "1234567" | passwd --stdin  user01  #--stdin  #This option is used to indicate that passwd should read the new password from standard input, which can be a pipe.  
 passwd -d  user01  #This is a quick way to delete a password for an account. It will set the named account passwordless. Available to root only.
