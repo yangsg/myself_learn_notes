@@ -313,6 +313,18 @@ find . -perm -664
 
 
 ```sh
+## id - print real and effective user and group IDs
+## Print user and group information for the specified USER, or (when USER omitted) for the current user.
+id
+id user01
+
+
+## lid - Display user's groups or group's users  (注:只有具有superuser privileges才可以执行此命令)
+## yum install libuser
+lid  user01       #list groups that user01 is contained in
+lid  -g  group01  #list users of group01
+
+
 ## groups - print the groups a user is in
 ## SYNOPSIS
 ##        groups [OPTION]... [USERNAME]...
