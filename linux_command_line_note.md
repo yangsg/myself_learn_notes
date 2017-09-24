@@ -386,6 +386,11 @@ chage -M 7  user01 #-M, --maxdays MAX_DAYS #Passing the number -1 as MAX_DAYS wi
 chage -W 2  user01 #-W, --warndays WARN_DAYS
 
 
+## groupadd [-g gid] [-r]  groupName
+groupadd  group01
+groupadd -r  group01  #-r, --system  #Create a system group.
+
+
 ```
 ```text
 FILES
