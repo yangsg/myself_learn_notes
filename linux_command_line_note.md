@@ -313,6 +313,21 @@ find . -perm -664
 
 
 ```sh
+## su - run a command with substitute user and group ID
+## (Switch User)
+## When called without arguments su defaults to running an interactive shell as root.
+## It is recommended to always use the --login option (instead it's shortcut -) to avoid side effects caused by mixing environments.
+
+man su
+su -                     #same as `su - root`
+su                       #same as `su   root`
+su - root
+su - user01
+su   user01
+su - user01 -c "date"    #run the date command as user01
+su  -s /bin/bash -c "/path/to/your/script"  noLoginUser01  #run a command as a no-login user
+exit
+
 ## id - print real and effective user and group IDs
 ## Print user and group information for the specified USER, or (when USER omitted) for the current user.
 id
