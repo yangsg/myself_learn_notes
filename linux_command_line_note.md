@@ -451,7 +451,7 @@ groups user01 user02
 ## The newgrp command is used to change the current group ID during a login session. If the optional - flag is given,
 ## the user's environment will be reinitialized as though the user had logged in, otherwise the current environment, including current working directory, remains unchanged.
 
-newgrp   `group02    #log in to group02
+newgrp    group02    #log in to group02
 newgrp -  group02    #类比 `su - user01`
 
 
