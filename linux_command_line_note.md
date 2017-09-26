@@ -1195,13 +1195,12 @@ at -f /tmp/myscript.sh  6:30am 2017-02-28
 at -f /tmp/myscript.sh  6:30pm 2017-02-28
 at -f /tmp/myscript.sh  4am   today
 at -f /tmp/myscript.sh  4pm   tomorrow
+at -f /tmp/myscript.sh  tomorrow
 
 at -f /tmp/myscript.sh  now + 3 minutes
 at -f /tmp/myscript.sh  now + 3 hours
 at -f /tmp/myscript.sh  now + 3 days
 at -f /tmp/myscript.sh  now + 3 weeks
-at -f /tmp/myscript.sh  now + 3 today
-at -f /tmp/myscript.sh  now + 3 tomorrow
 at -f /tmp/myscript.sh  4pm + 3 days    #run a job at 4pm three days from now
 at -f /tmp/myscript.sh  10am Jul 31     #run a job at 10:00am on July 31     #cat /usr/share/doc/at-3.1.13/timespec
 
@@ -1211,6 +1210,7 @@ at -c 2         #-c   #cats the jobs listed on the command line to standard outp
 at -m -f /tmp/myscript.sh  now + 3 minutes        #-m    #Send mail to the user when the job has completed even if there was no output.
 ## atrm [-V] job [job...]      #same as `at -r`   
 atrm  2         #2 is a job number
+for i in `atq | awk '{print $1}'`;do atrm $i;done     #You can run this command to remove all the jobs at the atq  #https://unix.stackexchange.com/questions/53144/remove-all-at-jobs
 
 
 ```
