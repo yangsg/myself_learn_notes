@@ -1179,6 +1179,8 @@ man at                  #
 
 [root@localhost ~]# at now + 1 minutes
 at> /bin/echo helloworld > /dev/pts/10   #It's better to use absolute path to run a command
+at> cd /tmp
+at> /bin/echo $(pwd) > /dev/pts/10
 at> <EOT>
 
 
