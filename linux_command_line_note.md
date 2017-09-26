@@ -1146,6 +1146,73 @@ tar -cvf - /home | tar -xvf -
 ```
 
 
+```sh
+service atd status      #/bin/systemctl status   atd.service    #<-centos7
+service atd stop        #/bin/systemctl stop     atd.service      #<-centos7
+service atd start       #/bin/systemctl start    atd.service     #<-centos7
+service atd restart     #/bin/systemctl restart  atd.service   #<-centos7
+
+##WARNING
+##       atd won't work if its spool directory is mounted via NFS even if no_root_squash is set.
+
+## /var/spool/at         The directory for storing jobs; this should be mode 700, owner root.
+## /var/spool/at/spool   The directory for storing output; this should be mode 700, owner root.
+## /etc/at.allow, /etc/at.deny determine who can use the at system.
+
+##       at and batch read commands from standard input or a specified file which are to be executed at a later time, using /bin/sh.
+##
+##       at      executes commands at a specified time.
+##       atq     lists the user's pending jobs, unless the user is the superuser; in that case, everybody's jobs are listed.  The format of the output lines (one for each job) is: Job number, date, hour, queue, and username.
+##       atrm    deletes jobs, identified by their job number.
+##       batch   executes commands when system load levels permit; in other words, when the load average drops below 0.8, or the value specified in the invocation of atd.
+
+
+man at.allow            #查看/etc/at.allow (白名单), /etc/at.deny (黑名单)的规则与优先级等信息
+man atd
+man at                  #
+
+##     For  both  at  and  batch,  commands are read from standard input or the file specified with the -f option and executed.  The working directory, the environment (except for the variables BASH_VERSINFO, DISPLAY, EUID, GROUPS,
+##     SHELLOPTS, TERM, UID, and _) and the umask are retained from the time of invocation.
+
+##     An  at  -  or  batch  -  command  invoked  from  a  su(1)  shell  will  retain  the  current userid.  The user will be mailed standard error and standard output from his commands, if any.  Mail will be sent using the command
+##     /usr/sbin/sendmail.  If at is executed from a su(1) shell, the owner of the login shell will receive the mail.
+
+[root@localhost ~]# at now + 1 minutes
+at> /bin/echo helloworld > /dev/pts/10   #It's better to use absolute path to run a command
+at> <EOT>
+
+
+at -f /tmp/myscript.sh  midnight
+at -f /tmp/myscript.sh  noon
+at -f /tmp/myscript.sh  teatime   # teatime is 4pm
+
+at 18:30
+at -f /tmp/myscript.sh  2017-02-28
+at -f /tmp/myscript.sh  18:30 2017-02-28
+at -f /tmp/myscript.sh  6:30am 2017-02-28
+at -f /tmp/myscript.sh  6:30pm 2017-02-28
+at -f /tmp/myscript.sh  4am   today
+at -f /tmp/myscript.sh  4pm   tomorrow
+
+at -f /tmp/myscript.sh  now + 3 minutes
+at -f /tmp/myscript.sh  now + 3 hours
+at -f /tmp/myscript.sh  now + 3 days
+at -f /tmp/myscript.sh  now + 3 weeks
+at -f /tmp/myscript.sh  now + 3 today
+at -f /tmp/myscript.sh  now + 3 tomorrow
+at -f /tmp/myscript.sh  4pm + 3 days    #run a job at 4pm three days from now
+at -f /tmp/myscript.sh  10am Jul 31     #run a job at 10:00am on July 31     #cat /usr/share/doc/at-3.1.13/timespec
+
+
+atq       #same as `at -l`
+at -c 2         #-c   #cats the jobs listed on the command line to standard output
+at -m -f /tmp/myscript.sh  now + 3 minutes        #-m    #Send mail to the user when the job has completed even if there was no output.
+## atrm [-V] job [job...]      #same as `at -r`   
+atrm  2         #2 is a job number
+
+
+```
+
 
 
 * install some useful tools
