@@ -1183,6 +1183,11 @@ at> cd /tmp
 at> /bin/echo $(pwd) > /dev/pts/10
 at> <EOT>
 
+[root@localhost ~]# batch
+at> cd /tmp
+at> /bin/echo $(pwd) > /dev/pts/10
+at> <EOT>
+
 
 at -f /tmp/myscript.sh  midnight
 at -f /tmp/myscript.sh  noon
