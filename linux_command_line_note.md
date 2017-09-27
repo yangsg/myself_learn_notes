@@ -1259,6 +1259,27 @@ man crontab
 ##     -i     This option modifies the -r option to prompt the user for a 'y/Y' response before actually removing the crontab.
 
 
+## man 5 crontab
+##代表意义  分钟 小时 日期 月份 周  指令
+##数字范围  0-59 0-23 1-31 1-12 0-7 呀就指令啊
+##      The time and date fields are:
+##
+##              field          allowed values
+##              -----          --------------
+##              minute         0-59
+##              hour           0-23
+##              day of month   1-31
+##              month          1-12 (or names, see below)
+##              day of week    0-7 (0 or 7 is Sunday, or use names)
+
+
+[test@localhost ~]$ crontab -e    #/var/spool/cron/test  #cron 执行的每一项工作都会被纪录到 /var/log/cron 这个登录档中
+20 8 * * *  /usr/bin/echo hello world > /dev/pts/3
+
+[test@localhost ~]$ crontab -l
+## 如果删除当个job, 应该使用`crontab -e`命令来编辑/var/spool/cron/test,删除该job对应的哪一行，
+## 如果删除当前用户的所有jobs, 则可以使用 `crontab -r` 命令
+[test@localhost ~]$ crontab -r   #相当于删除 /var/spool/cron/test
 
 
 ```
