@@ -1298,6 +1298,8 @@ man crontab
 ##       23 0-23/2 * * * echo "run 23 minutes after midn, 2am, 4am ..., everyday"
 ##       5 4 * * sun     echo "run at 5 after 4 every sunday"
 ##
+##       30 4 1,15 * 5   echo "每月1日和15日以及每个周5的的4:30(注意：周和日是或的关系)"
+##
 ##Jobs in /etc/cron.d/
 ##       The jobs in cron.d and /etc/crontab are system jobs, which are used usually for more than one user, thus, additionaly the username is needed.  MAILTO on the first line is optional.
 ##
