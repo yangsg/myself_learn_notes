@@ -1307,6 +1307,18 @@ man crontab
 ##       MAILTO=root
 ##       * * * * * root touch /tmp/file
 
+##资源分配不均的问题
+##如果每个流程都在同一个时间启动的话，那么在某个时段时，我的系统会变的相当的繁忙，所以，这个时候就必须要分别设定啦！我可以这样做：
+[root@study ~]# vim /etc/crontab
+1,6,11,16,21,26,31,36,41,46,51,56 * * * * root CMD1
+2,7,12,17,22,27,32,37,42,47,52,57 * * * * root CMD2
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * root CMD3
+4,9,14,19,24,29,34,39,44,49,54,59 * * * * root CMD4
+
+1-59/5 * * * * root CMD1
+2-59/5 * * * * root CMD2
+3-59/5 * * * * root CMD3
+4-59/5 * * * * root CMD4
 
 
 [test@localhost ~]$ crontab -e    #/var/spool/cron/test  #cron 执行的每一项工作都会被纪录到 /var/log/cron 这个登录档中
@@ -1316,6 +1328,7 @@ man crontab
 ## 如果删除当个job, 应该使用`crontab -e`命令来编辑/var/spool/cron/test,删除该job对应的哪一行，
 ## 如果删除当前用户的所有jobs, 则可以使用 `crontab -r` 命令
 [test@localhost ~]$ crontab -r   #相当于删除 /var/spool/cron/test
+
 
 
 ```
