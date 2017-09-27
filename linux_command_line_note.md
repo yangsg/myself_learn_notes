@@ -1243,6 +1243,7 @@ service crond status  #Linux 系统上面原本就有非常多的例行性工作
 man crond
 man 5 crontab
 man crontab
+
 ## crontab - maintains crontab files for individual users
 
 ##OPTIONS
@@ -1321,6 +1322,10 @@ man crontab
 ##       @hourly    :    Run once an hour, ie. "0 * * * *".
 
 
+
+man anacrontab
+man anacron
+
 ##----------------------start>>>---------------------------------------------------------------------
 ##---centos7----
 [root@localhost ~]# cat /etc/cron.d/0hourly
@@ -1330,7 +1335,37 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO=root
 01 * * * * root run-parts /etc/cron.hourly
 
-##------------------------------------------------------------
+##-------------------middle-----------------------------------------
+
+[root@localhost ~]# cat /etc/cron.hourly/0anacron
+#!/bin/sh
+# Check whether 0anacron was run today already
+if test -r /var/spool/anacron/cron.daily; then
+    day=`cat /var/spool/anacron/cron.daily`
+fi
+if [ `date +%Y%m%d` = "$day" ]; then
+    exit 0;
+fi
+
+# Do not run jobs when on battery power
+if test -x /usr/bin/on_ac_power; then
+    /usr/bin/on_ac_power >/dev/null 2>&1
+    if test $? -eq 1; then
+    exit 0
+    fi
+fi
+/usr/sbin/anacron -s
+
+##-------------------middle-----------------------------------------
+
+[root@localhost ~]# ls /var/spool/anacron/
+cron.daily  cron.monthly  cron.weekly
+[root@localhost ~]# cat  /var/spool/anacron/*
+20170927
+20170911
+20170921
+
+##-------------------middle-----------------------------------------
 
 [root@localhost ~]# cat /etc/anacrontab
 # /etc/anacrontab: configuration file for anacron
