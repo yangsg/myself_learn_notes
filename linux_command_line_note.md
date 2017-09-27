@@ -1309,6 +1309,50 @@ man crontab
 ##       MAILTO=root
 ##       * * * * * root touch /tmp/file
 
+##EXTENSIONS
+##       These special time specification "nicknames" which replace the 5 initial time and date fields, and are prefixed with the '@' character, are supported:
+##
+##       @reboot    :    Run once after reboot.
+##       @yearly    :    Run once a year, ie.  "0 0 1 1 *".
+##       @annually  :    Run once a year, ie.  "0 0 1 1 *".
+##       @monthly   :    Run once a month, ie. "0 0 1 * *".
+##       @weekly    :    Run once a week, ie.  "0 0 * * 0".
+##       @daily     :    Run once a day, ie.   "0 0 * * *".
+##       @hourly    :    Run once an hour, ie. "0 * * * *".
+
+
+##----------------------start>>>---------------------------------------------------------------------
+##---centos7----
+[root@localhost ~]# cat /etc/cron.d/0hourly
+# Run the hourly jobs
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+01 * * * * root run-parts /etc/cron.hourly
+
+##------------------------------------------------------------
+
+[root@localhost ~]# cat /etc/anacrontab
+# /etc/anacrontab: configuration file for anacron
+
+# See anacron(8) and anacrontab(5) for details.
+
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+# the maximal random delay added to the base delay of the jobs
+RANDOM_DELAY=45
+# the jobs will be started during the following hours only
+START_HOURS_RANGE=3-22
+
+#period in days   delay in minutes   job-identifier   command
+1       5       cron.daily              nice run-parts /etc/cron.daily
+7       25      cron.weekly             nice run-parts /etc/cron.weekly
+@monthly 45     cron.monthly            nice run-parts /etc/cron.monthly
+
+##----------------------end<<<---------------------------------------------------------------------
+
+
 ##资源分配不均的问题
 ##如果每个流程都在同一个时间启动的话，那么在某个时段时，我的系统会变的相当的繁忙，所以，这个时候就必须要分别设定啦！我可以这样做：
 [root@study ~]# vim /etc/crontab
