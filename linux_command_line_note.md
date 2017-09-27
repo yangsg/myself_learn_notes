@@ -1243,6 +1243,7 @@ service crond status  #Linux 系统上面原本就有非常多的例行性工作
 man crond
 man 5 crontab
 man crontab
+## crontab - maintains crontab files for individual users
 
 ##OPTIONS
 ##     -u     Appends the name of the user whose crontab is to be modified.  If this option is not used, crontab examines "your" crontab, i.e., the crontab of the person executing the command.
@@ -1271,6 +1272,41 @@ man crontab
 ##              day of month   1-31
 ##              month          1-12 (or names, see below)
 ##              day of week    0-7 (0 or 7 is Sunday, or use names)
+
+##   A field may contain an asterisk (*), which always stands for "first-last".
+##
+##   Ranges of numbers are allowed.  Ranges are two numbers separated with a hyphen.  The specified range is inclusive.  For example, 8-11 for an
+##
+##   Lists are allowed.  A list is a set of numbers (or ranges) separated by commas.  Examples: "1,2,5,9", "0-4,8-12".
+##
+##   Step values can be used in conjunction with ranges.  Following a range with "/<number>" specifies skips of the number's value through the range.  For example, "0-23/2" can be used in the 'hours' field to specify command exe‐
+##   cution for every other hour (the alternative in the V7 standard is "0,2,4,6,8,10,12,14,16,18,20,22").  Step values are also permitted after an asterisk, so if specifying a job to be run every two hours, you can use "*/2".
+
+##EXAMPLE CRON FILE
+##       # use /bin/sh to run commands, no matter what /etc/passwd says
+##       SHELL=/bin/sh
+##       # mail any output to `paul', no matter whose crontab this is
+##       MAILTO=paul
+##       #
+##       CRON_TZ=Japan
+##       # run five minutes after midnight, every day
+##       5 0 * * *       $HOME/bin/daily.job >> $HOME/tmp/out 2>&1
+##       # run at 2:15pm on the first of every month -- output mailed to paul
+##       15 14 1 * *     $HOME/bin/monthly
+##       # run at 10 pm on weekdays, annoy Joe
+##       0 22 * * 1-5    mail -s "It's 10pm" joe%Joe,%%Where are your kids?%
+##       23 0-23/2 * * * echo "run 23 minutes after midn, 2am, 4am ..., everyday"
+##       5 4 * * sun     echo "run at 5 after 4 every sunday"
+##
+##Jobs in /etc/cron.d/
+##       The jobs in cron.d and /etc/crontab are system jobs, which are used usually for more than one user, thus, additionaly the username is needed.  MAILTO on the first line is optional.
+##
+##EXAMPLE OF A JOB IN /etc/cron.d/job
+##       #login as root
+##       #create job with preferred editor (e.g. vim)
+##       MAILTO=root
+##       * * * * * root touch /tmp/file
+
 
 
 [test@localhost ~]$ crontab -e    #/var/spool/cron/test  #cron 执行的每一项工作都会被纪录到 /var/log/cron 这个登录档中
