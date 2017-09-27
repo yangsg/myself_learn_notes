@@ -1325,6 +1325,17 @@ man crontab
 
 man anacrontab
 man anacron
+##anacron - runs commands periodically
+##     Anacron  is  used to execute commands periodically, with a frequency specified in days.  Unlike cron(8), it does not assume that the machine is running continuously.  Hence, it can be used on machines that are not running 24
+##     hours a day to control regular jobs as daily, weekly, and monthly jobs.
+##
+##     Anacron reads a list of jobs from the /etc/anacrontab configuration file (see anacrontab(5)).  This file contains the list of jobs that Anacron controls.  Each job entry specifies a period in days,  a  delay  in  minutes,  a
+##     unique job identifier, and a shell command.
+##
+##OPTIONS
+##      -s     Serializes execution of jobs.  Anacron does not start a new job before the previous one finished.
+
+
 
 ##----------------------start>>>---------------------------------------------------------------------
 ##---centos7----
@@ -1358,7 +1369,7 @@ fi
 
 ##-------------------middle-----------------------------------------
 
-[root@localhost ~]# ls /var/spool/anacron/
+[root@localhost ~]# ls /var/spool/anacron/                       #This directory is used by Anacron for storing timestamp files.
 cron.daily  cron.monthly  cron.weekly
 [root@localhost ~]# cat  /var/spool/anacron/*
 20170927
