@@ -1220,6 +1220,49 @@ for i in `atq | awk '{print $1}'`;do atrm $i;done     #You can run this command 
 
 ```
 
+```sh
+service crond status  #Linux 系统上面原本就有非常多的例行性工作，因此这个系统服务是默认启动的。
+
+## /etc/cron.allow    /etc/cron.deny
+
+## When executing commands, any output is mailed to the owner of the crontab (or to the user specified in the MAILTO environment variable in the  crontab,  if  such  exists).  Any job output can also be sent to syslog by using the -s option.
+
+##   Cron checks these files and directories:
+##
+##   /etc/crontab
+##          system  crontab.   Nowadays  the  file is empty by default.  Originally it was usually used to run daily, weekly, monthly jobs.  By default these jobs are now run through anacron
+##          which reads /etc/anacrontab configuration file.  See anacrontab(5) for more details.
+##
+##   /etc/cron.d/
+##          directory that contains system cronjobs stored for different users.
+##
+##   /var/spool/cron
+##          directory that contains user crontables created by the crontab command.
+
+
+man crond
+man 5 crontab
+man crontab
+
+##OPTIONS
+##     -u     Appends the name of the user whose crontab is to be modified.  If this option is not used, crontab examines "your" crontab, i.e., the crontab of the person executing the command.
+##            Note that su(8) may confuse crontab, thus, when executing commands under su(8) you should always use the -u option.  If no crontab exists for a particular user, it is created for
+##            him the first time the crontab -u command is used under his username.
+##
+##     -l     Displays the current crontab on standard output.
+##
+##     -r     Removes the current crontab.
+##
+##     -e     Edits  the current crontab using the editor specified by the VISUAL or EDITOR environment variables.  After you exit from the editor, the modified crontab will be installed auto‐
+##            matically.
+##
+##     -i     This option modifies the -r option to prompt the user for a 'y/Y' response before actually removing the crontab.
+
+
+
+
+```
+
 
 
 * install some useful tools
