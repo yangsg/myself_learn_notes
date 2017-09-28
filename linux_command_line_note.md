@@ -1496,6 +1496,65 @@ kill -9  %2  #same as `kill -SIGKILL %2
 
 ```
 
+```sh
+man ps
+
+## ps - report a snapshot of the current processes.
+## (process status)
+## ps displays information about a selection of the active processes.  If you want a repetitive update of the selection and the displayed information, use top(1) instead.
+##
+##       This version of ps accepts several kinds of options:
+##
+##       1   UNIX options, which may be grouped and must be preceded by a dash.
+##       2   BSD options, which may be grouped and must not be used with a dash.
+##       3   GNU long options, which are preceded by two dashes.
+
+
+##EXAMPLES
+##       To see every process on the system using standard syntax:
+##          ps -e
+##          ps -ef
+##          ps -eF
+##          ps -ely
+##
+##       To see every process on the system using BSD syntax:
+##          ps ax
+##          ps axu      #(注:Note that "ps -aux" is distinct from "ps aux".推荐使用`ps axu`)
+##
+##       To print a process tree:
+##          ps -ejH
+##          ps axjf
+##
+##       To get info about threads:
+##          ps -eLf
+##          ps axms
+##
+##       To get security info:
+##          ps -eo euser,ruser,suser,fuser,f,comm,label       #man ps  #/STANDARD FORMAT SPECIFIERS
+##          ps axZ
+##          ps -eM
+##
+##       To see every process running as root (real & effective ID) in user format:
+##          ps -U root -u root u
+##
+##       To see every process with a user-defined format:
+##          ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
+##          ps axo stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
+##          ps -Ao pid,tt,user,fname,tmout,f,wchan
+##
+##       Print only the process IDs of syslogd:
+##          ps -C syslogd -o pid=
+##
+##       Print only the name of PID 42:
+##          ps -q 42 -o comm=
+
+ps -lA
+ps -l -2280     #-123   Identical to --pid 123.  #123    Identical to --pid 123.
+ps awxo pid,rss,vsz,etime,args --sort=rss
+ps jax --sort=uid,-ppid,+pid
+
+```
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
