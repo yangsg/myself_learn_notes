@@ -1555,6 +1555,91 @@ ps jax --sort=uid,-ppid,+pid
 
 ```
 
+```sh
+man top
+
+##SYNOPSIS
+##   top -hv|-bcHiOSs -d secs -n max -u|U user -p pid -o fld -w [cols]
+
+##   SORTING of task window
+##
+##      For compatibility, this top supports most of the former top sort keys.  Since this is primarily a service to former top users, these commands do not appear on any help screen.
+##            command   sorted-field                  supported
+##            A         start time (non-display)      No
+##            M         %MEM                          Yes
+##            N         PID                           Yes
+##            P         %CPU                          Yes
+##            T         TIME+                         Yes
+##
+##      Before  using  any  of the following sort provisions, top suggests that you temporarily turn on column highlighting using the `x' interactive command.  That will help ensure that the
+##      actual sort environment matches your intent.
+##
+##      The following interactive commands will only be honored when the current sort field is visible.  The sort field might not be visible because:
+##            1) there is insufficient Screen Width
+##            2) the `f' interactive command turned it Off
+##
+##         <  :Move-Sort-Field-Left
+##             Moves the sort column to the left unless the current sort field is the first field being displayed.
+##
+##         >  :Move-Sort-Field-Right
+##             Moves the sort column to the right unless the current sort field is the last field being displayed.
+##
+##      The following interactive commands will always be honored whether or not the current sort field is visible.
+##
+##         f | F  :Fields-Management
+##             These keys display a separate screen where you can change which field is used as the sort column, among other functions.  This can be a convenient way  to  simply  verify  the
+##             current sort field, when running top with column highlighting turned Off.
+##
+##         R  :Reverse/Normal-Sort-Field toggle
+##             Using this interactive command you can alternate between high-to-low and low-to-high sorts.
+##
+##      Note: Field sorting uses internal values, not those in column display.  Thus, the TTY and WCHAN fields will violate strict ASCII collating sequence.
+
+## Startup Defaults
+##     The following startup defaults assume no configuration file, thus no user customizations.  Even so, items shown with an asterisk (`*') could be overridden through the command-line.  All
+##     are explained in detail in the sections that follow.
+##
+##         Global-defaults
+##            A - Alt display      Off (full-screen)
+##          * d - Delay time       1.5 seconds
+##          * H - Threads mode     Off (summarize as tasks)
+##            I - Irix mode        On  (no, `solaris' smp)
+##          * p - PID monitoring   Off (show all processes)
+##          * s - Secure mode      Off (unsecured)
+##            B - Bold enable      On  (yes, bold globally)
+##         Summary-Area-defaults
+##            l - Load Avg/Uptime  On  (thus program name)
+##            t - Task/Cpu states  On  (1+1 lines, see `1')
+##            m - Mem/Swap usage   On  (2 lines worth)
+##            1 - Single Cpu       Off (thus multiple cpus)
+##         Task-Area-defaults
+##            b - Bold hilite      Off (use `reverse')
+##          * c - Command line     Off (name, not cmdline)
+##          * i - Idle tasks       On  (show all tasks)
+##            J - Num align right  On  (not left justify)
+##            j - Str align right  Off (not right justify)
+##            R - Reverse sort     On  (pids high-to-low)
+##          * S - Cumulative time  Off (no, dead children)
+##          * u - User filter      Off (show euid only)
+##          * U - User filter      Off (show any uid)
+##            V - Forest view      On  (show as branches)
+##            x - Column hilite    Off (no, sort field)
+##            y - Row hilite       On  (yes, running tasks)
+##            z - color/mono       On  (show colors)              #键入z可以toggle颜色(红色)
+
+man top
+top
+top -d 2     #-d ：后面可以接秒数，就是整个程序画面更新的秒数。预设是 5 秒；
+top -b -n 2 > /tmp/top.txt      #-b ：以批次的方式执行 top ，还有更多的参数可以使用喔！ 通常会搭配数据流重导向来将批次的结果输出成为档案。#-n ：与 -b 搭配，意义是，需要进行几次 top 的输出结果
+top -d 2 -p 14836     #-p ：指定某些个 PID 来进行观察监测而已。
+
+
+
+
+```
+
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
