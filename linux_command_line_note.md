@@ -1425,7 +1425,59 @@ START_HOURS_RANGE=3-22
 
 ```
 
+```sh
 
+## fork and exec：过程调用的流程
+
+man bash  #/JOB CONTROL   #/fg \[jobspec]   #/bg \[jobspec ...]
+
+## If  a command is terminated by the control operator &, the shell executes the command in the background in a subshell.
+## The shell does not wait for the command to finish, and the return status is 0.
+
+## If  the  operating  system  on which bash is running supports job control, bash contains facilities to use it.
+## Typing the suspend character (typically ^Z, Control-Z) while a process is running causes that process to be stopped and returns control to bash.
+##
+## There are a number of ways to refer to a job in the shell.  The character % introduces a job specification (jobspec).  Job number n may be referred to as %n.
+## The symbols %% and %+ refer to the shell's notion of the current job, which is the last job stopped while it was in the foreground or started in the  background.
+## The  previous job  may  be  referenced using %-.  If there is only a single job, %+ and %- can both be used to refer to that job.
+
+
+##   fg [jobspec]
+##          Resume jobspec in the foreground, and make it the current job.  If jobspec is not present, the shell's notion of the current job is used.  The return value is that of the command
+##          placed  into  the foreground, or failure if run when job control is disabled or, when run with job control enabled, if jobspec does not specify a valid job or jobspec specifies a
+##          job that was started without job control.
+
+##   bg [jobspec ...]
+##          Resume each suspended job jobspec in the background, as if it had been started with &.  If jobspec is not present, the shell's notion of the current  job  is  used.   bg  jobspec
+##          returns 0 unless run when job control is disabled or, when run with job control enabled, any specified jobspec was not found or was started without job control.
+
+
+tar -zpcf  /tmp/etc.tar.gz  /etc   &
+jobs
+fg %1
+C-z           #stty -a
+bg %1
+
+help jobs
+jobs -l   #-l        lists process IDs in addition to the normal information
+jobs -r   #-r        restrict output to running jobs
+jobs -s   #-s        restrict output to stopped jobs
+
+help kill   #type -a kill #which -a kill
+man kill
+
+## kill: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
+
+kill -l      #-l, --list [signal]  #Print a list of signal names, or convert signal given as argument to a name.  The signals are found in /usr/include/linux/signal.h
+kill -15 %2  #same as `kill -SIGTERM %2`  #15 is default  (以正常步骤结束一项工作)
+kill -9  %2  #same as `kill -SIGKILL %2
+
+
+
+
+
+
+```
 
 * install some useful tools
 ```sh
