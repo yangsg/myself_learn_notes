@@ -1529,6 +1529,34 @@ man nice
 nice -n -5 vi &
 
 
+##   renice - alter priority of running processes
+##
+##  SYNOPSIS
+##         renice [-n] priority [-gpu] identifier...
+##
+##  DESCRIPTION
+##         renice  alters  the  scheduling  priority of one or more running processes.  The first argument is the priority value to be used.  The other arguments are interpreted as process IDs (by
+##         default), process group IDs, user IDs, or user names.  renice'ing a process group causes all processes in the process group to have their scheduling priority altered.  renice'ing a user
+##         causes all processes owned by the user to have their scheduling priority altered.
+##
+##  OPTIONS
+##         -n, --priority priority
+##                Specify the scheduling priority to be used for the process, process group, or user.  Use of the option -n or --priority is optional, but when used it must be the first argument.
+##
+##         -g, --pgrp pgid...
+##                Force the succeeding arguments to be interpreted as process group IDs.
+##
+##         -u, --user name_or_uid...
+##                Force the succeeding arguments to be interpreted as usernames or UIDs.
+##
+##         -p, --pid pid...
+##                Force the succeeding arguments to be interpreted as process IDs (the default).
+
+
+renice 10 18625    #same as  `renice -n 10 18625`
+
+
+
 
 ## nohup - run a command immune to hangups, with output to a non-tty
 ## (no hangup)
