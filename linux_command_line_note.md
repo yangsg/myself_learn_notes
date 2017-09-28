@@ -1499,6 +1499,52 @@ killall -9 httpd       # 强制终止所有以 httpd 启动的程序
 kill -i -9 bash        # 依次询问每个 bash 程序是否需要被终止运作！
 
 
+man nice
+
+##  nice - run a program with modified scheduling priority
+##
+##  SYNOPSIS
+##         nice [OPTION] [COMMAND [ARG]...]
+##  DESCRIPTION
+##         Run COMMAND with an adjusted niceness, which affects process scheduling.  With no COMMAND, print the current niceness.
+##         Niceness values range from -20 (most favorable to the process) to 19 (least favorable to the process).
+##
+##         Mandatory arguments to long options are mandatory for short options too.
+##
+##         -n, --adjustment=N
+##                add integer N to the niceness (default 10)
+
+
+##  一般来说， PRI 与 NI 的相关性如下：
+##  PRI(new) = PRI(old) + nice
+##  不过你要特别留意到，如果原本的 PRI 是 50 ，并不是我们给予一个 nice = 5 ，
+##  就会让 PRI 变成 55 喔！ 因为 PRI 是系统『动态』决定的，所以，
+##  虽然 nice 值是可以影响 PRI ，不过， 最终的 PRI 仍是要经过系统分析后才会决定的。
+##
+##  此外，你必须要留意到：
+##  root 可随意调整自己或他人程序的 Nice 值，且范围为 -20 ~ 19 ；
+##  一般用户仅可调整自己程序的 Nice 值，且范围仅为 0 ~ 19 (避免一般用户抢占系统资源)；
+##  一般使用者仅可将 nice 值越调越高，例如本来 nice 为 5 ，则未来仅能调整到大于 5；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## nohup - run a command immune to hangups, with output to a non-tty
