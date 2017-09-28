@@ -1481,6 +1481,25 @@ kill -l 15
 kill -15 %2  #same as `kill -SIGTERM %2` #same as `kill -TERM %2`     #15 is default  (以正常步骤结束一项工作)
 kill -9  %2  #same as `kill -SIGKILL %2
 
+man killall
+## killall - kill processes by name
+##DESCRIPTION
+##     killall sends a signal to all processes running any of the specified commands.  If no signal name is specified, SIGTERM is sent.
+##
+##     Signals can be specified either by name (e.g.  -HUP or -SIGHUP) or by number (e.g.  -1) or by option -s.
+##
+##     If the command name is not regular expression (option -r) and contains a slash (/), processes executing that particular file will be selected for killing, independent of their name.
+##
+##     killall returns a zero return code if at least one process has been killed for each listed command, or no commands were listed and at least one process matched the -u and -Z search
+##     criteria.  killall returns non-zero otherwise.
+##
+##     A killall process never kills itself (but may kill other killall processes).
+
+killall -9 httpd       # 强制终止所有以 httpd 启动的程序
+kill -i -9 bash        # 依次询问每个 bash 程序是否需要被终止运作！
+
+
+
 
 ## nohup - run a command immune to hangups, with output to a non-tty
 ## (no hangup)
