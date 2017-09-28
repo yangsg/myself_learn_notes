@@ -1473,8 +1473,25 @@ kill -15 %2  #same as `kill -SIGTERM %2`  #15 is default  (以正常步骤结束
 kill -9  %2  #same as `kill -SIGKILL %2
 
 
+## nohup - run a command immune to hangups, with output to a non-tty
+## (no hangup)
+##SYNOPSIS
+##       nohup COMMAND [ARG]...
+##       nohup OPTION
+##
+##    If standard input is a terminal, redirect it from /dev/null.  If standard output is a terminal, append output to 'nohup.out' if possible, '$HOME/nohup.out' otherwise.  If standard error
+##    is a terminal, redirect it to standard output.  To save output to FILE, use 'nohup COMMAND > FILE'.
+##
+##    NOTE: your shell may have its own version of nohup, which usually supersedes the version described here.  Please refer to your shell's documentation for details  about  the  options  it
+##    supports.
 
+[root@study ~]# vim sleep500.sh
+#!/bin/bash
+/bin/sleep 500s
+/bin/echo "I have slept 500 seconds."
 
+[root@study ~]# chmod a+x sleep500.sh
+[root@study ~]# nohup ./sleep500.sh &
 
 
 ```
