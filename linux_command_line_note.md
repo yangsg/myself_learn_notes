@@ -1898,6 +1898,54 @@ top -d 2 -p 14836     #-p ：指定某些个 PID 来进行观察监测而已。
 ```
 
 
+```sh
+##  tarball安装
+tar -zxvf /root/ntp-4.2.8p3.tar.gz   -C  /usr/local/src/
+cd /usr/local/src/ntp-4.2.8p3
+vi INSTALL                    #<==记得 README 也要看一下！
+./configure --help | less     #<==查询可用的参数有哪些
+./configure --prefix=/usr/local/ntp --enable-all-clocks --enable-parse-clocks #<==开始建立Makefile
+make clean; make
+make check
+make install
+
+
+make uninstall
+
+## 函数库管理
+## XXX.a  静态函数库(archive)
+## XXX.so 动态函数库(shared object)
+
+
+man ldconfig
+
+ldd
+
+
+
+```
+
+```sh
+##    md5sum - compute and check MD5 message digest
+##
+## SYNOPSIS
+##        md5sum [OPTION]... [FILE]...
+##
+## DESCRIPTION
+##        Print or check MD5 (128-bit) checksums.  With no FILE, or when FILE is -, read standard input.
+
+## md5sum / sha1sum / sha256sum
+
+## [root@study ~]# md5sum/sha1sum/sha256sum [-bct] filename
+## [root@study ~]# md5sum/sha1sum/sha256sum [--status|--warn] --check filename
+
+md5sum ntp-4.2.8p3.tar.gz
+md5sum a.txt b.txt > md5.txt
+md5sum --check md5.txt
+
+
+
+```
 
 * install some useful tools
 ```sh
