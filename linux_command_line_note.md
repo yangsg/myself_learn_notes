@@ -1644,6 +1644,19 @@ dmesg
 ```
 
 ```sh
+## netstat - Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
+## NOTES
+##        This program is obsolete.  Replacement for netstat is ss.  Replacement for netstat -r is ip route.  Replacement for netstat -i is ip -s link.  Replacement for netstat -g is ip maddr.
+
+man netstat     #注：netstat命令已经被废弃
+netstat
+netstat -tulnp   #找出目前系统上已在监听的网络联机及其 PID
+
+
+
+```
+
+```sh
 ## vmstat - Report virtual memory statistics
 ## vmstat [options] [delay [count]]
 ## DESCRIPTION
