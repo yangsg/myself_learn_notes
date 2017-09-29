@@ -1598,6 +1598,31 @@ free -hs 5  #-s, --seconds seconds  #Continuously display the result delay secon
 ```
 
 ```sh
+## uptime - Tell how long the system has been running.
+##
+## DESCRIPTION
+##        uptime  gives a one line display of the following information.
+##        The current time, how long the system has been running, how many users are currently logged on,
+##        and the system load averages for the past 1, 5, and 15 minutes.
+##
+##        This is the same information contained in the header line displayed by w(1).
+##
+##        System load averages is the average number of processes that are either
+##        in a runnable or uninterruptable state.  A process in a runnable state
+##        is either using the CPU or waiting to  use the  CPU.   A process in uninterruptable state is waiting for
+##        some I/O access, eg waiting for disk.  The averages are taken over the three time intervals.
+##        Load averages are not normalized for the number of CPUs in a system, so a load average of 1 means a single CPU system is loaded all the time
+##        while on a 4 CPU system it means it was idle 75% of the time.
+
+uptime
+
+##FILES
+##       /var/run/utmp     information about who is currently logged on
+##       /proc              process information
+```
+
+
+```sh
 man ps
 
 ## ps - report a snapshot of the current processes.
