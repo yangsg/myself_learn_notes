@@ -1657,6 +1657,43 @@ netstat -tulnp   #找出目前系统上已在监听的网络联机及其 PID
 ```
 
 ```sh
+##       fuser - identify processes using files or sockets
+##
+##SYNOPSIS
+##       fuser [-fuv] [-a|-s] [-4|-6] [-c|-m|-n space] [ -k [-i] [-M] [-w] [-SIGNAL] ] name ...
+##       fuser -l
+##       fuser -V
+##
+##DESCRIPTION
+##       fuser displays the PIDs of processes using the specified files or file systems.  In the default display mode, each file name is followed by a letter denoting the type of access:
+##
+##              c      current directory.
+##              e      executable being run.
+##              f      open file.  f is omitted in default display mode.
+##              F      open file for writing.  F is omitted in default display mode.
+##              r      root directory.
+##              m      mmap'ed file or shared library.
+##
+##       fuser returns a non-zero return code if none of the specified files is accessed or in case of a fatal error.  If at least one access has been found, fuser returns zero.
+##
+##       In  order  to  look up processes using TCP and UDP sockets, the corresponding name space has to be selected with the -n option. By default fuser will look in both IPv6 and IPv4 sockets.
+##       To change the default, behavior, use the -4 and -6 options.  The socket(s) can be specified by the local and remote port, and the remote address.  All fields are optional, but commas in
+##       front of missing fields must be present:
+##
+##       [lcl_port][,[rmt_host][,[rmt_port]]]
+##
+##       Either symbolic or numeric values can be used for IP addresses and port numbers.
+##
+##       fuser outputs only the PIDs to stdout, everything else is sent to stderr.
+
+man fuser   #fuser：藉由档案(或文件系统)找出正在使用该档案的程序
+fuser -uv .
+fuser -mvu .
+fuser -mvu  /proc
+
+```
+
+```sh
 ## vmstat - Report virtual memory statistics
 ## vmstat [options] [delay [count]]
 ## DESCRIPTION
