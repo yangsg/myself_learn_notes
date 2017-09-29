@@ -1697,6 +1697,8 @@ fuser -mvu  /proc
 
 ## lsof - list open files
 
+##  lsof ：列出被程序所开启的档案文件名
+
 man lsof    #/EXAMPLES
 
 lsof  #列出目前系统上面所有已经被开启的档案与装置
