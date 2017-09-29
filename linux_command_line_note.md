@@ -1580,6 +1580,21 @@ renice 10 18625    #same as  `renice -n 10 18625`
 [root@study ~]# nohup ./sleep500.sh &
 
 
+
+```
+
+```sh
+## free - Display amount of free and used memory in the system
+##DESCRIPTION
+##     free  displays  the  total  amount  of free and used physical and swap
+##     memory in the system, as well as the buffers and caches used by the
+##     kernel. The information is gathered by parsing /proc/meminfo.
+
+free
+free -h
+free -hs 5  #-s, --seconds seconds  #Continuously display the result delay seconds apart.  You may actually specify any floating point number for delay, usleep(3) is used for microsecond resolution delay times.
+
+
 ```
 
 ```sh
