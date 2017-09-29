@@ -1552,6 +1552,7 @@ nice -n -5 vi &
 ##         -p, --pid pid...
 ##                Force the succeeding arguments to be interpreted as process IDs (the default).
 
+## 整个 nice 值是可以在父程序 --> 子程序之间传递的呢！
 
 renice 10 18625    #same as  `renice -n 10 18625`
 
