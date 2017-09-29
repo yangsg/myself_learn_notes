@@ -1623,6 +1623,27 @@ uptime
 
 
 ```sh
+## dmesg - print or control the kernel ring buffer
+##
+##SYNOPSIS
+##       dmesg [options]
+##
+##       dmesg --clear
+##       dmesg --read-clear [options]
+##       dmesg --console-level level
+##       dmesg --console-on
+##       dmesg --console-off
+##
+##DESCRIPTION
+##       dmesg is used to examine or control the kernel ring buffer.
+##
+##       The default action is to read all messages from kernel ring buffer.
+
+dmesg
+
+```
+
+```sh
 man ps
 
 ## ps - report a snapshot of the current processes.
