@@ -1644,6 +1644,35 @@ dmesg
 ```
 
 ```sh
+## vmstat - Report virtual memory statistics
+## vmstat [options] [delay [count]]
+## DESCRIPTION
+##     vmstat reports information about processes, memory, paging, block IO, traps, disks and cpu activity.
+##
+##     The  first report produced gives averages since the last reboot.  Additional reports give information on a sampling period of length delay. 
+##     The process and memory reports are instanta neous in either case.
+
+
+[root@study ~]# vmstat [-a] [延迟 [总计侦测次数]] <==CPU/内存等信息
+[root@study ~]# vmstat [-fs] <==内存相关
+[root@study ~]# vmstat [-S 单位] <==设定显示数据的单位
+[root@study ~]# vmstat [-d] <==与磁盘有关
+[root@study ~]# vmstat [-p 分割槽] <==与磁盘有关
+选项与参数：
+ -a ：使用 inactive/active(活跃与否) 取代 buffer/cache 的内存输出信息；
+ -f ：开机到目前为止，系统复制 (fork) 的程序数；
+ -s ：将一些事件 (开机至目前为止) 导致的内存变化情况列表说明；
+ -S ：后面可以接单位，让显示的数据有单位。例如 K/M 取代 bytes 的容量；
+ -d ：列出磁盘的读写总量统计表 -p ：后面列出分割槽，可显示该分割槽的读写总量统计表
+
+man vmstat
+vmstat
+vmstat 1 3   #每秒一次，共计三次
+vmstat -d    #系统上面所有的磁盘的读写状态
+
+```
+
+```sh
 man ps
 
 ## ps - report a snapshot of the current processes.
