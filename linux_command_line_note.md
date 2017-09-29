@@ -1694,6 +1694,37 @@ fuser -mvu  /proc
 ```
 
 ```sh
+
+## lsof - list open files
+
+man lsof    #/EXAMPLES
+
+lsof  #列出目前系统上面所有已经被开启的档案与装置
+lsof -u root -a -U     #仅列出关于 root 的所有程序开启的 socket 档案
+lsof +d /dev           #列出目前系统上面所有的被启动的周边装置
+lsof -u root | grep bash   #秀出属于 root 的 bash 这支程序所开启的档案
+
+
+
+```
+
+```sh
+##        pidof -- find the process ID of a running program.
+##
+## SYNOPSIS
+##        pidof [-s] [-c] [-n] [-x] [-m] [-o omitpid[,omitpid..]]  [-o omitpid[,omitpid..]..]  program [program..]
+##
+## DESCRIPTION
+##        Pidof finds the process id's (pids) of the named programs. It prints those id's on the standard output. This program is on some systems used in run-level change scripts, especially when
+##        the system has a System-V like rc structure. In that case these scripts are located in /etc/rc?.d, where ? is the runlevel. If the system has a start-stop-daemon (8) program that should
+##        be used instead.
+
+man pidof
+pidof systemd rsyslogd   #列出目前系统上面 systemd 以及 rsyslogd 这两个程序的 PID
+
+```
+
+```sh
 ## vmstat - Report virtual memory statistics
 ## vmstat [options] [delay [count]]
 ## DESCRIPTION
