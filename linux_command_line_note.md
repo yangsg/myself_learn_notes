@@ -1947,6 +1947,64 @@ md5sum --check md5.txt
 
 ```
 
+
+```sh
+
+man rpm
+
+rpm -ivh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm
+rpm -Uvh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm
+rpm -Fvh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm
+
+
+## [root@study ~]# rpm -qa <==已安装软件
+## [root@study ~]# rpm -q[licdR] 已安装的软件名称 <==已安装软件
+## [root@study ~]# rpm -qf 存在于系统上面的某个文件名 <==已安装软件
+## [root@study ~]# rpm -qp[licdR] 未安装的某个文件名 <==查阅RPM档案
+
+rpm -q logrotate     #找出你的 Linux 是否有安装 logrotate 这个软件？
+rpm -ql logrotate    #列出上题当中，属于该软件所提供的所有目录与档案
+rpm -qi logrotate    #列出 logrotate 这个软件的相关说明数据：
+rpm -qc logrotate    #找出 logrotate 的配置文件
+rpm -qd logrotate    #找出 logrotate 的说明档
+rpm -qR logrotate    #若要成功安装 logrotate ，他还需要什么档案的帮忙？
+rpm -qf /bin/sh      #找出 /bin/sh 是那个软件提供的？
+rpm -qpR filename.i386.rpm   #假设我有下载一个 RPM 档案，想要知道该档案的需求档案
+
+
+## [root@study ~]# rpm -Va
+## [root@study ~]# rpm -V 已安装的软件名称
+## [root@study ~]# rpm -Vp 某个 RPM 档案的档名
+## [root@study ~]# rpm -Vf 在系统上面的某个档案
+
+rpm -V logrotate      #列出你的 Linux 内的 logrotate 这个软件是否被更动过？
+rpm -Vf /etc/crontab  #查询一下，你的 /etc/crontab 是否有被更动过？
+
+## [root@study ~]# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+rpm -qi gpg-pubkey-f4a80eb5-53a7ff4b
+
+
+rpm -e pam-devel
+
+
+##   Database
+##       /var/lib/rpm/Basenames
+##       /var/lib/rpm/Conflictname
+##       /var/lib/rpm/Dirnames
+##       /var/lib/rpm/Group
+##       /var/lib/rpm/Installtid
+##       /var/lib/rpm/Name
+##       /var/lib/rpm/Obsoletename
+##       /var/lib/rpm/Packages
+##       /var/lib/rpm/Providename
+##       /var/lib/rpm/Requirename
+##       /var/lib/rpm/Sha1header
+##       /var/lib/rpm/Sigmd5
+##       /var/lib/rpm/Triggername
+
+```
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
