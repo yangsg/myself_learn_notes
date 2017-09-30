@@ -1917,13 +1917,67 @@ make uninstall
 ## XXX.so 动态函数库(shared object)
 
 
+##      ldconfig - configure dynamic linker run-time bindings
+##
+## SYNOPSIS
+##        /sbin/ldconfig [ -nNvXV ] [ -f conf ] [ -C cache ] [ -r root ] directory ...
+##        /sbin/ldconfig -l [ -v ] library ...
+##        /sbin/ldconfig -p
+##
+## DESCRIPTION
+##      ldconfig creates the necessary links and cache to the most recent shared libraries found in the directories specified on the command line, in the file /etc/ld.so.conf, and in the trusted directories (/lib and /usr/lib).  The
+##      cache is used by the run-time linker, ld.so or ld-linux.so.  ldconfig checks the header and filenames of the libraries it encounters when determining which versions should have their links updated.
+##
+##      ldconfig will attempt to deduce the type of ELF libs (i.e., libc5 or libc6/glibc) based on what C libs, if any, the library was linked against.
+##
+##      Some existing libs do not contain enough information to allow the deduction of their type.  Therefore, the /etc/ld.so.conf file format allows the specification of an expected type.  This is used only for those ELF libs which
+##      we  can not work out.  The format is "dirname=TYPE", where TYPE can be libc4, libc5, or libc6.  (This syntax also works on the command line.)  Spaces are not allowed.  Also see the -p option.  ldconfig should normally be run
+##      by the superuser as it may require write permission on some root owned directories and files.
+
+
+## FILES
+##        /lib/ld.so          run-time linker/loader
+##        /etc/ld.so.conf     File containing a list of colon, space, tab, newline, or comma-separated directories in which to search for libraries.
+##        /etc/ld.so.cache    File containing an ordered list of libraries found in the directories specified in /etc/ld.so.conf, as well as those found in /lib and /usr/lib.
+
+
 man ldconfig
 
-ldd
 
+范例一：假设我的 Mariadb 数据库函式库在 /usr/lib64/mysql 当中，如何读进 cache ？
+[root@study ~]# vim /etc/ld.so.conf.d/vbird.conf
+/usr/lib64/mysql   #这一行新增的啦！
+
+[root@study ~]# ldconfig   #画面上不会显示任何的信息，不要太紧张！正常的！
+[root@study ~]# ldconfig -p      #-p     Print the lists of directories and candidate libraries stored in the current cache.
 
 
 ```
+
+```sh
+##        ldd - print shared library dependencies
+##
+## SYNOPSIS
+##        ldd [OPTION]... FILE...
+##
+## DESCRIPTION
+##        ldd prints the shared libraries required by each program or shared library specified on the command line.
+##
+##   Security
+##      In  the usual case, ldd invokes the standard dynamic linker (see ld.so(8)) with the LD_TRACE_LOADED_OBJECTS environment variable set to 1, which causes the linker to display the library dependencies.  Be aware, however, that
+##      in some circumstances, some versions of ldd may attempt to obtain the dependency information by directly executing the program.  Thus, you should never employ ldd on an untrusted executable, since this may result in the exe‐
+##      cution of arbitrary code.  A safer alternative when dealing with untrusted executables is:
+##
+##          $ objdump -p /path/to/program | grep NEEDED
+
+
+man ldd
+ldd /usr/bin/passwd
+ldd -v /lib64/libc.so.6     #使用 -v 这个参数还可以得知该函式库来自于哪一个软件
+
+
+```
+
 
 ```sh
 ##    md5sum - compute and check MD5 message digest
