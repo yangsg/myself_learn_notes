@@ -2,6 +2,8 @@
 * 鸟哥的 Linux 私房菜  http://cn.linux.vbird.org/linux_basic/linux_basic.php
 * nixCraft             https://www.cyberciti.biz/faq/
 
+* 参考书籍:
+  -Linux基础及应用教程(基于CentOS7)
 
 * help man info  --help
 ```sh
