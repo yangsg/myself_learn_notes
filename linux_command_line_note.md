@@ -2064,6 +2064,18 @@ rpm -Vf /etc/crontab  #查询一下，你的 /etc/crontab 是否有被更动过�
 [root@study ~]# rpm -qa | grep pam
 [root@study ~]# rpm -e pam
 
+## 由于 RPM 档案常常会安装/移除/升级等，某些动作或许可能会导致 RPM 数据库 /var/lib/rpm/ 内的档案破损。
+## 果真如此的话，那你该如何是好？别担心，我们可以使用 --rebuilddb 这个选项来重建一下数据库喔！ 作法如下：
+[root@study ~]# rpm --rebuilddb #重建数据库
+
+rpm -q --whatrequires glibc-common    #查询依赖于已安装的'glibc-common'软件包的所有RPM包  #--whatrequires CAPABILITY  #Query all packages that require CAPABILITY for proper functioning.
+rpm -q  --whatprovides  vi            #--whatprovides CAPABILITY  #Query all packages that provide the CAPABILITY capability.
+
+rpm -q --scripts  glibc-common     #--scripts      #List the package specific scriptlet(s) that are used as part of the installation and uninstallation processes.
+rpm -q --conflicts glibc-common    #--conflicts    #List capabilities this package conflicts with.
+rpm -q --obsoletes glibc-common    #--obsoletes    #List packages this package obsoletes.
+rpm -q --changelog glibc-common    #--changelog    #Display change information for the package.
+
 
 ##   Database
 ##       /var/lib/rpm/Basenames
