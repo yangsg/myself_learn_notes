@@ -2005,6 +2005,54 @@ md5sum --check md5.txt
 
 ```
 
+```sh
+## daemon的主要分类：
+
+## 依据 daemon 的启动与管理方式来区分:
+## - stand alone
+## - super daemon
+##    * multi-threaded
+##    * single-threaded
+
+## 以 daemon 提供服务的的工作状态来区分:
+## - signal-control
+## - interval-control
+
+man daemon
+
+cat /etc/services
+
+man httpd
+
+ls /var/run/    #/var/run/sshd.pid
+cat /var/run/sshd.pid
+
+man service      #which service  #cat /usr/sbin/service
+
+/etc/init.d   #The directory containing System V init scripts.
+/etc/sysconfig/* ：各服务的初始化环境配置文件( /etc/sysconfig/syslog, /etc/sysconfig/network)
+/etc/xinetd.conf, /etc/xinetd.d/* ：super daemon 配置文件   # super daemon 只是一个统一管理的机制，他所管理的其他 daemon 的配置则写在 /etc/xinetd.d/* 里头喔！ 
+/etc/* ：各服务各自的配置文件
+/var/lib/* ：各服务产生的数据库  ( /var/lib/mysql/ )
+/var/run/* ：各服务的程序之 PID 记录处
+
+Stand alone 的 /etc/init.d/* 启动
+
+/etc/init.d/syslog   # 什么参数都不加的时候，系统会告诉你可以用的参数有哪些
+/etc/init.d/syslog status
+/etc/init.d/syslog start
+/etc/init.d/syslog stop
+/etc/init.d/syslog restart
+
+[root@www ~]# service [service name] (start|stop|restart|...)
+[root@www ~]# service --status-all
+
+
+[root@www ~]# grep -i 'disable' /etc/xinetd.d/*    #那如何得知 super daemon 所管理的服务是否有启动呢？你可以这样做
+
+
+
+```
 
 ```sh
 
