@@ -3,7 +3,7 @@
 * nixCraft             https://www.cyberciti.biz/faq/
 
 * 参考书籍:
-  -Linux基础及应用教程(基于CentOS7)
+  - Linux基础及应用教程(基于CentOS7)
 
 * help man info  --help
 ```sh
