@@ -2039,10 +2039,10 @@ man service      #which service  #cat /usr/sbin/service
 Stand alone 的 /etc/init.d/* 启动
 
 /etc/init.d/syslog   # 什么参数都不加的时候，系统会告诉你可以用的参数有哪些
-/etc/init.d/syslog status
-/etc/init.d/syslog start
-/etc/init.d/syslog stop
-/etc/init.d/syslog restart
+/etc/init.d/syslog status      #service syslog status
+/etc/init.d/syslog start       #service syslog start
+/etc/init.d/syslog stop        #service syslog stop
+/etc/init.d/syslog restart     #service syslog restart
 
 [root@www ~]# service [service name] (start|stop|restart|...)
 [root@www ~]# service --status-all
