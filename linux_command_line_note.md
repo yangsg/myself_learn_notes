@@ -2010,20 +2010,29 @@ rpm -ivh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm
 rpm -Uvh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm
 rpm -Fvh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm
 
+rpm -ivh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm  --test  #--test Do not install the package, simply check for and report potential conflicts.  #使用时机： 想要测试一下该软件是否可以被安装到使用者的 Linux 环境当中，可找出是否有属性相依的问题
+rpm -ivh /mnt/Packages/rp-pppoe-3.11-5.el7.x86_64.rpm  --justdb  #--justdb  #Update only the database, not the filesystem.  #使用时机： 由于 RPM 数据库破损或者是某些缘故产生错误时，可使用这个选项来更新软件在数据库内的相关信息。
 
-## [root@study ~]# rpm -qa <==已安装软件
+
+## [root@study ~]# rpm -qa <==已安装软件  #-a, --all  #Query all installed packages.
 ## [root@study ~]# rpm -q[licdR] 已安装的软件名称 <==已安装软件
 ## [root@study ~]# rpm -qf 存在于系统上面的某个文件名 <==已安装软件
 ## [root@study ~]# rpm -qp[licdR] 未安装的某个文件名 <==查阅RPM档案
 
 rpm -q logrotate     #找出你的 Linux 是否有安装 logrotate 这个软件？
-rpm -ql logrotate    #列出上题当中，属于该软件所提供的所有目录与档案
-rpm -qi logrotate    #列出 logrotate 这个软件的相关说明数据：
-rpm -qc logrotate    #找出 logrotate 的配置文件
-rpm -qd logrotate    #找出 logrotate 的说明档
-rpm -qR logrotate    #若要成功安装 logrotate ，他还需要什么档案的帮忙？
-rpm -qf /bin/sh      #找出 /bin/sh 是那个软件提供的？
-rpm -qpR filename.i386.rpm   #假设我有下载一个 RPM 档案，想要知道该档案的需求档案
+rpm -ql logrotate    #列出上题当中，属于该软件所提供的所有目录与档案  #-l, --list   #List files in package.
+rpm -qi logrotate    #列出 logrotate 这个软件的相关说明数据：   #-i, --info  #Display package information, including name, version, and description.  This uses the --queryformat if one was specified.
+rpm -qc logrotate    #找出 logrotate 的配置文件  #-c, --configfiles  #List only configuration files (implies -l).
+rpm -qd logrotate    #找出 logrotate 的说明档    #-d, --docfiles     #List only documentation files (implies -l).
+rpm -qR logrotate    #若要成功安装 logrotate ，他还需要什么档案的帮忙？  #-R, --requires   #List capabilities on which this package depends.
+rpm -qf /bin/sh      #找出 /bin/sh 是那个软件提供的？      #-f, --file FILE    #Query package owning FILE.
+rpm -qpR filename.i386.rpm   #假设我有下载一个 RPM 档案，想要知道该档案的需求档案  #-p, --package PACKAGE_FILE
+
+## -p, --package PACKAGE_FILE
+##     Query an (uninstalled) package PACKAGE_FILE.  The PACKAGE_FILE may be specified as an ftp or http style URL, in which case the package header will be downloaded and queried.  See
+##     FTP/HTTP  OPTIONS  for  information  on rpm's internal ftp and http client support. The PACKAGE_FILE argument(s), if not a binary package, will be interpreted as an ASCII package
+##     manifest unless --nomanifest option is used.  In manifests, comments are permitted, starting with a '#', and each line of a package manifest file may include  white  space
+##     separated glob expressions, including URL's, that will be expanded to paths that are substituted in place of the package manifest as additional PACKAGE_FILE arguments to the query.
 
 
 ## [root@study ~]# rpm -Va
@@ -2034,12 +2043,26 @@ rpm -qpR filename.i386.rpm   #假设我有下载一个 RPM 档案，想要知道
 rpm -V logrotate      #列出你的 Linux 内的 logrotate 这个软件是否被更动过？
 rpm -Vf /etc/crontab  #查询一下，你的 /etc/crontab 是否有被更动过？
 
+## CentOS 使用的数字签名系统为 GNU 计划的 GnuPG (GNU Privacy Guard, GPG)  #https://www.gnupg.org/
+## [root@study ~]# ll /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+## [root@study ~]# cat /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7    #该数字签名码其实仅是一个随机数而已(公钥)
 ## [root@study ~]# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
-rpm -qi gpg-pubkey-f4a80eb5-53a7ff4b
+## 由于不同版本 GPG 密钥档案放置的位置可能不同，不过档名大多是以 GPG-KEY 来说明的，
+## 因此你可以简单的使用 locate 或 find 来找寻，如以下的方式来搜寻即可：
+[root@study ~]# locate GPG-KEY
+[root@study ~]# find /etc -name '*GPG-KEY*'
 
+## 那安装完成之后，这个密钥的内容会以什么方式呈现呢？基本上都是使用 pubkey 作为软件的名称的！
+## 那我们先列出密钥软件名称后，再以 -qi 的方式来查询看看该软件的信息为何：
+[root@study ~]# rpm -qa | grep pubkey
+[root@study ~]# rpm -qi gpg-pubkey-f4a80eb5-53a7ff4b
 
-rpm -e pam-devel
+## 解安装的过程一定要由最上层往下解除(类似"压栈和出栈")
+
+# 找出与 pam 有关的软件名称，并尝试移除 pam 这个软件：
+[root@study ~]# rpm -qa | grep pam
+[root@study ~]# rpm -e pam
 
 
 ##   Database
