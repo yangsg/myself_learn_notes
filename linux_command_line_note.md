@@ -2094,6 +2094,145 @@ rpm -q --changelog glibc-common    #--changelog    #Display change information f
 
 ```
 
+```sh
+
+##    yum - Yellowdog Updater Modified
+##
+## SYNOPSIS
+##    yum [options] [command] [package ...]
+##
+## DESCRIPTION
+##    yum  is an interactive, rpm based, package manager. It can automatically perform system updates, including dependency analysis and obsolete processing based on "repository" metadata. It
+##    can also perform installation of new packages, removal of old packages and perform queries on the installed and/or available packages among many other commands/services (see below). yum
+##    is similar to other high level package managers like apt-get and smart.
+
+## GENERAL OPTIONS
+##    -y, --assumeyes
+##           Assume yes; assume that the answer to any question which would be asked is yes.
+##           Configuration Option: assumeyes
+##
+##    -C, --cacheonly
+##           Tells yum to run entirely from system cache - does not download or update any headers unless it has to to perform the requested action.
+##
+##    --enablerepo=repoidglob
+##           Enables specific repositories by id or glob that have been disabled in the configuration file using the enabled=0 option.
+##           Configuration Option: enabled
+##
+##    --disablerepo=repoidglob
+##           Disables specific repositories by id or glob.
+##           Configuration Option: enabled
+##
+##    --installroot=root
+##           Specifies an alternative installroot, relative to which all packages will be installed. Think of this like doing "chroot <root> yum" except using --installroot allows yum to work
+##           before  the  chroot is created.  Note: You may also want to use the option --releasever=/ when creating the installroot as otherwise the $releasever value is taken from the rpmdb
+##           within the installroot (and thus. will be empty, before creation).
+##           Configuration Option: installroot
+
+
+##    search This  is  used to find packages when you know something about the package but aren't sure of it's name. By default search will try searching just package names and summaries, but
+##            if that "fails" it will then try descriptions and url.
+##
+##            Yum search orders the results so that those packages matching more terms will appear first.
+##
+##            You can force searching everything by specifying "all" as the first argument.
+
+
+man yum   #/examples
+
+yum check-update            #检查可更新的所有软件包
+yum update                  #下载更新系统已安装的所有软件包  #If run without any packages, update will update every currently installed package.
+yum upgrade                 #大规模的版本升级，与yum update不同的是，连旧的被淘汰的包也升级. # this makes it better for distro-version changes, for example: upgrading from somelinux 8.0 to somelinux 9.
+yum install package1 [package2] [...]     #安装新软件包
+yum update [package1] [package2] [...]        #更新指定的软件包
+yum remove | erase package1 [package2] [...]  #移除指定的软件包
+
+yum clean [ packages | metadata | expire-cache | rpmdb | plugins | all ]   #Is used to clean up various things which accumulate in the yum cache directory over time.  More complete details can be found in the Clean Options section below.
+yum makecache [fast]   #Is used to download and make usable all the metadata for the currently enabled yum repos. If the argument "fast" is passed, then we just try to make sure the repos.  are  current (much like "yum clean expire-cache").
+
+yum search vim
+yum search all vim
+
+yum deplist package1 [package2] [...]   #Produces  a  list  of all dependencies and what packages provide those dependencies for the given packages. As of 3.2.30 it now just shows the latest version of each package that matches (this can be changed by using --showduplicates) and it only shows the newest providers (which can be changed by using --verbose).
+
+yum provides feature1 [feature2] [...]  #Is used to find out which package provides some feature or file. Just use a specific name or a file-glob-syntax wildcards to list the packages available or installed that provide that feature or file.
+
+yum install rpmfile1 [rpmfile2] [...]         # Is  used to install a set of local rpm files. If required the enabled repositories will be used to resolve dependencies.
+yum update  rpmfile1 [rpmfile2] [...]         # Is used to update the system by specifying local rpm files. Only the specified rpm files of which an older version is already installed will be installed, the remaining specified packages  will  be  ignored.  If required the enabled repositories will be used to resolve dependencies. 
+
+yum group install  "Development Tools"
+yum group update   "Development Tools"
+yum group remove   "Development Tools"
+yum group list                             #"group list" is used to list the available groups from all yum repos.
+yum group info     "Development Tools"     #"group info" is used to give the description and package list of a group (and which type those packages are marked as).
+
+
+##     yum list [all | glob_exp1] [glob_exp2] [...]
+##            List all available and installed packages.
+##
+##     yum list available [glob_exp1] [...]
+##            List all packages in the yum repositories available to be installed.
+##
+##     yum list updates [glob_exp1] [...]
+##            List all packages with updates available in the yum repositories.
+##
+##     yum list installed [glob_exp1] [...]
+##            List the packages specified by args.  If an argument does not match the name of an available package, it is assumed to be a shell-style glob and any matches are printed.
+##
+##     yum list extras [glob_exp1] [...]
+##            List the packages installed on the system that are not available in any yum repository listed in the config file.
+##
+##     yum list distro-extras [glob_exp1] [...]
+##            List the packages installed on the system that are not available, by name, in any yum repository listed in the config file.
+##
+##     yum list obsoletes [glob_exp1] [...]
+##            List the packages installed on the system that are obsoleted by packages in any yum repository listed in the config file.
+##
+##     yum list recent
+##            List packages recently added into the repositories. This is often not helpful, but what you may really want to use is "yum list-updateinfo new" from the security yum plugin.
+
+##CLEAN OPTIONS
+##    The  following are the ways which you can invoke yum in clean mode. Note that "all files" in the commands below means "all files in currently enabled repositories".  If you want to also
+##    clean any (temporarily) disabled repositories you need to use --enablerepo='*' option.
+##
+##    yum clean expire-cache
+##           Eliminate the local data saying when the metadata and mirrorlists were downloaded for each repo. This means yum will revalidate the cache for each repo. next  time  it  is  used.
+##           However if the cache is still valid, nothing significant was deleted.
+##
+##    yum clean packages
+##           Eliminate any cached packages from the system.  Note that packages are not automatically deleted after they are downloaded.
+##
+##    yum clean headers
+##           Eliminate all of the header files, which old versions of yum used for dependency resolution.
+##
+##    yum clean metadata
+##           Eliminate all of the files which yum uses to determine the remote availability of packages. Using this option will force yum to download all the metadata the next time it is run.
+##
+##    yum clean dbcache
+##           Eliminate  the  sqlite cache used for faster access to metadata.  Using this option will force yum to download the sqlite metadata the next time it is run, or recreate the sqlite
+##           metadata if using an older repo.
+##
+##    yum clean rpmdb
+##           Eliminate any cached data from the local rpmdb.
+##
+##    yum clean plugins
+##           Tell any enabled plugins to eliminate their cached data.
+##
+##    yum clean all
+##           Does all of the above.
+
+
+
+FILES
+       /etc/yum.conf
+       /etc/yum/version-groups.conf
+       /etc/yum.repos.d/
+       /etc/yum/pluginconf.d/
+       /var/cache/yum/
+
+
+
+```
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
