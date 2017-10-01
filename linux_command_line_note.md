@@ -2165,6 +2165,8 @@ yum group remove   "Development Tools"
 yum group list                             #"group list" is used to list the available groups from all yum repos.
 yum group info     "Development Tools"     #"group info" is used to give the description and package list of a group (and which type those packages are marked as).
 
+yum repolist [all|enabled|disabled]        #Produces a list of configured repositories. The default is to list all enabled repositories.
+
 
 ##     yum list [all | glob_exp1] [glob_exp2] [...]
 ##            List all available and installed packages.
@@ -2230,6 +2232,44 @@ FILES
        /var/cache/yum/
 
 
+## YUM的主配置文件 /etc/yum.conf ,存放了YUM的基本配置参数
+## 在主配置文件中可以设置yum命令使用的代理服务器，例如
+[root@localhost ~]# vim /etc/yum.conf   #man yum.conf
+##设置代理服务器及其端口号
+proxy=http://mycache.mydomain.com:3128
+##设置用于yum连接的代理服务器的账户细节
+proxy_username=your-yum-user
+proxy_password=your-yum-password
+
+
+## 有关CentOS附加仓库和第三方仓库的详细信息  https://wiki.centos.org/AdditionalResources/Repositories
+## About 'enabled' and 'disabled' repository configuration files
+##
+## Please read man 5 yum.conf, particularly the discussion of enabled=0 versus enabled=1 . A line containing one of these options is recommended for each repository in each .conf file in the
+## /etc/yum.repos.d/  directory. This allows the administrator to more clearly specify whether a repository is or is not used for packages. After any edits of these files, in order to clear
+##  any cached information, and to make sure the changes are immediately recognized, as root run:
+##
+##  yum clean all
+
+##仓库配置文件 /etc/yum.repos.d/*.repo
+## YUM使用仓库配置文件（文件名以.repo结尾文件）配置仓库的镜像站点地址等配置信息。
+## 默认情况下，CentOS在/etc/yum.repos.d/目录下包含6个配置文件。
+## 主要的仓库配置文件为CentOS-Base.repo,其余配置文件中的仓库默认均为启用。
+
+
+## 仓库的启用和禁用
+man yum-config-manager
+yum-config-manager - manage yum configuration options and yum repositories
+yum-config-manager --enable centosplus  #启用centosplus仓库 #--enable  #Enable the specified repos (automatically saves). To enable all repositories run 'yum-config-manager --enable \*".
+yum-config-manager --disable centosplus #禁用centosplus仓库 #--disable #Disable the specified repos (automatically saves). To disable all repositories run "yum-config-manager --disable \*"
+
+## sclo仓库提供了软件的不同版本
+## The Software Collections ( SCL ) Repository   https://wiki.centos.org/AdditionalResources/Repositories/SCL
+## In order to gain access to SCLs for CentOS, you need to install the CentOS Linux Software Collections release file.
+## It is part of the CentOS Extras repository (x86_64 only) and can be installed with this command:
+yum install centos-release-scl
+
+## The available collections are mostly tracked   https://wiki.centos.org/SpecialInterestGroup/SCLo/CollectionsList
 
 ```
 
