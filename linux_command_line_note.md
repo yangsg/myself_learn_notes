@@ -2047,8 +2047,36 @@ Stand alone 的 /etc/init.d/* 启动
 [root@www ~]# service [service name] (start|stop|restart|...)
 [root@www ~]# service --status-all
 
+## ----------Super daemon 的启动方式>>>-------------start centos6---------------------------
+## http://www.server-world.info/en/note?os=CentOS_6&p=rsynco
 
-[root@www ~]# grep -i 'disable' /etc/xinetd.d/*    #那如何得知 super daemon 所管理的服务是否有启动呢？你可以这样做
+[root@www ~]# yum -y install rsync xinetd
+[root@www ~]# grep -rn 'disable' /etc/xinetd.d/    #那如何得知 super daemon 所管理的服务是否有启动呢？你可以这样做
+
+## 1. 先修改配置文件成为启动的模样：
+[root@www ~]# vim /etc/xinetd.d/rsync
+## 请将 disable 那一行改成如下的模样 (原本是 yes 改成 no 就对了)
+service rsync
+{
+##        disable = yes
+        disable = no
+        flags           = IPv6
+        socket_type     = stream
+        wait            = no
+        user            = root
+        server          = /usr/bin/rsync
+        server_args     = --daemon
+        log_on_failure  += USERID
+}
+## 2. 重新启动 xinetd 这个服务
+[root@www ~]# /etc/init.d/xinetd restart
+
+# 3. 观察启动的端口
+[root@www ~]# grep 'rsync' /etc/services  <==先看看端口是哪一号
+
+[root@www ~]# netstat -tnlp | grep 873
+
+## ----------Super daemon 的启动方式<<<-------------end centos6---------------------------
 
 
 
