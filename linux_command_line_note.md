@@ -2047,8 +2047,9 @@ Stand alone 的 /etc/init.d/* 启动
 [root@www ~]# service [service name] (start|stop|restart|...)
 [root@www ~]# service --status-all
 
-## ----------Super daemon 的启动方式>>>-------------start centos6---------------------------
-## http://www.server-world.info/en/note?os=CentOS_6&p=rsynco
+## ----------Super daemon 的启动方式>>>-------------start centos6-------(注：此例子步骤不全，因只为演示Super daemon 的启动方式)--------------------
+## CentOS6: http://www.server-world.info/en/note?os=CentOS_6&p=rsynco
+## CentOS7: https://www.server-world.info/en/note?os=CentOS_7&p=rsync
 
 [root@www ~]# yum -y install rsync xinetd
 [root@www ~]# grep -rn 'disable' /etc/xinetd.d/    #那如何得知 super daemon 所管理的服务是否有启动呢？你可以这样做
@@ -2069,18 +2070,97 @@ service rsync
         log_on_failure  += USERID
 }
 ## 2. 重新启动 xinetd 这个服务
-[root@www ~]# /etc/init.d/xinetd restart
+[root@www ~]# /etc/rc.d/init.d/xinetd start   #service xinetd restart
 
 # 3. 观察启动的端口
 [root@www ~]# grep 'rsync' /etc/services  <==先看看端口是哪一号
 
 [root@www ~]# netstat -tnlp | grep 873
 
-## ----------Super daemon 的启动方式<<<-------------end centos6---------------------------
+man xinetd
+man xinetd.conf
+
+##默认值配置文件 /etc/xinetd.conf
+
+http://cn.linux.vbird.org/linux_basic/0560daemons_2.php
+
+## ----------Super daemon 的启动方式<<<-------------end centos6-------(注：此例子步骤不全，因只为演示Super daemon 的启动方式)--------------------
+
+
+```sh
+## 配置开机后立即启动服务的方法 ----CentOS6---------------
+
+## 到底我的 Linux 主机是怎么启动的呢？
+##     1. 打开计算机电源，开始读取 BIOS 并进行主机的自我测试；
+##     2. 透过 BIOS 取得第一个可启动装置，读取主要启动区 (MBR) 取得启动管理程序；
+##     3. 透过启动管理程序的配置，取得 kernel 并加载内存且侦测系统硬件；
+##     4. 核心主动呼叫 init 程序；
+##     5. init 程序开始运行系统初始化 (/etc/rc.d/rc.sysinit)
+##     6. 依据 init 的配置进行 daemon start (/etc/rc.d/rc[0-6].d/*)   <------------------------------
+##     7. 加载本机配置 (/etc/rc.d/rc.local)`
+
+## chkconfig： 管理系统服务默认启动启动与否
+## [root@www ~]# chkconfig --list [服务名称]
+## [root@www ~]# chkconfig [--level [0123456]] [服务名称] [on|off]
+
+[root@www ~]# chkconfig --list | less    #列出目前系统上面所有被 chkconfig 管理的服务
+[root@www ~]# chkconfig --list | grep '3:on'  #显示出目前在 run level 3 为启动的服务
+[root@www ~]# chkconfig --level 345 atd on    #让 atd 这个服务在 run level 为 3, 4, 5 时启动：
+
+
+## chkconfig 仅是配置启动时默认会启动的服务而已， 所以该服务目前的状态如何是不知道的
+[root@www ~]# /etc/init.d/httpd status
+[root@www ~]# chkconfig --list httpd
+[root@www ~]# chkconfig httpd on; chkconfig --list httpd
+[root@www ~]# /etc/init.d/httpd status
+
+##  chkconfig 可以配置开机是否启动，我们也能用来管理 super daemon 的启动与关闭
+[root@www ~]# /etc/init.d/rsync status
+[root@www ~]# netstat -tlup | grep rsync
+[root@www ~]# chkconfig --list rsync
+[root@www ~]# chkconfig rsync off; chkconfig --list rsync     #命令`chkconfig rsync off`会将/etc/xinetd.d/rsync文件中disable那一行修改为"disable = yes"
+[root@www ~]# /etc/init.d/xinetd restart; netstat -tlup | grep rsync
+
+
+## -----chkconfig： 配置自己的系统服务-----------start>-----------------------
+man chkconfig   #可以查看init.d script的格式要求
+
+## [root@www ~]# chkconfig [--add|--del] [服务名称]
+## 选项与参数：
+## --add ：添加一个服务名称给 chkconfig 来管理，该服务名称必须在 /etc/init.d/ 内
+## --del ：删除一个给 chkconfig 管理的服务
+
+## 举个例子，我们在 /etc/init.d/ 里面创建一个 myvbird 文件，该文件仅是一个简单的服务范例，基本上，没有任何用途.... 对于该文件的必须性是这样的：
+##   -- myvbird 将在 run level 3 及 5 启动；
+##   -- myvbird 在 /etc/rc.d/rc[35].d 当中启动时，以 80 顺位启动，以 70 顺位结束。
+[root@www ~]# vim /etc/init.d/myvbird
+#!/bin/bash
+# chkconfig: 35 80 70
+# description: 没啥！只是用来作为练习之用的一个范例
+echo "Nothing" "man chkconfig"
+
+## 基本上，比较重要的是第二行，他的语法是： 『 chkconfig: [runlevels] [启动顺位] [停止顺位] 』其中，
+## runlevels 为不同的 run level 状态， 启动顺位 (start number) 与 结束顺位 (stop number)
+## 则是在 /etc/rc.d/rc[35].d 内创建以 S80myvbird 及 K70myvbird 为档名的配置方式！
+
+[root@www ~]# chkconfig --list myvbird
+[root@www ~]# chkconfig --add myvbird; chkconfig --list myvbird   #`chkconfig --add myvbird`会创建两个文件/etc/rc.d/rc3.d/S80myvbird  /etc/rc.d/rc5.d/S80myvbird
+[root@www ~]# chkconfig --del myvbird                             #`chkconfig --del myvbird`会删除两个文件/etc/rc.d/rc3.d/S80myvbird  /etc/rc.d/rc5.d/S80myvbird
+[root@www ~]# rm /etc/init.d/myvbird
+
+## -----chkconfig： 配置自己的系统服务-----------end<-----------------------
+
+
+## ntsysv： 类图形接口管理模式      #我们的 CentOS 还有提供一个更不错用的， 那就是 ntsysv 了！注意喔， chkconfig 很多的 distributions 都存在，但是 ntsysv 则是 Red Hat 系统特有的！
+## (注:ntsysv在putty中也是可以使用的)
+## [root@www ~]# ntsysv [--level <levels>]
+## 选项与参数：
+## --level ：后面可以接不同的 run level ，例如 ntsysv --level 35
 
 
 
 ```
+
 
 ```sh
 
