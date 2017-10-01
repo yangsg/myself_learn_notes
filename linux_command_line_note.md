@@ -1899,6 +1899,8 @@ top -d 2 -p 14836     #-p ：指定某些个 PID 来进行观察监测而已。
 
 
 ```sh
+## Makefile的学习资源·：Makefile经典教程(掌握这些足够)   http://blog.csdn.net/ruglcc/article/details/7814546
+
 ##  tarball安装
 tar -zxvf /root/ntp-4.2.8p3.tar.gz   -C  /usr/local/src/
 cd /usr/local/src/ntp-4.2.8p3
