@@ -2259,7 +2259,7 @@ proxy_password=your-yum-password
 
 ## 仓库的启用和禁用
 man yum-config-manager
-yum-config-manager - manage yum configuration options and yum repositories
+## yum-config-manager - manage yum configuration options and yum repositories
 yum-config-manager --enable centosplus  #启用centosplus仓库 #--enable  #Enable the specified repos (automatically saves). To enable all repositories run 'yum-config-manager --enable \*".
 yum-config-manager --disable centosplus #禁用centosplus仓库 #--disable #Disable the specified repos (automatically saves). To disable all repositories run "yum-config-manager --disable \*"
 
