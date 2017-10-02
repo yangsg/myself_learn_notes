@@ -2191,10 +2191,28 @@ echo "Nothing" "man chkconfig"
 
 ## -----------------------CentOS7----------------------------------
 
+
 ```
+## Available systemd Unit Types  https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-Managing_Services_with_systemd#tabl-Managing_Services_with_systemd-Introduction-Units-Locations
+
+Unit Type                  |  File Extension  |  Description
+---------------------------|------------------|-----------------------
+Service unit               |  .service        | A system service.
+Target unit                |  .target         | A group of systemd units.
+Automount unit             |  .automount      | A file system automount point.
+Device unit                |  .device         | A device file recognized by the kernel.
+Mount unit                 |  .mount          | A file system mount point.
+Path unit                  |  .path           | A file or directory in a file system.
+Scope unit                 |  .scope          | An externally created process.
+Slice unit                 |  .slice          | A group of hierarchically organized units that manage system processes.
+Snapshot unit              |  .snapshot       | A saved state of the systemd manager.
+Socket unit                |  .socket         | An inter-process communication socket.
+Swap unit                  |  .swap           | A swap device or a swap file.
+Timer unit                 |  .timer          | A systemd timer.
+
 ## Systemd Unit Files Locations
-Directory | Description
------------- | -------------
+Directory                | Description
+-------------------------| ---------------------------------------
 /usr/lib/systemd/system/ | Systemd unit files distributed with installed RPM packages. 每个服务最主要的启动脚本设定，有点类似以前的 /etc/init.d 底下的档案
 /run/systemd/system/     | Systemd unit files created at run time. This directory takes precedence over the directory with installed service unit files. 系统执行过程中所产生的服务脚本，这些脚本的优先序要比 /usr/lib/systemd/system/ 高！
 /etc/systemd/system/     | Systemd unit files created by systemctl enable as well as unit files added for extending a service. This directory takes precedence over the directory with runtime unit files. 管理员依据主机系统的需求所建立的执行脚本，其实这个目录有点像以前 /etc/rc.d/rc5.d/Sxx 之类的功能！执行优先序又比 /run/systemd/system/ 高喔！
