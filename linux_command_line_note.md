@@ -2231,7 +2231,7 @@ Directory                | Description
 ```
 
 ## [Comparison of the service Utility with systemctl](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-services)
-service systemctl Description
+service                    | systemctl                                    | Description
 ---------------------------|----------------------------------------------|----------------------------------------
 service name start         | systemctl start name.service                 | Starts a service.
 service name stop          | systemctl stop name.service                  | Stops a service.
