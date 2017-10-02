@@ -2230,6 +2230,19 @@ Directory                | Description
 
 ```
 
+## [Comparison of the service Utility with systemctl](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-services)
+service systemctl Description
+
+service name start         | systemctl start name.service                 | Starts a service.
+service name stop          | systemctl stop name.service                  | Stops a service.
+service name restart       | systemctl restart name.service               | Restarts a service.
+service name condrestart   | systemctl try-restart name.service           | Restarts a service only if it is running.
+service name reload        | systemctl reload name.service                | Reloads configuration.
+service name status        | systemctl status name.service   <br />     systemctl is-active name.service       | Checks if a service is running.
+service --status-all       | systemctl list-units --type service --all    | Displays the status of all services.
+
+
+
 ```sh
 
 man rpm
