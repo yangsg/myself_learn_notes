@@ -2331,6 +2331,43 @@ Failed to issue method call: Unit cups.service is masked. # 再也无法唤醒�
 [root@study ~]# systemctl emergency         # 强制进入紧急救援模式
 
 
+## 关机、重新启动、救援与紧急模式这没啥问题，那么什么是暂停与休眠模式呢？
+##   suspend：  暂停模式会将系统的状态数据保存到内存中，然后关闭掉大部分的系统硬件，
+##              当然，并没有实际关机喔！ 当用户按下唤醒机器的按钮，系统数据会重内存中回复，
+##              然后重新驱动被大部分关闭的硬件，就开始正常运作！唤醒的速度较快。
+##   hibernate：休眠模式则是将系统状态保存到硬盘当中，保存完毕后，将计算机关机。
+##              当用户尝试唤醒系统时，系统会开始正常运作， 然后将保存在硬盘中的系统状态恢复回来。
+##              因为数据是由硬盘读出，因此唤醒的效能与你的硬盘速度有关。
+
+
+
+
+
+####### 透过 systemctl 分析各服务之间的相依性
+## [root@study ~]# systemctl list-dependencies [unit] [--reverse]
+## 选项与参数：
+## --reverse ：反向追踪谁使用这个 unit 的意思！
+
+## 列出目前的 target 环境下，用到什么特别的 unit
+[root@study ~]# systemctl get-default
+[root@study ~]# systemctl list-dependencies             #列出当前target依赖哪些systemd unit
+[root@study ~]# systemctl list-dependencies --reverse   #列出当前target被哪些systemd unit依赖
+
+## 与 systemd 的 daemon 运作过程相关的目录简介
+
+## 我们在前几小节曾经谈过比较重要的 systemd 启动脚本配置文件在 /usr/lib/systemd/system/, /etc/systemd/system/ 目录下，
+## 那还有哪些目录跟系统的 daemon 运作有关呢？ 基本上是这样的：
+##    /usr/lib/systemd/system/：使用 CentOS 官方提供的软件安装后，默认的启动脚本配置文件都放在这里，这里的数据尽量不要修改～ 要修改时，请到 /etc/systemd/system 底下修改较佳！
+##    /run/systemd/system/：    系统执行过程中所产生的服务脚本，这些脚本的优先序要比 /usr/lib/systemd/system/ 高！
+##    /etc/systemd/system/：    管理员依据主机系统的需求所建立的执行脚本，其实这个目录有点像以前 /etc/rc.d/rc5.d/Sxx 之类的功能！执行优先序又比 /run/systemd/system/ 高喔！
+##    /etc/sysconfig/*：        几乎所有的服务都会将初始化的一些选项设定写入到这个目录下，举例来说，mandb 所要更新的 man page 索引中，
+##                              需要加入的参数就写入到此目录下的 man-db 当中喔！而网络的设定则写在 /etc/sysconfig/network-scripts/ 这个目录内。所以，这个目录内的档案也是挺重要的；
+##    /var/lib/：               一些会产生数据的服务都会将他的数据写入到 /var/lib/ 目录中。举例来说，数据库管理系统 Mariadb 的数据库默认就是写入 /var/lib/mysql/ 这个目录下啦！
+##    /run/：                   放置了好多 daemon 的暂存档，包括 lock file 以及 PID file 等等。
+
+
+
+
 
 
 systemctl show nfs-server.service -p Names    # To find all aliases that can be used for a particular unit,
