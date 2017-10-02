@@ -2366,6 +2366,56 @@ Failed to issue method call: Unit cups.service is masked. # 再也无法唤醒�
 ##    /run/：                   放置了好多 daemon 的暂存档，包括 lock file 以及 PID file 等等。
 
 
+## 我们知道 systemd 里头有很多的本机会用到的 socket 服务，里头可能会产生很多的 socket file
+##  ～那你怎么知道这些 socket file 放置在哪里呢？ 很简单！还是透过 systemctl 来管理！
+[root@study ~]# systemctl list-sockets
+
+[root@study ~]# systemctl list-sockets  --all  #Pass --all to see loaded but inactive sockets, too.
+
+
+
+####### 网络服务与端口口对应简介
+[root@study ~]# cat /etc/services
+
+## 基本上，会产生一个网络监听端口口 (port) 的程序，你就可以称他是个网络服务了！ 那么如何观察网络端口口？就这样追踪啊！
+[root@study ~]# netstat -tlunp
+[root@study ~]# systemctl list-units --all | grep avahi-daemon   #使用 systemctl 去观察一下，到底有没有 avahi-daemon 为开头的服务呢
+
+## 透过追查，知道这个 avahi-daemon 的目的是在局域网络进行类似网芳的搜寻，
+## 因此这个服务可以协助你在区网内随时了解即插即用的装置！ 包括笔记本电脑等，
+## 只要连上你的区网，你就能够知道谁进来了。问题是，你可能不要这个协议啊！所以，那就关闭他吧！
+[root@study ~]# systemctl stop avahi-daemon.service
+[root@study ~]# systemctl stop avahi-daemon.socket
+[root@study ~]# systemctl disable avahi-daemon.service avahi-daemon.socket
+[root@study ~]# netstat -tlunp
+## 一般来说，你的本地服务器至少需要 25 号埠口，而 22 号埠口则最好加上防火墙来管理远程联机登入比较妥当～
+
+
+
+
+
+
+####### systemctl 针对 service 类型的配置文件
+
+## systemctl 配置文件相关目录简介
+##  现在我们知道服务的管理是透过 systemd，而 systemd 的配置文件大部分放置于 /usr/lib/systemd/system/ 目录内。
+##  但是 Red Hat 官方文件指出， 该目录的档案主要是原本软件所提供的设定，建议不要修改！
+##  而要修改的位置应该放置于 /etc/systemd/system/ 目录内。
+##  举例来说，如果你想要额外修改 vsftpd.service 的话， 他们建议要放置到哪些地方呢？
+/usr/lib/systemd/system/vsftpd.service：          官方释出的预设配置文件；
+/etc/systemd/system/vsftpd.service.d/custom.conf：在 /etc/systemd/system 底下建立与配置文件相同文件名的目录，但是要加上 .d 的扩展名。
+                                                  然后在该目录下建立配置文件即可。另外，配置文件最好附档名取名为 .conf 较佳！
+                                                  在这个目录下的档案会『累加其他设定』进入 /usr/lib/systemd/system/vsftpd.service 内喔！
+/etc/systemd/system/vsftpd.service.wants/*：      此目录内的档案为链接档，设定相依服务的连结。意思是启动了 vsftpd.service 之后，最好再加上这目录底下建议的服务。
+/etc/systemd/system/vsftpd.service.requires/*：   此目录内的档案为链接档，设定相依服务的连结。意思是在启动 vsftpd.service 之前，需要事先启动哪些服务的意思。
+
+
+
+
+## systemctl 配置文件的设定项目简介  #todo
+
+
+
 
 
 
