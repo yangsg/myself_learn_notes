@@ -2189,9 +2189,83 @@ echo "Nothing" "man chkconfig"
 
 man systemd
 man systemctl
+## 书籍： <鸟哥的 Linux 私房菜(第四版)>
 
 ls -l /usr/lib/systemd/system/ | grep -E '(vsftpd|multi|cron)'
 
+[root@study ~]# systemctl status atd.service    #看看目前 atd 这个服务的状态为何？
+[root@study ~]# systemctl stop atd.service      #正常关闭这个 atd 服务  #不应该使用 kill 的方式来关掉一个正常的服务喔！否则 systemctl 会无法继续监控该服务的！ 那就比较麻烦。
+
+## 再回到 systemctl status atd.service 的第三行，不是有个 Active 的 daemon 现在状态吗？除了 running 跟 dead 之外， 有没有其他的状态呢？有的～基本上有几个常见的状态：
+##    active (running)：正有一只或多只程序正在系统中执行的意思，举例来说，正在执行中的 vsftpd 就是这种模式。
+##    active (exited)：仅执行一次就正常结束的服务，目前并没有任何程序在系统中执行。 举例来说，开机或者是挂载时才会进行一次的 quotaon 功能，
+##                     就是这种模式！ quotaon 不须一直执行～只须执行一次之后，就交给文件系统去自行处理啰！通常用 bash shell 写的小型服务，大多是属于这种类型 (无须常驻内存)。
+##    active (waiting)：正在执行当中，不过还再等待其他的事件才能继续处理。举例来说，打印的队列相关服务就是这种状态！
+##                      虽然正在启动中，不过，也需要真的有队列进来 (打印作业) 这样他才会继续唤醒打印机服务来进行下一步打印的功能。
+##    inactive：这个服务目前没有运作的意思。
+
+## 既然 daemon 目前的状态就有这么多种了，那么 daemon 的预设状态有没有可能除了 enable/disable 之外，还有其他的情况呢？当然有！
+enabled：这个 daemon 将在开机时被执行
+disabled：这个 daemon 在开机时不会被执行
+static：这个 daemon 不可以自己启动 (enable 不可)，不过可能会被其他的 enabled 的服务来唤醒 (相依属性的服务)
+mask：这个 daemon 无论如何都无法被启动！因为已经被强制注销 (非删除)。可透过 systemctl unmask 方式改回原本状态
+
+
+##--- 练习01--start>--(关闭独立的服务:即不存在相依问题，不会被其他 systemd unit 唤醒)-----------------------------
+[root@study ~]# systemctl status chronyd.service
+[root@study ~]# systemctl stop chronyd.service
+[root@study ~]# systemctl disable chronyd.service
+[root@study ~]# systemctl status chronyd.service
+
+##--- 练习01--end<--(关闭独立的服务:即不存在相依问题，不会被其他 systemd unit 唤醒)-----------------------------
+
+
+
+
+##--- 练习02--start>-----(强迫服务注销，不管服务的相依问题,即不理会其他可以唤醒该服务的systemd unit)--------------------------
+
+[root@study ~]# systemctl status cups.service
+[root@study ~]# systemctl stop cups.service
+[root@study ~]# systemctl disable cups.service
+[root@study ~]# netstat -tlunp | grep cups
+[root@study ~]# systemctl start cups.socket  #尝试启动 cups.socket 监听客户端的需求喔！
+[root@study ~]# systemctl status cups.service cups.socket cups.path  # 确定仅有 cups.socket 在启动，其他的并没有启动的状态！
+[root@study ~]# echo "testing" | lp     #尝试使用 lp 这个指令来打印看看？
+[root@study ~]# systemctl status cups.service    # 见鬼！竟然 cups 自动被启动了！明明我们都没有驱动他啊！怎么回事啊？
+
+## 上面这个范例的练习在让您了解一下，很多服务彼此之间是有相依性的！cups 是一种打印服务，
+## 这个打印服务会启用 port 631 来提供网络打印机的打印功能。 但是其实我们无须一直启动 631 埠口吧？
+## 因此，多了一个名为 cups.socket 的服务，这个服务可以在『用户有需要打印时，才会主动唤醒 cups.service 』的意思！
+## 因此，如果你仅是 disable/stop cups.service 而忘记了其他两个服务的话，
+## 那么当有用户向其他两个 cups.path, cups.socket 提出要求时， cups.service 就会被唤醒！所以，你关掉也没用！
+
+## --强迫服务注销 (mask) 的练习-----------------
+## 比较正规的作法是，要关闭 cups.service 时，连同其他两个会唤醒 service 的 cups.socket 与 cups.path 通通关闭，那就没事了！
+## 比较不正规的作法是，那就强迫 cups.service 注销吧！透过 mask 的方式来将这个服务注销看看！
+[root@study ~]# systemctl stop cups.service
+[root@study ~]# systemctl mask cups.service
+ln -s '/dev/null' '/etc/systemd/system/cups.service'  # 喔耶～其实这个 mask 注销的动作，只是让启动的脚本变成空的装置而已！
+[root@study ~]# systemctl status cups.service
+[root@study ~]# systemctl start cups.service
+Failed to issue method call: Unit cups.service is masked. # 再也无法唤醒！
+
+## 上面的范例你可以仔细推敲一下～原来整个启动的脚本配置文件被连结到 /dev/null 这个空装置～因此，
+## 无论如何你是再也无法启动这个 cups.service 了！ 透过这个 mask 功能，
+## 你就可以不必管其他相依服务可能会启动到这个想要关闭的服务了！虽然是非正规，不过很有效！ ^_^
+
+## 那如何取消注销呢？当然就是 unmask 即可啊！ [root@
+[root@study ~]# systemctl unmask cups.service
+[root@study ~]# systemctl status cups.service      ## 好佳在有恢复正常！
+
+##--- 练习02--end<-----(强迫服务注销，不管服务的相依问题,即不理会其他可以唤醒该服务的systemd unit)--------------------------
+
+
+
+
+
+
+
+systemctl show nfs-server.service -p Names    # To find all aliases that can be used for a particular unit,
 
 
 ## -----------------------CentOS7----------------------------------
