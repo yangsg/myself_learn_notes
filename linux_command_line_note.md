@@ -2184,8 +2184,13 @@ echo "Nothing" "man chkconfig"
    4. systemd 启动过程中，无法与管理员透过 standard input 传入讯息！因此，自行撰写 systemd 的启动设定时，务必要取消互动机制～(连透过启动时传进的标准输入讯息也要避免！)
 
 
+## https://en.wikipedia.org/wiki/Systemd
 ## https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd
 
+man systemd
+man systemctl
+
+ls -l /usr/lib/systemd/system/ | grep -E '(vsftpd|multi|cron)'
 
 
 
@@ -2193,7 +2198,7 @@ echo "Nothing" "man chkconfig"
 
 
 ```
-##  [Available systemd Unit Types](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-Managing_Services_with_systemd#tabl-Managing_Services_with_systemd-Introduction-Units-Locations)
+##  [Available systemd Unit Types](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-Managing_Services_with_systemd#tabl-Managing_Services_with_systemd-Introduction-Units-Locations)   `man systemd`
 
 Unit Type                  |  File Extension  |  Description
 ---------------------------|------------------|-----------------------
