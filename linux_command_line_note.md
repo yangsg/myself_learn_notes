@@ -2264,8 +2264,67 @@ Failed to issue method call: Unit cups.service is masked. # 再也无法唤醒�
 
 
 
+####### 透过 systemctl 观察系统上所有的服务
+##   那系统上面有多少的服务存在呢？这个时候就得要透过 list-units 及 list-unit-files 来观察了！
+## [root@study ~]# systemctl [command] [--type=TYPE] [--all]
+##   command:
+##      list-units ：依据 unit 列出目前有启动的 unit。若加上 --all 才会列出没启动的。
+##      list-unit-files ：依据 /usr/lib/systemd/system/ 内的档案，将所有档案列表说明。
+##   --type=TYPE：就是之前提到的 unit type，主要有 service, socket, target 等
+
+[root@study ~]# systemctl    #列出系统上面有启动的 unit    #systemctl 都不加参数，其实预设就是 list-units 的意思！
+[root@study ~]# systemctl list-unit-files     #列出所有已经安装的 unit 有哪些？  #使用 systemctl list-unit-files 会将系统上所有的服务通通列出来～而不像 list-units 仅以 unit 分类作大致的说明
+
+
+[root@study ~]# systemctl list-units --type=service --all   #我不想要知道这么多的 unit 项目，我只想要知道 service 这种类别的 daemon 而已，而且不论是否已经启动，通通要列出来！
+[root@study ~]# systemctl list-units --type=service --all | grep cpu   #查询系统上是否有以 cpu 为名的服务？
+
+
+
+
+####### 透过 systemctl 管理不同的操作环境 (target unit)
+[root@study ~]# systemctl list-units --type=target --all    #列出跟操作界面比较有关的 target 项目
+
+## 在我们的 CentOS 7.1 的预设情况下，就有 26 个 target unit 耶！而跟操作界面相关性比较高的 target 主要有底下几个：
+##    -  graphical.target：就是文字加上图形界面，这个项目已经包含了底下的 multi-user.target 项目！
+##    -  multi-user.target：纯文本模式！
+##    -  rescue.target：在无法使用 root 登入的情况下，systemd 在开机时会多加一个额外的暂时系统，与你原本的系统无关。
+##                      这时你可以取得 root 的权限来维护你的系统。 但是这是额外系统，因此可能需要动到 chroot 的方式来取得你原有的系统喔！再后续的章节我们再来谈！
+##    -  emergency.target：紧急处理系统的错误，还是需要使用 root 登入的情况，在无法使用 rescue.target 时，可以尝试使用这种模式！
+##    -  shutdown.target：就是关机的流程。
+##    -  getty.target：可以设定你需要几个 tty 之类的，如果想要降低 tty 的项目，可以修改这个东西的配置文件！
+##
+##  正常的模式是 multi-user.target 以及 graphical.target 两个，救援方面的模式主要是 rescue.target 以及更严重的 emergency.target。
+##  如果要修改可提供登入的 tty 数量，则修改 getty.target 项目。基本上，我们最常使用的当然就是 multi-user 以及 graphical 啰！
+
+
+## [root@study ~]# systemctl [command] [unit.target]
+## 选项与参数：
+## command:
+##         get-default ：取得目前的 target
+##         set-default ：设定后面接的 target 成为默认的操作模式
+##         isolate ：切换到后面接的模式
+
+
+[root@study ~]# systemctl get-default   #我们的测试机器默认是图形界面，先观察是否真为图形模式，再将默认模式转为文字界面
+[root@study ~]# systemctl set-default multi-user.target    #将默认模式转为文字界面
+[root@study ~]# systemctl get-default
+[root@study ~]# systemctl isolate multi-user.target        #在不重新启动的情况下，将目前的操作环境改为纯文本模式，关掉图形界面
+[root@study ~]# systemctl isolate graphical.target         #重新取得图形界面
+
+## 要注意，改变 graphical.target 以及 multi-user.target 是透过 isolate 来处理的！
+## 鸟哥刚刚接触到 systemd 的时候，在 multi-user.target 环境下转成 graphical.target 时，
+## 可以透过 systemctl start graphical.target 喔！然后鸟哥就以为关闭图形界面即可回到 multi-user.target 的！
+## 但使用 systemctl stop graphical.target 却完全不理鸟哥～这才发现错了...在 service 部份用 start/stop/restart 才对，
+## 在 target 项目则请使用 isolate (隔离不同的操作模式) 才对！
+
+
+
+
+
 
 systemctl show nfs-server.service -p Names    # To find all aliases that can be used for a particular unit,
+
 
 
 ## -----------------------CentOS7----------------------------------
