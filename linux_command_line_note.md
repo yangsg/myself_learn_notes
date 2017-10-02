@@ -2531,6 +2531,22 @@ chkconfig --list           | systemctl list-dependencies --before         | List
 
 
 
+```sh
+
+[root@localhost ~]# systemctl --type help
+[root@localhost ~]# systemctl list-units  --state failed
+[root@localhost ~]# systemctl reload httpd.service   #this will reload Apache's httpd.conf in the web server, not the apache.service systemd unit file.
+[root@localhost ~]# systemctl daemon-reload          #Reload systemd manager configuration. This will rerun all generators (see systemd.generator(7)), reload all unit files,
+                                                     #and recreate the entire dependency tree. While the daemon is being reloaded, all sockets systemd listens
+                                                     #on behalf of user configuration will stay accessible.
+
+
+man 7 glob
+
+
+
+```
+
 
 
 
