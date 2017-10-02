@@ -2322,6 +2322,13 @@ Failed to issue method call: Unit cups.service is masked. # 再也无法唤醒�
 ## 在 target 项目则请使用 isolate (隔离不同的操作模式) 才对！
 
 
+## 为了方便起见， systemd 也提供了数个简单的指令给我们切换操作模式之用喔！ 大致上如下所示：
+[root@study ~]# systemctl poweroff          # 系统关机
+[root@study ~]# systemctl reboot            # 重新启动
+[root@study ~]# systemctl suspend           # 进入暂停模式
+[root@study ~]# systemctl hibernate         # 进入休眠模式
+[root@study ~]# systemctl rescue            # 强制进入救援模式
+[root@study ~]# systemctl emergency         # 强制进入紧急救援模式
 
 
 
