@@ -2005,6 +2005,7 @@ md5sum --check md5.txt
 
 ```
 
+
 ```sh
 ## daemon的主要分类：
 
@@ -2160,6 +2161,43 @@ echo "Nothing" "man chkconfig"
 
 
 ```
+
+
+```sh
+## -----------------------CentOS7----------------------------------
+## systemd 有好处:
+   1. 平行处理所有服务，加速开机流程(未相依的服务同时启动)
+   2. 一经要求就响应的 on-demand 启动方式 (systemd 全部就是仅有一只 systemd 服务搭配 systemctl 指令来处理, systemd 由于常驻内存，因此任何要求 (on-demand) 都可以立即处理后续的 daemon 启动的任务)
+   3. 服务相依性的自我检查(systemd 可以自定义服务相依性的检查, B->A, 则systemd 会自动帮你启动 A 服务)
+   4. 依 daemon 功能分类(首先 systemd 先定义所有的服务为一个服务单位 (unit)，并将该 unit 归类到不同的服务类型 (type) 去。
+       旧的 init 仅分为 stand alone 与 super daemon 实在不够看，
+       systemd 将服务单位 (unit) 区分为 service, socket, target, path, snapshot, timer 等多种不同的类型(type)， 方便管理员的分类与记忆)
+   5. 将多个 daemons 集合成为一个群组 (如同 systemV 的 init 里头有个 runlevel 的特色，systemd 亦将许多的功能集合成为一个所谓的 target 项目，
+       这个项目主要在设计操作环境的建置， 所以是集合了许多的 daemons，亦即是执行某个 target 就是执行好多个 daemon 的意思！)
+
+   6. 向下兼容旧有的 init 服务脚本
+
+## 虽然如此，不过 systemd 也是有些地方无法完全取代 init 的！包括：
+   1. 在 runlevel 的对应上，大概仅有 runlevel 1, 3, 5 有对应到 systemd 的某些 target 类型而已，没有全部对应； 
+   2. 全部的 systemd 都用 systemctl 这个管理程序管理，而 systemctl 支持的语法有限制，不像 /etc/init.d/daemon 就是纯脚本可以自定义参数，systemctl 不可自定义参数
+   3. 如果某个服务启动是管理员自己手动执行启动，而不是使用 systemctl 去启动的 (例如你自己手动输入 crond 以启动 crond 服务)，那么 systemd 将无法侦测到该服务，而无法进一步管理。 
+   4. systemd 启动过程中，无法与管理员透过 standard input 传入讯息！因此，自行撰写 systemd 的启动设定时，务必要取消互动机制～(连透过启动时传进的标准输入讯息也要避免！)
+
+
+## https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd
+
+
+
+
+## -----------------------CentOS7----------------------------------
+
+```
+## Systemd Unit Files Locations
+Directory | Description
+------------ | -------------
+/usr/lib/systemd/system/ | Systemd unit files distributed with installed RPM packages. 每个服务最主要的启动脚本设定，有点类似以前的 /etc/init.d 底下的档案
+/run/systemd/system/     | Systemd unit files created at run time. This directory takes precedence over the directory with installed service unit files. 系统执行过程中所产生的服务脚本，这些脚本的优先序要比 /usr/lib/systemd/system/ 高！
+/etc/systemd/system/     | Systemd unit files created by systemctl enable as well as unit files added for extending a service. This directory takes precedence over the directory with runtime unit files. 管理员依据主机系统的需求所建立的执行脚本，其实这个目录有点像以前 /etc/rc.d/rc5.d/Sxx 之类的功能！执行优先序又比 /run/systemd/system/ 高喔！
 
 
 ```sh
