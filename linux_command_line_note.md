@@ -1,8 +1,11 @@
 **useful online resource**
-* 鸟哥的 Linux 私房菜  http://cn.linux.vbird.org/linux_basic/linux_basic.php
+* 鸟哥的 Linux 私房菜(第3版)  http://cn.linux.vbird.org/linux_basic/linux_basic.php
+* 鸟哥的 Linux 私房菜(第4版)  http://linux.vbird.org/linux_basic/
 * nixCraft             https://www.cyberciti.biz/faq/
 
 * 参考书籍:
+  - [鸟哥的Linux私房菜 基础学习篇(第三版)](http://product.dangdang.com/20866026.html)
+  - [鸟哥的Linux私房菜:服务器架设篇(第3版)](http://product.dangdang.com/22787833.html)
   - Linux基础及应用教程(基于CentOS7)
 
 * help man info  --help
