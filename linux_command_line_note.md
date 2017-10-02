@@ -2413,11 +2413,58 @@ Failed to issue method call: Unit cups.service is masked. # 再也无法唤醒�
 
 
 ## systemctl 配置文件的设定项目简介  #todo
+## https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
+[root@study ~]# cat /usr/lib/systemd/system/sshd.service
+[root@localhost ~]# cat /usr/lib/systemd/system/sshd.service
+[Unit]
+Description=OpenSSH server daemon
+After=network.target sshd-keygen.service
+Wants=sshd-keygen.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/sshd
+ExecStart=/usr/sbin/sshd -D $OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
 
 
+##  两个 vsftpd 运作的实例 (此实例没有在此追加，查看鸟哥的linux私房菜第四版)
 
+[root@study system]# systemctl daemon-reload    #重载 systemd 的脚本配置文件内容
 
+## https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
 
+## 9.6.5. Working with Instantiated Units
+## It is possible to instantiate multiple units from a single template
+## configuration file at runtime. The "@" character is used to mark the template
+## and to associate units with it. Instantiated units can be started from another
+## unit file (using Requires or Wants options), or with the systemctl start
+## command. Instantiated service units are named the following way:
+###     template_name@instance_name.service
+
+## Where template_name stands for the name of the template configuration file.
+## Replace instance_name with the name for the unit instance. Several instances
+## can point to the same template file with configuration options common for all
+## instances of the unit. Template unit name has the form of:
+###     unit_name@.service
+## For example, the following Wants setting in a unit file:
+###     Wants=getty@ttyA.service,getty@ttyB.service
+
+## first makes systemd search for given service units. If no such units are found,
+## the part between "@" and the type suffix is ignored and systemd searches for
+## the getty@.service file, reads the configuration from it, and starts the
+## services.
+
+## Wildcard characters, called unit specifiers, can be used in any unit
+## configuration file. Unit specifiers substitute certain unit parameters and are
+## interpreted at runtime. Table 9.14, “Important Unit Specifiers” lists unit
+## specifiers that are particularly useful for template units.
+man 5 systemd.unit  #/Table 2. Specifiers available in unit files
 
 
 systemctl show nfs-server.service -p Names    # To find all aliases that can be used for a particular unit,
