@@ -2217,6 +2217,13 @@ Directory                | Description
 /run/systemd/system/     | Systemd unit files created at run time. This directory takes precedence over the directory with installed service unit files. 系统执行过程中所产生的服务脚本，这些脚本的优先序要比 /usr/lib/systemd/system/ 高！
 /etc/systemd/system/     | Systemd unit files created by systemctl enable as well as unit files added for extending a service. This directory takes precedence over the directory with runtime unit files. 管理员依据主机系统的需求所建立的执行脚本，其实这个目录有点像以前 /etc/rc.d/rc5.d/Sxx 之类的功能！执行优先序又比 /run/systemd/system/ 高喔！
 
+```sh
+## 也就是说，到底系统开机会不会执行某些服务其实是看 /etc/systemd/system/ 底下的设定，所以该目录底下就是一大堆连结档。
+## 而实际执行的 systemd 启动脚本配置文件， 其实都是放置在 /usr/lib/systemd/system/ 底下的喔！因此如果你想要修改某个服务启动的设定，
+## 应该要去 /usr/lib/systemd/system/ 底下修改才对！ /etc/systemd/system/ 仅是连结到正确的执行脚本配置文件而已。所以想要看执行脚本设定，
+## 应该就得要到 /usr/lib/systemd/system/ 底下去查阅才对！
+
+```
 
 ```sh
 
