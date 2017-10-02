@@ -2242,6 +2242,20 @@ service name status        | systemctl status name.service   <br />     systemct
 service --status-all       | systemctl list-units --type service --all    | Displays the status of all services.
 
 
+## [Comparison of the chkconfig Utility with systemctl](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-services)
+chkconfig                  | systemctl                                    | Description
+---------------------------|----------------------------------------------|----------------------------------------
+chkconfig name on          | systemctl enable name.service                | Enables a service.
+chkconfig name off         | systemctl disable name.service               | Disables a service.
+chkconfig --list name      | systemctl status name.service          <br /> systemctl is-enabled name.service          | Checks if a service is enabled.
+chkconfig --list           | systemctl list-unit-files --type service     | Lists all services and checks if they are enabled.
+chkconfig --list           | systemctl list-dependencies --after          | Lists services that are ordered to start before the specified unit.
+chkconfig --list           | systemctl list-dependencies --before         | Lists services that are ordered to start after the specified unit.
+
+
+
+
+
 
 ```sh
 
