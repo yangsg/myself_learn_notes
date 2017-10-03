@@ -1658,6 +1658,72 @@ netstat
 netstat -tulnp   #找出目前系统上已在监听的网络联机及其 PID
 
 
+https://security.stackexchange.com/questions/51767/does-connection-that-use-0-0-0-0-in-foreign-address-secured
+## -----------------------------------------------------------------------------------------------------------------
+## Proto Recv-Q Send-Q     Local Address               Foreign Address             State       PID/Program name
+## tcp        0      0     127.0.0.1:5555              0.0.0.0:*                   LISTEN
+## -----------------------------------------------------------------------------------------------------------------
+## All this is indicating is that the process listening on that address and port
+## has 'requested' the ability to receive connections from any IP address on any
+## port. Until a connection is made the process appears as being connected to
+## nothing in this way (asterisk).
+
+
+
+## https://superuser.com/questions/240105/netstat-a-command-difference-between-0-0-0-0-and-127-0-0-1
+##   Listening on 0.0.0.0 means that the program is listening on all IPv4 addresses assigned to the machine,
+##   whereas 127.0.0.1 is the loopback address, only accessible from the same machine.
+
+## https://serverfault.com/questions/78048/whats-the-difference-between-ip-address-0-0-0-0-and-127-0-0-1
+
+## https://serverfault.com/questions/228629/is-there-an-official-name-to-the-0-0-0-0-ip-address
+## https://tools.ietf.org/html/rfc5735#section-3
+## 0.0.0.0/0, which covers every IP on the Internet, is different from 0.0.0.0/32
+## or just 0.0.0.0, which is what the OP seemed to be asking about.  0.0.0.0 is
+## INADDR_ANY, which is primarily used when accept(2)ing to allow incoming
+## connections regardless of the destination IP address, while 0.0.0.0/0 is "all
+## addresses" (most commonly used in routing when specifying a default gateway,
+## and in firewalls when specifying default rules), and 0.0.0.0/32 is "the
+## unspecified address" (used most commonly in application-level programming to
+## say, "this address is wrong/uninitialized").
+
+
+
+
+https://baike.baidu.com/item/INADDR_ANY/1493998?fr=aladdin
+https://zhidao.baidu.com/question/560066724.html
+http://www.cnblogs.com/lemon-flm/p/7396536.html
+## ::: 这三个: 的前两个”::“，是“0:0:0:0:0:0:0:0”的缩写，相当于IPv6的“0.0.0.0”，就是本机的所有IPv6地址，第三个:是IP和端口的分隔符
+
+## https://askubuntu.com/questions/174387/what-does-the-asterisk-in-the-netstat-output-mean
+It is a wildcard meaning "any".
+For example, in the third line:
+------------------------------------------------------------------------------
+tcp        0      0 *:smtp                  *:*                     LISTEN
+------------------------------------------------------------------------------
+The first *, in *:smtp, means the process is listening on all of the IP addresses the machine has.
+The second *, in *:*, means connections can come from any IP address.
+The third *, in *:*, means the connection can originate from any port on the remote machine.
+
+## https://en.wikipedia.org/wiki/Netstat
+## Statistics provided[edit]
+## Netstat provides statistics for the following:
+##
+## Proto - The name of the protocol (TCP or UDP).
+## Local Address - The IP address of the local computer and the port number being used.
+##                 The name of the local computer that corresponds to the IP address and
+##                 the name of the port is shown unless the -n parameter is specified.
+##                 An asterisk (*) is shown for the host if the server is listening on all interfaces.
+##                 If the port is not yet established, the port number is shown as an asterisk.
+##
+## Foreign Address - The IP address and port number of the remote computer to which the socket
+##                   is connected. The names that corresponds to the IP address and the port are
+##                   shown unless the -n parameter is specified. If the port is not yet established,
+##                   the port number is shown as an asterisk (*).
+## State - Indicates the state of a TCP connection. The possible states are as follows:
+##                   CLOSE_WAIT, CLOSED, ESTABLISHED, FIN_WAIT_1, FIN_WAIT_2, LAST_ACK, LISTEN, SYN_RECEIVED, SYN_SEND, and TIME_WAIT.
+##                   For more information about the states of a TCP connection, see RFC 793.
+
 
 ```
 
