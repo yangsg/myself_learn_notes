@@ -2541,6 +2541,9 @@ chkconfig --list           | systemctl list-dependencies --before         | List
                                                      #on behalf of user configuration will stay accessible.
 
 [root@localhost ~]# systemctl show
+UnitPath=/etc/systemd/system /run/systemd/system /run/systemd/generator /usr/local/lib/systemd/system /usr/lib/systemd/system /run/systemd/generator.late
+[root@localhost ~]# systemctl list-unit-files  | grep getty
+[root@localhost ~]# find $(systemctl show | grep 'UnitPath='  | cut -d '=' -f 2)  -name getty.target
 
 
 man 7 glob
