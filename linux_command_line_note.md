@@ -1694,6 +1694,8 @@ https://baike.baidu.com/item/INADDR_ANY/1493998?fr=aladdin
 https://zhidao.baidu.com/question/560066724.html
 http://www.cnblogs.com/lemon-flm/p/7396536.html
 ## ::: 这三个: 的前两个”::“，是“0:0:0:0:0:0:0:0”的缩写，相当于IPv6的“0.0.0.0”，就是本机的所有IPv6地址，第三个:是IP和端口的分隔符
+http://bbs.csdn.net/topics/390895715
+## 0.0.0.0的意思是任意地址。表示本机的时候，0.0.0.0代表本机所有可用地址；当外部地址用的时候，表示所有网络地址
 
 ## https://askubuntu.com/questions/174387/what-does-the-asterisk-in-the-netstat-output-mean
 It is a wildcard meaning "any".
