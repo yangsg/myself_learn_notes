@@ -2894,6 +2894,176 @@ yum install centos-release-scl
 
 ```
 
+## [SELINUX](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/index)
+```sh
+####### SELINUX ARCHITECTURE--------------------------------------------
+##   SELinux is a Linux security module that is built into the Linux kernel. SELinux
+##   is driven by loadable policy rules. When security-relevant access is taking
+##   place, such as when a process attempts to open a file, the operation is
+##   intercepted in the kernel by SELinux. If an SELinux policy rule allows the
+##   operation, it continues, otherwise, the operation is blocked and the process
+##   receives an error.
+##
+##
+##   SELinux decisions, such as allowing or disallowing access, are cached. This
+##   cache is known as the Access Vector Cache (AVC). When using these cached
+##   decisions, SELinux policy rules need to be checked less, which increases
+##   performance. Remember that SELinux policy rules have no effect if DAC rules
+##   deny access first.
+
+
+##### SELINUX STATES AND MODES--------------------------------------------
+## setenforce - modify the mode SELinux is running in ( Changes made with setenforce do not persist across reboots.)
+## setenforce [Enforcing|Permissive|1|0]
+
+## You must reboot and possibly relabel if you change the policy type to have it take effect on the system.
+## The corresponding policy configuration for each such policy must be installed in the /etc/selinux/{SELINUXTYPE}/ directories.
+
+man 8 selinux   #/etc/selinux/config  #default: SELINUX=enforcing  SELINUXTYPE=targeted
+## 如果改变了政策则需要重新启动；如果由 enforcing 或 permissive 改成 disabled ，
+## 或由 disabled 改成其他两个，那也必须要重新启动。这是因为 SELinux 是整合到核心里面去的，
+## 你只可以在 SELinux 运作下切换成为强制 (enforcing) 或宽容 (permissive) 模式，不能够直接关闭 SELinux 的！
+
+##       Every confined service on the system has a man page in the following format:
+##       <servicename>_selinux(8)
+##       For example, httpd has the httpd_selinux(8) man page.
+
+
+man setenforce
+man -k selinux  #Will list all SELinux man pages.
+
+
+## targeted：针对网络服务限制较多，针对本机限制较少，是预设的政策；
+
+[root@localhost ~]# getenforce
+[root@localhost ~]# setenforce 1    #Use Enforcing or 1 to put SELinux in enforcing mode.
+[root@localhost ~]# setenforce 0    #Use Permissive or 0 to put SELinux in permissive mode.
+
+[root@localhost ~]# ls -Z    #-Z, --context  #Display security context so it fits on most displays.  Displays only mode, user, group, security context and file name.
+-rw-------. root root system_u:object_r:admin_home_t:s0 anaconda-ks.cfg
+
+## role
+## object_r：代表的是档案或目录等档案资源，这应该是最常见的啰；
+## system_r：代表的就是程序啦！不过，一般使用者也会被指定成为 system_r 喔！
+
+## 类型 (Type) (最重要！)：
+## 在预设的 targeted 政策中， Identify 与 Role 字段基本上是不重要的！重要的在于这个类型 (type) 字段！
+## 基本上，一个主体程序能不能读取到这个档案资源，与类型字段有关！而类型字段在档案与程序的定义不太相同，分别是：
+##   - type：在档案资源 (Object) 上面称为类型 (Type)；
+##   - domain：在主体程序 (Subject) 则称为领域 (domain) 了！
+## domain 需要与 type 搭配，则该程序才能够顺利的读取档案资源啦！
+
+##     To get security info:
+##        ps -eo euser,ruser,suser,fuser,f,comm,label
+##        ps axZ
+##        ps -eM
+##
+##        ps -eZ  #same as `ps -eM`
+
+## 那如何观察有没有受限 (confined )呢？ 很简单啊！就透过 ps -eZ 去撷取
+[root@study ~]# ps -eZ | grep -E 'cron|bash'
+system_u:system_r:crond_t:s0-s0:c0.c1023 863 ?  00:00:00 crond                  #在目前 target 这个政策底下，只有第三个类型 (type) 字段会有影响,我们可以看到， crond 确实是有受限的主体程序
+unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 2244 tty1 00:00:00 bash   #unconfined_t #bash 因为是本机程序，因此就是不受限 (unconfined_t) 的类型
+
+##   sestatus - SELinux status tool
+##   sestatus [-v] [-b]
+##   This tool is used to get the status of a system running SELinux.
+
+[root@localhost ~]# sestatus
+[root@localhost ~]# sestatus -v   #-v   #Displays the contexts of files and processes listed in the /etc/sestatus.conf file. It also checks whether the file is a symbolic link, if so then the context of the target  file is also shown.
+[root@localhost ~]# sestatus -b   #-b   #Display the current state of booleans.
+
+## getsebool - get SELinux boolean value(s)
+[root@localhost ~]# getsebool -a   #-a     Show all SELinux booleans.
+
+[root@localhost ~]# yum install setools-console
+
+
+##    seinfo - SELinux policy query tool
+##      seinfo [OPTIONS] [EXPRESSION] [POLICY ...]
+## DESCRIPTION
+##        seinfo allows the user to query the components of a SELinux policy.
+
+man seinfo
+[root@localhost ~]# seinfo    #If no expressions are provided, policy statistics will be printed (see --stats below) #same as `seinfo --stats`
+[root@localhost ~]# seinfo --all  #--all  Print all components.
+[root@localhost ~]# seinfo -u   #-u[NAME], --user[=NAME]  #Print a list of users or, if NAME is provided, print the user NAME.  With -x, print a list of roles assigned to each displayed user.
+[root@localhost ~]# seinfo -r   #-r[NAME], --role[=NAME]  #Print a list of roles or, if NAME is provided, print the role NAME.  With -x, print a list of types assigned to each displayed role.
+[root@localhost ~]# seinfo -t   #-r[NAME], --role[=NAME]  #Print a list of roles or, if NAME is provided, print the role NAME.  With -x, print a list of types assigned to each displayed role.
+[root@localhost ~]# seinfo -b   #-b[NAME], --bool[=NAME]  #Print a list of conditional booleans or, if NAME is provided, print the boolean NAME.  With -x, print the default state of each displayed conditional boolean.
+
+##       sesearch - SELinux policy query tool
+##
+##SYNOPSIS
+##       sesearch [OPTIONS] RULE_TYPE [RULE_TYPE ...] [EXPRESSION] [POLICY ...]
+##
+##DESCRIPTION
+##       sesearch allows the user to search the rules in a SELinux policy.
+##
+##RULE TYPE OPTIONS
+##       sesearch is capable of searching multiple types of rules. At least one of the following must be provided to specify the desired type(s) of rules to search.
+##
+##       -A, --allow
+##              Search for allow rules.
+##
+##EXPRESSIONS
+##       -s NAME, --source=NAME
+##              Find rules with type/attribute NAME as their source.
+##
+##       -t NAME, --target=NAME
+##              Find rules with type/attribute NAME as their target.
+##       -b NAME, --bool=NAME
+##              Find conditional rules with NAME in their conditional expression.  This option will include rules in both the true and false lists of the conditional.
+
+man sesearch
+[root@localhost ~]# sesearch -A -s crond_t | grep spool
+[root@localhost ~]# sesearch -A -t user_cron_spool_t | grep crond
+[root@localhost ~]# sesearch -A -b fcron_crond
+
+
+
+
+##       semanage - SELinux Policy Management tool
+##
+##SYNOPSIS
+##       semanage {import,export,login,user,port,interface,module,node,fcontext,boolean,permissive,dontaudit}
+##                       ...  positional arguments:
+
+man semanage
+man semanage-boolean
+
+[root@localhost ~]# semanage boolean -l | grep httpd_enable_homedirs
+SELinux boolean                State  Default Description
+httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
+
+[root@localhost ~]# sesearch -A -b httpd_enable_homedirs
+
+##       setsebool - set SELinux boolean value
+##
+##SYNOPSIS
+##       setsebool [ -PNV ] boolean value | bool1=val1 bool2=val2 ...
+##
+##DESCRIPTION
+##       setsebool  sets the current state of a particular SELinux boolean or a list of booleans to a given value. The value may be 1 or true or on to enable the boolean, or 0 or false or off to disable it.
+##
+##       Without the -P option, only the current boolean value is affected; the boot-time default settings are not changed.
+##
+##       If the -P option is given, all pending values are written to the policy file on disk. So they will be persistent across reboots.
+##
+##       If the -N option is given, the policy on disk is not reloaded into the kernel.
+##
+##       If the -V option is given, verbose error messages will be printed from semanage libraries.
+
+[root@localhost ~]# setsebool -P httpd_enable_homedirs 1   #-P选项会导致修改被持久化到配置文件中
+[root@localhost ~]# getsebool  httpd_enable_homedirs
+[root@localhost ~]# setsebool -P httpd_enable_homedirs 0
+[root@localhost ~]# getsebool  httpd_enable_homedirs
+
+
+
+```
+
+
 * install some useful tools
 ```sh
 yum install bash-completion bash-completion-extras  #https://www.cyberciti.biz/faq/fedora-redhat-scientific-linuxenable-bash-completion/
