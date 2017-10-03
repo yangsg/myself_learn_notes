@@ -1703,9 +1703,9 @@ For example, in the third line:
 ------------------------------------------------------------------------------
 tcp        0      0 *:smtp                  *:*                     LISTEN
 ------------------------------------------------------------------------------
-The first *, in *:smtp, means the process is listening on all of the IP addresses the machine has.
-The second *, in *:*, means connections can come from any IP address.
-The third *, in *:*, means the connection can originate from any port on the remote machine.
+## The first *, in *:smtp, means the process is listening on all of the IP addresses the machine has.
+## The second *, in *:*, means connections can come from any IP address.
+## The third *, in *:*, means the connection can originate from any port on the remote machine.
 
 ## https://en.wikipedia.org/wiki/Netstat
 ## Statistics provided[edit]
