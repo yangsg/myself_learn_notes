@@ -599,6 +599,8 @@ chmod u=rwx,go=rx .bashrc   #[ugoa]
 chmod a+w .bashrc
 chmod a-x .bashrc
 chmod -R a-x dir01 #-R, --recursive
+chmod --reference a.txt b.txt   #--reference=RFILE  #use RFILE's mode instead of MODE values
+
 
 ```
 
@@ -3058,6 +3060,90 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 [root@localhost ~]# getsebool  httpd_enable_homedirs
 [root@localhost ~]# setsebool -P httpd_enable_homedirs 0
 [root@localhost ~]# getsebool  httpd_enable_homedirs
+
+##现在我们知道 SELinux 对受限的主体程序有没有影响，
+##    第一关考虑 SELinux 的三种类型，
+##    第二关考虑 SELinux 的政策规则是否放行，
+##    第三关则是开始比对 SELinux type 啦！
+
+## 使用 chcon 手动修改档案的 SELinux type
+## chcon - change file SELinux security context
+##SYNOPSIS
+##       chcon [OPTION]... CONTEXT FILE...
+##       chcon [OPTION]... [-u USER] [-r ROLE] [-l RANGE] [-t TYPE] FILE...
+##
+##DESCRIPTION
+##       Change the SELinux security context of each FILE to CONTEXT.  With --reference, change the security context of each FILE to that of RFILE.
+##
+
+[root@study ~]# ls -l -Z /etc/hosts
+[root@study ~]# chcon -v -t net_conf_t /etc/cron.d/checktime
+[root@study ~]# ls -l -Z /etc/cron.d/checktime
+[root@study ~]# chcon -v --reference=/etc/shadow /etc/cron.d/checktime     #类比chown,chgrp,chmod的--reference选项
+[root@study ~]# ls -l -Z /etc/shadow /etc/cron.d/checktime
+
+## 使用 restorecon 让档案恢复正确的 SELinux type
+##       restorecon - restore file(s) default SELinux security contexts.
+##
+##SYNOPSIS
+##     restorecon [-R] [-n] [-p] [-v] [-e directory] pathname...
+##
+##     restorecon -f infilename [-e directory] [-R] [-n] [-p] [-v] [-F]
+##
+##     This program is primarily used to set the security context (extended attributes) on one or more files.
+##
+##     It  can  also be run at any other time to correct inconsistent labels, to add support for newly-installed policy or, by using the -n option, to passively check whether the file contexts
+##     are all set as specified by the active policy (default behavior).
+##
+##     If a file object does not have a context, restorecon will write the default context to the file object's extended attributes. If a file object has a context, restorecon will only modify
+##     the type portion of the security context.  The -F option will force a replacement of the entire context.
+##
+##     It is the same executable as setfiles but operates in a slightly different manner depending on its argv[0].
+##
+##OPTIONS
+##       -R, -r change files and directories file labels recursively (descend directories).
+##              Note: restorecon reports warnings on paths without default labels only if called non-recursively or in verbose mode.
+
+
+
+[root@study ~]# restorecon -Rv /etc/cron.d
+
+## semanage 默认目录的安全性本文查询与修改
+
+## 为什么 restorecon 可以『恢复』原本的 SELinux type 呢？那肯定就是有个地方在纪录每个档案/目录的 SELinux 默认类型啰？
+## 没错！是这样～那要如何 (1)查询预设的 SELinux type 以及 (2)如何增加/修改/删除预设的 SELinux type 呢？
+## 很简单～透过 semanage 即可！他是这样使用的：
+
+##       semanage-fcontext - SELinux Policy Management file context tool
+##
+##SYNOPSIS
+##     semanage fcontext [-h] [-n] [-N] [-S STORE] [ --add ( -t TYPE -f FTYPE -r RANGE -s SEUSER | -e EQUAL ) FILE_SPEC ) | --delete ( -t TYPE -f FTYPE | -e EQUAL ) FILE_SPEC ) | --deleteall |
+##     --extract | --list [-C] | --modify ( -t TYPE -f FTYPE -r RANGE -s SEUSER | -e EQUAL ) FILE_SPEC ) ]
+##
+##DESCRIPTION
+##     semanage is used to configure certain elements of SELinux policy without requiring modification to or recompilation from policy sources.   semanage  fcontext  is  used  to   manage  the
+##     default file system labeling on an SELinux system.  This command maps file paths using regular expressions to SELinux labels.
+##
+##OPTIONS
+##       -l, --list
+##              List records of the specified object type
+##       -a, --add
+##              Add a record of the specified object type
+##       -d, --delete
+##              Delete a record of the specified object type
+##       -m, --modify
+##              Modify a record of the specified object type
+
+[root@study ~]# semanage fcontext -l | grep -E '^/etc |^/etc/cron'    #查询一下 /etc /etc/cron.d 的预设 SELinux type 为何
+
+[root@study ~]# semanage fcontext -a -t system_cron_spool_t "/srv/mycron(/.*)?"
+[root@study ~]# semanage fcontext -l | grep '^/srv/mycron'
+
+
+
+
+
+
 
 
 
