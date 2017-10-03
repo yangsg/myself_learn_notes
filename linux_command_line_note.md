@@ -2540,6 +2540,8 @@ chkconfig --list           | systemctl list-dependencies --before         | List
                                                      #and recreate the entire dependency tree. While the daemon is being reloaded, all sockets systemd listens
                                                      #on behalf of user configuration will stay accessible.
 
+[root@localhost ~]# systemctl show
+
 
 man 7 glob
 
