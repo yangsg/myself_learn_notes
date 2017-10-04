@@ -1989,6 +1989,106 @@ top -d 2 -p 14836     #-p ：指定某些个 PID 来进行观察监测而已。
 CentOS7.4中tcp_wrappers已经被弃用，所以CentOS7最好不要再使用此技术了。
 tcp_wrappers deprecated # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html-single/7.4_Release_Notes/index.html
 
+
+https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html
+
+
+[root@localhost ~]# ldd /sbin/sshd | grep libwrap       #查看sshd服务是否支持tcp_wrappers
+        libwrap.so.0 => /lib64/libwrap.so.0 (0x00007eff90d2c000)   #如果输出中有这一行，则表示支持tcp_wrappers
+
+(注： the last line of a hosts access file must be a newline character (created by pressing the Enter key))
+/etc/hosts.allow  #许可表
+/etc/hosts.deny   #拒绝表
+
+TCP Wrappers Configuration Files
+
+To determine if a client is allowed to connect to a service, TCP Wrappers
+reference the following two files, which are commonly referred to as hosts
+access files:
+
+/etc/hosts.allow
+/etc/hosts.deny
+
+##  When a TCP-wrapped service receives a client request, it performs the following
+##  steps:
+##
+##      It references /etc/hosts.allow. — The TCP-wrapped service sequentially parses
+##      the /etc/hosts.allow file and applies the first rule specified for that
+##      service. If it finds a matching rule, it allows the connection. If not, it
+##      moves on to the next step.
+##
+##      It references /etc/hosts.deny. — The TCP-wrapped service sequentially parses
+##      the /etc/hosts.deny file. If it finds a matching rule, it denies the
+##      connection. If not, it grants access to the service.
+##
+##  The following are important points to consider when using TCP Wrappers to
+##  protect network services:
+##
+##      Because access rules in hosts.allow are applied first, they take precedence
+##      over rules specified in hosts.deny. Therefore, if access to a service is
+##      allowed in hosts.allow, a rule denying access to that same service in
+##      hosts.deny is ignored.
+##
+##      The rules in each file are read from the top down and the first matching rule
+##      for a given service is the only one applied. The order of the rules is
+##      extremely important.
+##
+##      If no rules for the service are found in either file, or if neither file
+##      exists, access to the service is granted.
+##
+##      TCP-wrapped services do not cache the rules from the hosts access files, so any
+##      changes to hosts.allow or hosts.deny take effect immediately, without
+##      restarting network services.
+
+
+
+[root@localhost ~]# yum install tcp_wrappers
+
+## https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html
+man 5 hosts_options     #/ACCESS CONTROL   #/RUNNING OTHER COMMANDS
+man 5 hosts_access      #/EXPANSIONS   #/WILDCARDS
+man tcpd
+
+--------------------------------------------------------------------
+                 daemon_list : client_list [ : shell_command ]
+--------------------------------------------------------------------
+
+##----------------------(命令需要使用绝对路径)-----------------------------------------------------------------------------
+[root@www ~]# vim /etc/hosts.deny
+rsync : ALL: spawn (echo "security notice from host $(/bin/hostname)" ;\
+  echo; /usr/sbin/safe_finger @%h ) | \
+  /bin/mail -s "%d-%h security" root & \
+  : twist ( /bin/echo -e "\n\nWARNING connection not allowed.\n\n" )
+##---------------------------------------------------------------------------------------------------
+
+## Shell Commands
+##
+## Option fields allow access rules to launch shell commands through the following two directives:
+##
+## spawn — Launches a shell command as a child process. This directive can perform tasks like using /usr/sbin/safe_finger
+##         to get more information about the requesting client or create special log files using the echo command.
+##
+## ##In the following example, clients attempting to access Telnet services from the example.com domain are quietly logged to a special file:
+## ---example start>-------------------------------------------
+## in.telnetd : .example.com \
+##   : spawn /bin/echo `/bin/date` from %h>>/var/log/telnet.log \
+##   : allow
+## ---example end<-------------------------------------------
+##
+## twist — Replaces the requested service with the specified command. This directive is often used to set up traps
+##         for intruders (also called "honey pots"). It can also be used to send messages to connecting clients.
+##         The twist directive must occur at the end of the rule line.
+##
+## ##In the following example, clients attempting to access FTP services from the example.com domain are sent a message using the echo command:
+##
+## ---example start>-------------------------------------------
+## vsftpd : .example.com \
+##   : twist /bin/echo "421 This domain has been black-listed. Access denied!"
+## ---example end<-------------------------------------------
+
+
+
+
 ```
 
 ```sh
