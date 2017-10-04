@@ -3138,7 +3138,9 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 [root@study ~]# semanage fcontext -l | grep -E '^/etc |^/etc/cron'    #查询一下 /etc /etc/cron.d 的预设 SELinux type 为何
 
 
-## https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security-Enhanced_Linux/sect-Security-Enhanced_Linux-SELinux_Contexts_Labeling_Files-Persistent_Changes_semanage_fcontext.html
+## -----demo start>---49fdce05-5e62-414f-a61c-09bdf27ff47f---------------------------
+
+## https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-selinux_contexts_labeling_files#sect-Security-Enhanced_Linux-SELinux_Contexts_Labeling_Files-Persistent_Changes_semanage_fcontext
 [root@study ~]# mkdir /srv/mycron
 [root@study ~]# cp /etc/cron.d/checktime /srv/mycron
 [root@study ~]# ll -dZ /srv/mycron /srv/mycron/checktime
@@ -3153,9 +3155,9 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 
 [root@localhost ~]# semanage fcontext -d "/srv/mycron(/.*)?"
 [root@localhost ~]# semanage fcontext -l | grep '^/srv/mycron'
+[root@localhost ~]# cat /etc/selinux/targeted/contexts/files/file_contexts.local
 
-
-
+## -----demo end<---49fdce05-5e62-414f-a61c-09bdf27ff47f---------------------------
 
 
 ```
