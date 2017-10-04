@@ -1983,6 +1983,14 @@ top -d 2 -p 14836     #-p ：指定某些个 PID 来进行观察监测而已。
 ```
 
 
+
+[Enhancing the security of the OS with cryptography changes in Red Hat Enterprise Linux 7.4](https://access.redhat.com/blogs/766093/posts/3050871)
+```sh
+CentOS7.4中tcp_wrappers已经被弃用，所以CentOS7最好不要再使用此技术了。
+tcp_wrappers deprecated # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html-single/7.4_Release_Notes/index.html
+
+```
+
 ```sh
 ## Makefile的学习资源·：Makefile经典教程(掌握这些足够)   http://blog.csdn.net/ruglcc/article/details/7814546
 
