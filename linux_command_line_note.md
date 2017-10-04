@@ -56,6 +56,15 @@ date --set='-5 minutes'
 ```
 
 ```sh
+## uuidgen - create a new UUID value
+
+uuidgen       #By default uuidgen will generate a random-based UUID if a high-quality  random  number generator is present. Otherwise, it will choose a time-based UUID.
+uuidgen -r    #-r, --random  #Generate  a  random-based  UUID.  This method creates a UUID consisting mostly of random bits.  It requires that the operating system have a high quality random number generator, such as /dev/random.
+uuidgen -t    #-t, --time #Generate a time-based UUID.  This method creates a UUID based on the system clock plus the system's ethernet hardware address, if present.
+
+```
+
+```sh
 man shutdown
 shutdown -h now  #equivalent to `shutdown -h +0` #立刻关机
 shutdown -h 20:25  #系统在今天的 20:25 分会关机，若在21:25才下达此指令，则隔天才关机
@@ -3143,7 +3152,7 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 ## https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-selinux_contexts_labeling_files#sect-Security-Enhanced_Linux-SELinux_Contexts_Labeling_Files-Persistent_Changes_semanage_fcontext
 [root@study ~]# mkdir /srv/mycron
 [root@study ~]# cp /etc/cron.d/checktime /srv/mycron
-[root@study ~]# ll -dZ /srv/mycron /srv/mycron/checktime
+[root@study ~]# ls -dZ /srv/mycron /srv/mycron/checktime
 [root@study ~]# semanage fcontext -l | grep '^/srv'
 [root@study ~]# semanage fcontext -a -t system_cron_spool_t "/srv/mycron(/.*)?"  #use quotation marks around the regular expression: #将 mycron及其下的内容默认值改为 system_cron_spool_t 啰！
 [root@study ~]# semanage fcontext -l | grep '^/srv/mycron'
@@ -3151,7 +3160,7 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 [root@localhost ~]# cat /etc/selinux/targeted/contexts/files/file_contexts.local   #该文件中的entry会被命令'semanage fcontext -a -t system_cron_spool_t "/srv/mycron(/.*)?"'修改
 
 [root@study ~]# restorecon -Rv /srv/mycron
-[root@study ~]# ll -dZ /srv/mycron /srv/mycron/*
+[root@study ~]# ls -dZ /srv/mycron /srv/mycron/*
 
 [root@localhost ~]# semanage fcontext -d "/srv/mycron(/.*)?"
 [root@localhost ~]# semanage fcontext -l | grep '^/srv/mycron'
