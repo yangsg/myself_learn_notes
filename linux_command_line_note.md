@@ -1,6 +1,7 @@
 **useful online resource**
 * 鸟哥的 Linux 私房菜(第3版)  http://cn.linux.vbird.org/linux_basic/linux_basic.php
 * 鸟哥的 Linux 私房菜(第4版)  http://linux.vbird.org/linux_basic/
+* [Product Documentation for Red Hat Enterprise Linux](https://access.redhat.com/documentation/en/red-hat-enterprise-linux?version=7/)
 * nixCraft             https://www.cyberciti.biz/faq/
 
 * 参考书籍:
@@ -3076,11 +3077,11 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 ##       Change the SELinux security context of each FILE to CONTEXT.  With --reference, change the security context of each FILE to that of RFILE.
 ##
 
-[root@study ~]# ls -l -Z /etc/hosts
+[root@study ~]# ls -Z /etc/hosts
 [root@study ~]# chcon -v -t net_conf_t /etc/cron.d/checktime
-[root@study ~]# ls -l -Z /etc/cron.d/checktime
+[root@study ~]# ls -Z /etc/cron.d/checktime
 [root@study ~]# chcon -v --reference=/etc/shadow /etc/cron.d/checktime     #类比chown,chgrp,chmod的--reference选项
-[root@study ~]# ls -l -Z /etc/shadow /etc/cron.d/checktime
+[root@study ~]# ls -Z /etc/shadow /etc/cron.d/checktime
 
 ## 使用 restorecon 让档案恢复正确的 SELinux type
 ##       restorecon - restore file(s) default SELinux security contexts.
@@ -3136,12 +3137,22 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 
 [root@study ~]# semanage fcontext -l | grep -E '^/etc |^/etc/cron'    #查询一下 /etc /etc/cron.d 的预设 SELinux type 为何
 
-[root@study ~]# semanage fcontext -a -t system_cron_spool_t "/srv/mycron(/.*)?"
+
+## https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security-Enhanced_Linux/sect-Security-Enhanced_Linux-SELinux_Contexts_Labeling_Files-Persistent_Changes_semanage_fcontext.html
+[root@study ~]# mkdir /srv/mycron
+[root@study ~]# cp /etc/cron.d/checktime /srv/mycron
+[root@study ~]# ll -dZ /srv/mycron /srv/mycron/checktime
+[root@study ~]# semanage fcontext -l | grep '^/srv'
+[root@study ~]# semanage fcontext -a -t system_cron_spool_t "/srv/mycron(/.*)?"  #use quotation marks around the regular expression: #将 mycron及其下的内容默认值改为 system_cron_spool_t 啰！
 [root@study ~]# semanage fcontext -l | grep '^/srv/mycron'
 
+[root@localhost ~]# cat /etc/selinux/targeted/contexts/files/file_contexts.local   #该文件中的entry会被命令'semanage fcontext -a -t system_cron_spool_t "/srv/mycron(/.*)?"'修改
 
+[root@study ~]# restorecon -Rv /srv/mycron
+[root@study ~]# ll -dZ /srv/mycron /srv/mycron/*
 
-
+[root@localhost ~]# semanage fcontext -d "/srv/mycron(/.*)?"
+[root@localhost ~]# semanage fcontext -l | grep '^/srv/mycron'
 
 
 
