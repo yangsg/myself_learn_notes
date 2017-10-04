@@ -3169,6 +3169,51 @@ httpd_enable_homedirs          (off  ,  off)  Allow httpd to enable homedirs
 ## -----demo end<---49fdce05-5e62-414f-a61c-09bdf27ff47f---------------------------
 
 
+######一个网络服务案例及登录文件协助
+## setroubleshoot --> 错误讯息写入 /var/log/messages
+troubleshoot 大家都知道是错误克服，因此这个 setroubleshoot
+自然就得要启动他啦！这个服务会将关于 SELinux 的错误讯息与克服方法记录到
+/var/log/messages 与 /var/log/setroubleshoot/* 里头，所以你一定得要启动这个服务才好
+这玩意儿总共需要两个软件，分别是 setroublshoot 与 setroubleshoot-server
+
+原本的 SELinux 信息本来是以两个服务来记录的，分别是 auditd
+与 setroubleshootd。既然是同样的信息，因此 CentOS 6.x (含 7.x) 以后将两者整合在
+auditd 当中啦！所以，并没有 setroubleshootd 的服务存在了喔！因此，当你安装好了
+setroubleshoot-server 之后，请记得要重新启动 auditd，否则 setroubleshootd
+的功能不会被启动的。
+
+CentOS 7.x 对 setroubleshootd 的运作方式是：
+  1. 先由 auditd 去呼叫 audispd 服务
+  2. 然后 audispd 服务去启动 sedispatch 程序
+  3. sedispatch 再将原本的 auditd 讯息转成 setroubleshootd 的讯息，进一步储存下来的
+
+[root@localhost ~]# yum install setroubleshoot setroubleshoot-server     #再说一遍，安装完毕最好重新启动 auditd 这个服务喔！
+[root@localhost ~]# systemctl list-units  | grep auditd
+  auditd.service                                                                      loaded active running   Security Auditing Service
+
+## 在实际试验中，使用`systemctl restart auditd.service`会报依赖相关的错误并失败，但是通过service命令却可以成功stop和restart该auditd服务
+[root@localhost ~]# service auditd restart      #https://stackoverflow.com/questions/41053331/ansible-how-to-restart-auditd-service-on-centos-7-get-error-about-dependency
+
+[root@localhost ~]# useradd -s /sbin/nologin ftptest
+[root@localhost ~]# echo "myftp123" | passwd --stdin ftptest
+[root@localhost ~]# yum install vsftpd
+[root@localhost ~]# systemctl start vsftpd.service
+[root@localhost ~]# systemctl enable vsftpd.service
+[root@localhost ~]# netstat -tulnp
+
+[root@localhost ~]# echo a.txt > a.txt
+[root@localhost ~]# mkdir testdir01
+[root@localhost ~]# echo b.txt > testdir01/b.txt
+[root@localhost ~]# cp -a testdir01 a.txt /var/ftp/pub
+
+[root@localhost ~]# curl ftp://localhost   #先看看 FTP 根目录底下有什么档案存在？
+[root@localhost ~]# curl ftp://localhost/pub/ #再往下看看，能不能看到 pub 内的档案呢？#因为是目录，要加上 / 才好！
+[root@localhost dir02]# curl ftp://localhost/pub/a.txt
+[root@localhost dir02]# vim /var/log/messages
+[root@study ~]# sealert -l 3a57aad3-a128-461b-966a-5bb2b0ffa0f9   #后续操作参考<鸟哥的linux私房菜(第4版)>
+
+
+
 ```
 
 
