@@ -2055,9 +2055,9 @@ helpers  icmptypes  ipsets  services  xmlschema  zones
 ```
 - [The zone settings in /etc/firewalld/ are a range of preset settings, which can be quickly applied to a network interface](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
 zone                          | explanation
-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-drop |Any incoming network packets are dropped; there is no reply. Only outgoing network connections are possible.
-block|Any incoming network connections are rejected with an icmp-host-prohibited message for IPv4 and icmp6-adm-prohibited for IPv6. Only network connections initiated from within the system are possible.
+------------------------------|----------------------------------------
+drop | Any incoming network packets are dropped; there is no reply. Only outgoing network connections are possible.
+block | Any incoming network connections are rejected with an icmp-host-prohibited message for IPv4 and icmp6-adm-prohibited for IPv6. Only network connections initiated from within the system are possible.
 public | For use in public areas. You do not trust the other computers on the network to not harm your computer. Only selected incoming connections are accepted.
 external | For use on external networks with masquerading enabled, especially for routers. You do not trust the other computers on the network to not harm your computer. Only selected incoming connections are accepted.
 [dmz](https://baike.baidu.com/item/DMZ/631225?fr=aladdin) | For computers in your demilitarized zone that are publicly-accessible with limited access to your internal network. Only selected incoming connections are accepted.
