@@ -2053,7 +2053,7 @@ helpers  icmptypes  ipsets  services  xmlschema  zones
 
 
 ```
-[The zone settings in /etc/firewalld/ are a range of preset settings, which can be quickly applied to a network interface](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
+- [The zone settings in /etc/firewalld/ are a range of preset settings, which can be quickly applied to a network interface](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
 zone                          | explanation
 ----------------------------- | ----------------------------------------
 drop |Any incoming network packets are dropped; there is no reply. Only outgoing network connections are possible.
