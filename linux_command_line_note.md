@@ -1982,7 +1982,43 @@ top -d 2 -p 14836     #-p ：指定某些个 PID 来进行观察监测而已。
 
 ```
 
+[FIREWALLS](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
 
+[INSTALLING FIREWALLD](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-installing_firewalld)
+```sh
+yum install firewalld
+
+##----Starting firewalld--start>---------
+
+systemctl unmask firewalld
+systemctl start firewalld
+systemctl enable firewalld   #To ensure firewalld starts automatically at system start,
+
+##----Starting firewalld--end<---------
+
+
+##----Stopping firewalld--start>---------
+
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl mask firewalld     #To make sure firewalld is not started by accessing the firewalld D-Bus interface and also if other services require firewalld,
+
+##----Stopping firewalld--end<---------
+
+##----Checking If firewalld Is Running--start>---------
+
+systemctl status firewalld     #check if firewalld is running
+firewall-cmd --state           #check if firewall-cmd can connect to the daemon   (running)
+
+##----Checking If firewalld Is Running--end>---------
+
+
+
+
+
+
+
+```
 
 [Enhancing the security of the OS with cryptography changes in Red Hat Enterprise Linux 7.4](https://access.redhat.com/blogs/766093/posts/3050871)
 ```sh
