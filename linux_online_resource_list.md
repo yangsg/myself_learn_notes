@@ -4,4 +4,6 @@
 
 - [30 Things to Do After Minimal RHEL/CentOS 7 Installation](https://www.tecmint.com/things-to-do-after-minimal-rhel-centos-7-installation/)
 
+--[Firewalld fedora](https://fedoraproject.org/wiki/Firewalld?rd=FirewallD)
+
 
