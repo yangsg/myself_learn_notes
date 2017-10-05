@@ -2062,13 +2062,10 @@ block | Any incoming network connections are rejected with an icmp-host-prohibit
 public | For use in public areas. You do not trust the other computers on the network to not harm your computer. Only selected incoming connections are accepted.
 external | For use on external networks with masquerading enabled, especially for routers. You do not trust the other computers on the network to not harm your computer. Only selected incoming connections are accepted.
 [dmz](https://baike.baidu.com/item/DMZ/631225?fr=aladdin) | For computers in your demilitarized zone that are publicly-accessible with limited access to your internal network. Only selected incoming connections are accepted.
-
-```sh
 work | For use in work areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.
 home | For use in home areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.
 internal | For use on internal networks. You mostly trust the other computers on the networks to not harm your computer. Only selected incoming connections are accepted.
 trusted | All network connections are accepted.
-```
 
 
 
