@@ -2053,7 +2053,8 @@ helpers  icmptypes  ipsets  services  xmlschema  zones
 
 
 ```
-- [The zone settings in /etc/firewalld/ are a range of preset settings, which can be quickly applied to a network interface](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
+*** [Understanding Network Zones](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
+The zone settings in /etc/firewalld/ are a range of preset settings, which can be quickly applied to a network interface
 
  zone                         | explanation
 ------------------------------|----------------------------------------
@@ -2067,7 +2068,12 @@ home | For use in home areas. You mostly trust the other computers on networks t
 internal | For use on internal networks. You mostly trust the other computers on the networks to not harm your computer. Only selected incoming connections are accepted.
 trusted | All network connections are accepted.
 
-
+```sh
+It is possible to designate one of these zones to be the default zone. When
+interface connections are added to NetworkManager, they are assigned to the
+default zone. On installation, the default zone in firewalld is set to be the
+public zone.
+```
 
 
 
