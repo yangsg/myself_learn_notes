@@ -2076,12 +2076,90 @@ public zone.
 ```
 
 
+```sh
+
+## Protocol names are preferred over service or application names in firewalld
+
+firewall-cmd --get-services               #To list all services available on the system
+firewall-cmd --info-service=service-name  #To get the settings of a service
+ls /usr/lib/firewalld/services/           #To list only the default predefined services available
+
+##Files in /usr/lib/firewalld/services/ must not be edited. Only the files in /etc/firewalld/services/ should be edited.
+
+ls /etc/firewalld/services/    #To list the system or user-created services, enter the following command as root
+
+##  The files /usr/lib/firewalld/services/ can be used as templates if you want to add or change a service.
+
+firewall-cmd --permanent --new-service=service-name   #To add a new service in a terminal,
+firewall-cmd --permanent --new-service-from-file=service-name.xml    #To add a new service using a local file
+## You can change the service name with the additional --name=service-name option.
+
+## As soon as service settings are changed, an updated copy of the service is placed into /etc/firewalld/services/.
+
+cp /usr/lib/firewalld/services/service-name.xml /etc/firewalld/services/service-name.xml   #As root, you can enter the following command to copy a service manually
+
+##  firewalld loads files from /usr/lib/firewalld/services in the first place. If
+##  files are placed in /etc/firewalld/services and they are valid, then these will
+##  override the matching files from /usr/lib/firewalld/services. The overriden
+##  files in /usr/lib/firewalld/services will be used as soon as the matching files
+##  in /etc/firewalld/services have been removed or if firewalld has been asked to
+##  load the defaults of the services. This applies to the permanent environment
+##  only. A reload is needed to get these fallbacks also in the runtime
+##  environment.
+
+
+```
+
+```sh
+/etc/firewalld/direct.xml
+```
+
+```sh
+## Configuring the Firewall Using the firewall-cmd Command-Line Tool
+
+firewall-cmd --set-default-zone=zone-name   #Setting the Default Zone
+
+firewall-cmd --version    #check the version
+firewall-cmd --help       #view the help output
+man firewall-cmd
+
+
+## To make a command both persistent and take effect immediately, enter the
+## command twice: once with the --permanent and once without. This is because
+## a firewalld reload takes more time than just repeating a command because it has
+## to reload all configuration files and recreate the whole firewall
+## configuration. While reloading, the policy for built-in chains is set to DROP
+## for security reasons and is then reset to ACCEPT at the end. Service disruption
+## is possible during the reload.
+
+
+## For configuration settings such as the default zone, there is no difference
+## between the runtime and permanent environment when using the command-line and GUI tools.
+
+
+firewall-cmd --get-active-zones             #view the list of active zones with a list of the interfaces currently assigned to them
+firewall-cmd --get-zone-of-interface=em1    #find out the zone that an interface, for example, em1, is currently assigned to
+firewall-cmd --zone=public --list-interfaces  #find out all the interfaces assigned to a zone, for example, the public zone,
+firewall-cmd --zone=public --list-all      # find out all the settings of a zone, for example, the public zone,
+firewall-cmd --info-zone=public            #To view the zone information, use the --info-zone option. To get the verbose output with the description and short description, use the additional -v option.
+firewall-cmd --get-services           #To view the list of services currently loaded,
+firewall-cmd --permanent --get-services    #To list the custom services that have been created but not loaded, # This lists all services, including custom services configured in /etc/firewalld/services/, even if they are not yet loaded.
+
+firewall-cmd --info-service=ftp   #To show the settings of the ftp service 
+## To view the settings in permanent configuration mode, use the --permanent option.
+
+
+## Dropping All Packets (Panic Mode)
+firewall-cmd --panic-on        #To start dropping all incoming and outgoing packets, # All incoming and outgoing packets will be dropped. Active connections will be terminated after a period of inactivity; the time taken depends on the individual session timeout values.
+firewall-cmd --panic-off    #To start passing incoming and outgoing packets again, #After disabling panic mode, established connections might work again if panic mode was enabled for a short period of time.
+firewall-cmd --query-panic  #find out if panic mode is enabled or disabled, #The command prints yes with exit status 0 if enabled. It prints no with exit status 1 otherwise.
 
 
 
 
 
 
+```
 
 
 
