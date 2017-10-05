@@ -2155,11 +2155,143 @@ firewall-cmd --panic-off    #To start passing incoming and outgoing packets agai
 firewall-cmd --query-panic  #find out if panic mode is enabled or disabled, #The command prints yes with exit status 0 if enabled. It prints no with exit status 1 otherwise.
 
 
+firewall-cmd --reload    #To reload the firewall without interrupting user connections (without losing state information),
+
+## A firewall reload involves reloading all configuration files and recreating the
+## whole firewall configuration. While reloading, the policy for built-in chains
+## is set to DROP for security reasons and is then reset to ACCEPT at the end.
+## Service disruption is therefore possible during the reload. Alternatively as
+## the root user, send the SIGHUP signal to reload the firewall.
+
+firewall-cmd --complete-reload   #To reload the firewall and interrupt user connections, discarding state information,
+                                 # This command should normally only be used in case of severe firewall problems.
+                                 # For example, use this command if there are state information problems and no
+                                 # connection can be established but the firewall rules are correct.
+
+
+firewall-cmd --zone=public --add-interface=em1    #To add an interface to a zone (for example, to add em1 to the public zone),
+firewall-cmd --permanent --zone=public --add-interface=em1  #To make this setting persistent, repeat the commands adding the --permanent option
+
+
+## To add an interface to a zone by editing the ifcfg-em1 configuration file (for
+## example, to add em1 to the work zone), add the following line to ifcfg-em1 as
+## root:
+------------------
+ZONE=work
+------------------
+## Note that if you omit the ZONE option, or use ZONE=, or ZONE='', then the default zone will be used.
+
+
+######Configuring the Default Zone by Editing the firewalld Configuration File
+## As root, open /etc/firewalld/firewalld.conf and edit the file as follows:
+-------------------------------------------------------------------------------------------------------------
+# default zone
+# The default zone used if an empty zone string is used.
+# Default: public
+DefaultZone=home
+-------------------------------------------------------------------------------------------------------------
+## Reload the firewall by entering the following command as root:
+firewall-cmd --reload
+## This will reload the firewall without losing state information (that is, TCP
+## sessions will not be terminated), but service disruption is possible during the reload.
+
+
+
+firewall-cmd --set-default-zone=public     #To set the default zone (for example, to public  #This change will take effect immediately; in this case, it is not necessary to reload the firewall
+firewall-cmd --zone=dmz --list-ports       #To list all open ports for a zone (for example, dmz),   #Note that this will not show ports opened as a result of the --add-services command.
+firewall-cmd --zone=dmz --add-port=8080/tcp   #To add a port to a zone (for example, to allow TCP traffic to port 8080 to the dmz zone)
+firewall-cmd --zone=dmz --add-port=8080/tcp --permanent
+
+firewall-cmd --zone=public --add-port=5060-5061/udp   #To add a range of ports to a zone (for example, to allow the ports from 5060 to 5061 to the public zone
+firewall-cmd --zone=public --add-port=5060-5061/udp --permanent`
+
+
+firewall-cmd --zone=dmz --list-protocols    #To list all open ports for a zone (dmz, for example), #Note that this command does not show protocols opened as a result of the firewall-cmd --add-services command.
+
+firewall-cmd --zone=dmz --add-protocol=esp   #To add a protocol to a zone (for example, to allow ESP traffic to the dmz zone),
+firewall-cmd --zone=dmz --add-protocol=esp --permanent
+
+
+firewall-cmd --zone=dmz --list-source-ports  #To list all open source ports for a zone (for example, the dmz zone) #Note that this command does not show source ports opened as a result of the firewall-cmd --add-services command.
+
+firewall-cmd --zone=dmz --add-source-port=8080/tcp   #To add a source port to a zone (for example, to allow TCP traffic from port 8080 to the dmz zone)
+firewall-cmd --zone=dmz --add-source-port=8080/tcp --permanent
+
+firewall-cmd --zone=public --add-source-port=5060-5061/udp  #To add a range of source ports to a zone (for example, to allow the ports from 5060 to 5061 to the public zone)
+firewall-cmd --zone=public --add-source-port=5060-5061/udp --permanent
+
+
+firewall-cmd --zone=work --add-service=smtp  #To add a service to a zone (for example, to allow SMTP to the work zone
+firewall-cmd --zone=work --add-service=smtp --permanent
+
+firewall-cmd --zone=work --remove-service=smtp   #To remove a service from a zone (for example, to remove SMTP from the work zone)
+firewall-cmd --zone=work --remove-service=smtp --permanent
+## This change will not break established connections. If that is your intention,
+## you can use the --complete-reload option, but this will break all established
+## connections — not just for the service you have removed.
+
+
+## Adding a Service to a Zone by Editing XML Files
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_firewalld
+
+
+firewall-cmd --zone=external --query-masquerade   #To check if IP masquerading is enabled (for example, for the external zone) # The command prints yes with exit status 0 if enabled. It prints no with exit status 1 otherwise. If zone is omitted, the default zone will be used.
+
+firewall-cmd --zone=external --add-masquerade  #To enable IP masquerading
+firewall-cmd --zone=external --add-masquerade --permanent
+
+firewall-cmd --zone=external --remove-masquerade  #To disable IP masquerading,
+firewall-cmd --zone=external --remove-masquerade --permanent
+
+
+######5.3.5.15. Configuring Port Forwarding Using the Command-Line Interface (CLI)
+## To forward inbound network packets from one port to an alternative port or
+## address, first enable IP address masquerading for a zone (for example,
+## external), by entering the following command as root:
+firewall-cmd --zone=external --add-masquerade
+firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=3753 # forward packets to a local port (a port on the same system),
+firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=3753 --permanent
+## In this example, the packets intended for port 22 are now forwarded to port
+## 3753. The original destination port is specified with the port option. This
+## option can be a port or port range, together with a protocol. The
+## protocol, if specified, must be one of either tcp or udp. The new local
+## port (the port or range of ports to which the traffic is being forwarded
+## to) is specified with the toport option.
+
+## To forward packets to another IPv4 address, usually an internal address,
+## without changing the destination port, enter the following command as root:
+firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toaddr=192.0.2.55
+firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toaddr=192.0.2.55 --permanent
+## In this example, the packets intended for port 22 are now forwarded to the same
+## port at the address given with the toaddr. The original destination port is
+## specified with the port option. This option can be a port or port range,
+## together with a protocol. The protocol, if specified, must be one of either tcp
+## or udp. The new destination port (the port or range of ports to which the
+## traffic is being forwarded to) is specified with the toport option.
+
+## To forward packets to another port at another IPv4 address, usually an
+## internal address, enter the following command as root:
+firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.0.2.55
+firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.0.2.55 --permanent
+## In this example, the packets intended for port 22 are now forwarded to port
+## 2055 at the address given with the toaddr option. The original destination port
+## is specified with the port option. This option can be a port or port range,
+## together with a protocol. The protocol, if specified, must be one of either tcp
+## or udp. The new destination port, the port or range of ports to which the
+## traffic is being forwarded to, is specified with the toport option.
+
+
+## 5.3.6. Configuring the Firewall Using XML Files   # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_firewalld
+
+
+## 5.3.7. Using the Direct Interface
 
 
 
 
 ```
+
+
 
 
 
