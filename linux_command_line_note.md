@@ -2012,13 +2012,95 @@ firewall-cmd --state           #check if firewall-cmd can connect to the daemon 
 
 ##----Checking If firewalld Is Running--end>---------
 
+```
+
+[CONFIGURING FIREWALLD](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_firewalld)
+```sh
+
+man 5 firewalld.zone
+man 5 firewalld.service
+man 5 firewalld.icmptype
+
+man firewalld  #/DIRECTORIES
+/usr/lib/firewalld  #Default/Fallback configuration
+/etc/firewalld      #System configuration settings  (The files will overload the default configuration files.)
+
+[root@localhost ~]# ls /etc/firewalld/
+firewalld.conf  helpers  icmptypes  ipsets  lockdown-whitelist.xml  services  zones
+
+[root@localhost ~]# ls /usr/lib/firewalld/
+helpers  icmptypes  ipsets  services  xmlschema  zones
 
 
+[root@localhost ~]# firewall-cmd --get-zones     #[--permanent] --get-zones #Print predefined zones as a space separated list.
+[root@localhost ~]# firewall-cmd --get-services  #[--permanent] --get-services #Print predefined services as a space separated list.
+[root@localhost ~]# firewall-cmd --get-icmptypes  #[--permanent] --get-icmptypes #Print predefined icmptypes as a space separated list.
+[root@localhost ~]# firewall-cmd --get-icmptypes | fmt -5
 
+[root@localhost ~]# firewall-cmd --get-default-zone
+
+[root@localhost ~]# firewall-cmd --get-active-zones   #
+
+####firewall-offline-cmd
+##    The command-line client firewall-offline-cmd can only be used by the root user
+##    to alter the permanent environment. It is not talking to firewalld, but it is
+##    using a part of the firewalld core and the I/O backends to alter the
+##    configuration. It is not recommended to use this tool while firewalld is
+##    active. It could be used, but changes done with the firewall-offline-cmd are
+##    not applied immediately to firewalld. The changes are applied to the permanent
+##    environment after firewalld was able to detect file changes in the file system.
 
 
 
 ```
+[The zone settings in /etc/firewalld/ are a range of preset settings, which can be quickly applied to a network interface](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls)
+zone                          | explanation
+------------------------------|-----------------------------------------
+drop |Any incoming network packets are dropped; there is no reply. Only outgoing network connections are possible.
+block|Any incoming network connections are rejected with an icmp-host-prohibited message for IPv4 and icmp6-adm-prohibited for IPv6. Only network connections initiated from within the system are possible.
+public | For use in public areas. You do not trust the other computers on the network to not harm your computer. Only selected incoming connections are accepted.
+external | For use on external networks with masquerading enabled, especially for routers. You do not trust the other computers on the network to not harm your computer. Only selected incoming connections are accepted.
+[dmz](https://baike.baidu.com/item/DMZ/631225?fr=aladdin) | For computers in your demilitarized zone that are publicly-accessible with limited access to your internal network. Only selected incoming connections are accepted.
+work | For use in work areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.
+home | For use in home areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.
+internal | For use on internal networks. You mostly trust the other computers on the networks to not harm your computer. Only selected incoming connections are accepted.
+trusted | All network connections are accepted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```sh
+## iptables service
+/etc/sysconfig/iptables
+/etc/sysconfig/ip6tables
+
+######Comparison of firewalld to system-config-firewall and iptables
+## The essential differences between firewalld and the iptables (and ip6tables) services are:
+##   1. The iptables service stores configuration in /etc/sysconfig/iptables and
+##      /etc/sysconfig/ip6tables, while firewalld stores it in various XML files in
+##      /usr/lib/firewalld/ and /etc/firewalld/. Note that the /etc/sysconfig/iptables
+##      file does not exist as firewalld is installed by default on Red Hat Enterprise
+##      Linux.
+##
+##   2. With the iptables service, every single change means flushing all the old rules
+##      and reading all the new rules from /etc/sysconfig/iptables, while with
+##      firewalld there is no recreating of all the rules. Only the differences are
+##      applied. Consequently, firewalld can change the settings during runtime without
+##      existing connections being lost.
+
+
+```
+
 
 [Enhancing the security of the OS with cryptography changes in Red Hat Enterprise Linux 7.4](https://access.redhat.com/blogs/766093/posts/3050871)
 ```sh
