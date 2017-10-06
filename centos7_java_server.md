@@ -16,6 +16,7 @@
 - [Node Hero - Node.js Security Tutorial](https://blog.risingstack.com/node-hero-node-js-security-tutorial/)
 - [Protect Your Node App's Noggin With Helmet](http://scottksmith.com/blog/2014/09/21/protect-your-node-apps-noggin-with-helmet/)
 - [csurf](https://github.com/expressjs/csurf)
+- [Production Best Practices: Security](https://expressjs.com/en/advanced/best-practice-security.html)
 
 
 
