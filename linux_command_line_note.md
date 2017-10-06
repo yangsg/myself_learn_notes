@@ -2422,6 +2422,40 @@ rsync : ALL: spawn (echo "security notice from host $(/bin/hostname)" ;\
 ## ---example end<-------------------------------------------
 
 
+- [EDITING NETWORK CONFIGURATION FILES](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-Editing_Network_Configuration_Files)
+- [CentOS7网络配置和修改网卡名称及常用服务管理命令](http://www.linuxidc.com/Linux/2017-04/143002.htm)
+- [CONSISTENT NETWORK DEVICE NAMING](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/ch-Consistent_Network_Device_Naming)
+- [CentOS 7 系统网卡命名规则](http://blog.csdn.net/example440982/article/details/53107063)
+
+```sh
+## 一致的网络设备名以双字符前缀开始：
+en: 表示以太网设备 EtherNet
+wl: 表示无线局域网设备 Wireless LAN
+ww: 表示无线广域网设备 Wireless WAN
+
+## 随后的第3个字符用于用于区分不同的硬件类型
+o: 表示主板板载设备 Onboard device
+s: 表示热插拔插槽上的设备 hot-plug Slot
+p: 表示PCI总线或USB接口上的设备 PCI Device
+
+举例：
+eno16777736: 板载的以太网设备(板载设备索引编号为16777736)
+enp0s8:      PCI接口的以太网设备(PCI总线地址0，插槽编号为8)
+wlp12s0:     PCI接口的无线以太网设备(PCI总线地址12，插槽编号为0)
+
+```
+
+** Static Network Settings
+```sh
+[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-eno16777736
+DEVICE=eno16777736
+BOOTPROTO=none
+ONBOOT=yes
+PREFIX=24
+IPADDR=192.168.253.131
+
+```
+
 
 
 ```
