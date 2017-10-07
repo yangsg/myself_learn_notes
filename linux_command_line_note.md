@@ -3722,6 +3722,61 @@ CentOS 7.x 对 setroubleshootd 的运作方式是：
 ## 特殊的 loopback IP 网段
 ## 这个网段在 127.0.0.0/8 这个 Class A，而且默认的主机 (localhost) 的 IP 是 127.0.0.1 呦！
 
+## 在同一个网段里面，可以透过 IP 广播的方式来达到资料传递的目的。但如果是非同一网段内的数据呢？ 这时就得要透过那个所谓的邮局 (路由器) 的帮忙了！
+
+## [root@www ~]# route
+## Destination     Gateway         Genmask         Flags Metric Ref  Use Iface
+## 192.168.0.0     *               255.255.255.0   U     0      0      0 eno16777736
+## 127.0.0.0       *               255.0.0.0       U     0      0      0 lo
+## default         192.168.0.254   0.0.0.0         UG    0      0      0 eno16777736
+
+## [root@www ~]# route -n
+## Destination     Gateway         Genmask         Flags Metric Ref  Use Iface
+## 192.168.0.0     0.0.0.0         255.255.255.0   U     0      0      0 eno16777736
+## 127.0.0.0       0.0.0.0         255.0.0.0       U     0      0      0 lo
+## 0.0.0.0         192.168.0.254   0.0.0.0         UG    0      0      0 eno16777736
+
+##  IP 与 MAC：链结层的 ARP 与 RARP 协定
+## 当我们想要了解某个 IP 其实是设定于某张以太网络卡上头时，我们的主机会对整个区网发送出 ARP 封包，
+## 对方收到 ARP 封包后就会回传他的 MAC 给我们，我们的主机就会知道对方所在的网卡，那接下来就能够开始传递数据啰。
+## 如果每次要传送都得要重新来一遍这个 ARP 协定那不是很烦？因此，当使用 ARP
+## 协议取得目标 IP 与他网卡卡号后， 就会将该笔记录写入我们主机的 ARP table
+## 中 (内存内的数据) 记录 20 分钟
+
+## 在 Linux 环境下
+[root@localhost ~]# ip a
+[root@localhost ~]# ip addr show eno16777736
+[root@localhost ~]# ifconfig eno16777736
+[root@localhost ~]# ifconfig
+
+## 在 Windows 环境下
+## C:\Documents and Settings\admin..> ipconfig /all
+## 以太网适配器 本地连接:
+##
+##    连接特定的 DNS 后缀 . . . . . . . :
+##    本地链接 IPv6 地址. . . . . . . . : fb80::328a:b40a:45f3:ffb1%10
+##    自动配置 IPv4 地址  . . . . . . . : 169.254.255.177
+##    子网掩码  . . . . . . . . . . . . : 255.255.0.0
+##    默认网关. . . . . . . . . . . . . :
+
+## [root@www ~]# arp -[nd] hostname
+## [root@www ~]# arp -s hostname(IP) Hardware_address
+## 选项与参数：
+## -n ：将主机名以 IP 的型态显示
+## -d ：将 hostname 的 hardware_address 由 ARP table 当中删除掉
+## -s ：设定某个 IP 或 hostname 的 MAC 到 ARP table 当中
+[root@www ~]# arp
+[root@www ~]# arp -n
+## Address            HWtype  HWaddress           Flags Mask    Iface
+## 192.168.1.100      ether   00:01:03:01:02:03      C          eno16777736
+## 192.168.1.240      ether   00:01:03:01:DE:0A      C          eno16777736
+## 192.168.1.254      ether   00:01:03:55:74:AB      C          eno16777736
+
+[root@localhost ~]# arp -d 192.168.253.254                     #将 192.168.253.254 的 hardware_address 由 ARP table 当中删除掉
+[root@localhost ~]# arp -s 192.168.253.254 00:50:56:fe:47:ff   #将 192.168.253.254 那部主机的网卡卡号直接写入 ARP 表格中
+
+
+
 
 
 ```
