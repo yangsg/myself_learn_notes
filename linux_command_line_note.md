@@ -3759,6 +3759,17 @@ CentOS 7.x 对 setroubleshootd 的运作方式是：
 ##    子网掩码  . . . . . . . . . . . . : 255.255.0.0
 ##    默认网关. . . . . . . . . . . . . :
 
+
+##       arp - manipulate the system ARP cache
+##NOTE
+##       This program is obsolete. For replacement check ip neigh.  (该命令已被废弃)
+##
+##DESCRIPTION
+##       Arp manipulates or displays the kernel's IPv4 network neighbour cache. It can add entries to the table, delete one or display the current content.
+##
+##       ARP stands for Address Resolution Protocol, which is used to find the media access control address of a network neighbour for a given IPv4 Address.
+
+
 ## [root@www ~]# arp -[nd] hostname
 ## [root@www ~]# arp -s hostname(IP) Hardware_address
 ## 选项与参数：
@@ -3775,11 +3786,33 @@ CentOS 7.x 对 setroubleshootd 的运作方式是：
 [root@localhost ~]# arp -d 192.168.253.254                     #将 192.168.253.254 的 hardware_address 由 ARP table 当中删除掉
 [root@localhost ~]# arp -s 192.168.253.254 00:50:56:fe:47:ff   #将 192.168.253.254 那部主机的网卡卡号直接写入 ARP 表格中
 
-
-
+man ip-neighbour
+[root@localhost ~]# ip neighbour   #Shows the current neighbour table in kernel.
 
 
 ```
+
+>ICMP 的全名是『 Internet Control Message Protocol, 因特网讯息控制协议 』。
+>基本上，ICMP 是一个错误侦测与回报的机制，最大的功能就是可以确保我们网络的联机状态与联机的正确性！
+>ICMP 也是网络层的重要封包之一，不过，这个封包并非独立存在，而是纳入到 IP
+>的封包中！也就是说， ICMP 同样是透过 IP 封包来进行数据传送的啦！因为在 Internet
+>上面有传输能力的就是 IP 封包啊！ ICMP 有相当多的类别可以侦测与回报，底下是比较常见的几个 ICMP 的类别 (Type)：
+类别代号 | 类别名称与意义
+-------- | ------------------------------
+0 | Echo Reply (代表一个响应信息)
+3 | Destination Unreachable (表示目的地不可到达)
+4 | Source Quench (当 router 的负载过高时，此类别码可用来让发送端停止发送讯息)
+5 | Redirect (用来重新导向路由路径的信息)
+8 | Echo Request (请求响应消息)
+11 | Time Exceeded for a Datagram (当数据封包在某些路由传送的现象中造成逾时状态，此类别码可告知来源该封包已被忽略的讯息)
+12 | Parameter Problem on a Datagram (当一个 ICMP 封包重复之前的错误时，会回复来源主机关于参数错误的讯息)
+13 | Timestamp Request (要求对方送出时间讯息，用以计算路由时间的差异，以满足同步性协议的要求)
+14 | Timestamp Reply (此讯息纯粹是响应 Timestamp Request 用的)
+15 | Information Request (在 RARP 协议应用之前，此讯息是用来在开机时取得网络信息)
+16 | Information Reply (用以响应 Infromation Request 讯息)
+17 | Address Mask Request (这讯息是用来查询子网 mask 设定信息)
+18 | Address Mask Reply (响应子网 mask 查询讯息的)
+
 
 
 * install some useful tools
