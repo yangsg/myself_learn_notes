@@ -3693,6 +3693,8 @@ CentOS 7.x 对 setroubleshootd 的运作方式是：
 
 ```
 
+* [网络基础](http://cn.linux.vbird.org/linux_server/0110network_basic_3.php)
+
 
 * install some useful tools
 ```sh
