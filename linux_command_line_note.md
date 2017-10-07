@@ -3815,7 +3815,9 @@ man ip-neighbour
 18 | Address Mask Reply (响应子网 mask 查询讯息的)
 
 >特权埠口 (Privileged Ports)
+
 > 在我们的 Linux 环境下，各网络服务与 port number 的对应默认给他写在 /etc/services 档案内喔！ 底下鸟哥列出几个常见的 port number 与网络服务的对应：
+
 端口 | 服务名称与内容
 ---- | -----------------
 20 | FTP-data，文件传输协议所使用的主动数据传输端口
