@@ -3693,7 +3693,37 @@ CentOS 7.x 对 setroubleshootd 的运作方式是：
 
 ```
 
-* [网络基础](http://cn.linux.vbird.org/linux_server/0110network_basic_3.php)
+* [网络基础network basic](http://cn.linux.vbird.org/linux_server/0110network_basic_3.php)
+```sh
+## 以二进制说明 Network 第一个数字的定义：
+## Class A : 0xxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx  ==> NetI_D 的开头是 0
+##           |--net--|---------host------------|
+## Class B : 10xxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx  ==> NetI_D 的开头是 10
+##           |------net-------|------host------|
+## Class C : 110xxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx  ==> NetI_D 的开头是 110
+##           |-----------net-----------|-host--|
+## Class D : 1110xxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx  ==> NetI_D 的开头是 1110
+## Class E : 1111xxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx  ==> NetI_D 的开头是 1111
+##
+## 五种分级在十进制的表示：
+## Class B : 128.xx.xx.xx ~ 191.xx.xx.xx
+## Class C : 192.xx.xx.xx ~ 223.xx.xx.xx
+## Class D : 224.xx.xx.xx ~ 239.xx.xx.xx
+## Class E : 240.xx.xx.xx ~ 255.xx.xx.xx
+
+## Public IP : 公共 IP ，经由 INTERNIC 所统一规划的 IP，有这种 IP 才可以连上 Internet ；
+## Private IP : 私有 IP 或保留 IP，不能直接连上 Internet 的 IP ， 主要用于局域网络内的主机联机规划。
+## 私有 IP 也分别在 A, B, C 三个 Class 当中各保留一段作为私有 IP 网段，那就是：
+## Class A：10.0.0.0    - 10.255.255.255
+## Class B：172.16.0.0  - 172.31.255.255
+## Class C：192.168.0.0 - 192.168.255.255
+
+## 特殊的 loopback IP 网段
+## 这个网段在 127.0.0.0/8 这个 Class A，而且默认的主机 (localhost) 的 IP 是 127.0.0.1 呦！
+
+
+
+```
 
 
 * install some useful tools
