@@ -3706,6 +3706,7 @@ CentOS 7.x 对 setroubleshootd 的运作方式是：
 ## Class E : 1111xxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx  ==> NetI_D 的开头是 1111
 ##
 ## 五种分级在十进制的表示：
+## Class A :   0.xx.xx.xx ~ 127.xx.xx.xx
 ## Class B : 128.xx.xx.xx ~ 191.xx.xx.xx
 ## Class C : 192.xx.xx.xx ~ 223.xx.xx.xx
 ## Class D : 224.xx.xx.xx ~ 239.xx.xx.xx
