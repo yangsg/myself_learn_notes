@@ -3867,8 +3867,15 @@ cat /etc/protocols   #这个档案则是在定义出 IP 封包协议的相关数
 ifup eth0 (ifdown eth0)        #启动或者是关闭某张网络接口。可以透过这个简单的 script 来处理喔！ 这两个 script 会主动到 /etc/sysconfig/network-scripts/ 目录下， 读取适当的配置文件来处理啊！ (例如 ifcfg-eth0)。
 
 
-```
+## 那么要修改的四个档案与相关的启动脚本，以及重新启动后需要用啥指令观察的重点，鸟哥再次的使用一个简单的表格来说明，
+## 你只要记得这几个表格内的重要档案与指令，以后在修改网络参数时，就不会出现错误了！
 
+```
+修改的参数 | 配置文件与重要启动脚本 | 观察结果的指令
+---------- | ---------------------- | ------------------
+IP相关参数 | /etc/sysconfig/network-scripts/ifcfg-eth0 <br /> /etc/init.d/network restart | ifconfig (IP/Netmask) <br /> route -n (gateway)
+DNS | /etc/resolv.conf | dig www.google.com
+主机名 | /etc/sysconfig/network <br /> /etc/hosts | hostname (主机名) <br /> ping $(hostname) <br /> reboot
 
 
 
