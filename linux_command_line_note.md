@@ -3855,6 +3855,22 @@ DNS IP | /etc/resolv.conf | nameserver DNS的IP
 私有 IP 对应的主机名 | /etc/hosts | 私有IP 主机名 别名
 
 
+- [Interface Configuration Files](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html)
+- [连上 Internet](http://cn.linux.vbird.org/linux_server/0130internet_connect_2.php)
+```
+## 除此之外，还有些档案或许你也应该要知道一下比较好呦！
+cat /etc/services    #这个档案则是记录架构在 TCP/IP 上面的总总协议，包括 http, ftp, ssh, telnet 等等服务所定义的 port number ，都是这个档案所规划出来的。如果你想要自定义一个新的协议与 port 的对应，就得要改这个档案了；
+cat /etc/protocols   #这个档案则是在定义出 IP 封包协议的相关数据，包括 ICMP/TCP/UDP 这方面的封包协议的定义等。
+
+## 网络方面的启动指令的话，可以记得几个简单的指令即可喔！
+/etc/init.d/network restart    #这个 script 最重要！因为可以一口气重新启动整个网络的参数！ 他会主动的去读取所有的网络配置文件，所以可以很快的恢复系统默认的参数值。
+ifup eth0 (ifdown eth0)        #启动或者是关闭某张网络接口。可以透过这个简单的 script 来处理喔！ 这两个 script 会主动到 /etc/sysconfig/network-scripts/ 目录下， 读取适当的配置文件来处理啊！ (例如 ifcfg-eth0)。
+
+
+```
+
+
+
 
 * install some useful tools
 ```sh
