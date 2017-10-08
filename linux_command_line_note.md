@@ -3858,6 +3858,8 @@ DNS IP | /etc/resolv.conf | nameserver DNS的IP
 - [Interface Configuration Files](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html)
 - [连上 Internet](http://cn.linux.vbird.org/linux_server/0130internet_connect_2.php)
 ```
+man 5 nm-settings-ifcfg-rh  #查看网络配置参数
+
 ## 除此之外，还有些档案或许你也应该要知道一下比较好呦！
 cat /etc/services    #这个档案则是记录架构在 TCP/IP 上面的总总协议，包括 http, ftp, ssh, telnet 等等服务所定义的 port number ，都是这个档案所规划出来的。如果你想要自定义一个新的协议与 port 的对应，就得要改这个档案了；
 cat /etc/protocols   #这个档案则是在定义出 IP 封包协议的相关数据，包括 ICMP/TCP/UDP 这方面的封包协议的定义等。
@@ -3875,11 +3877,12 @@ ifup eth0 (ifdown eth0)        #启动或者是关闭某张网络接口。可以
 ---------- | ---------------------- | ------------------
 IP相关参数 | /etc/sysconfig/network-scripts/ifcfg-eth0 <br /> /etc/init.d/network restart | ifconfig (IP/Netmask) <br /> route -n (gateway)
 DNS | /etc/resolv.conf | dig www.google.com
-主机名 | /etc/sysconfig/network <br /> /etc/hosts | hostname (主机名) <br /> ping $(hostname) <br /> reboot
+主机名 | /etc/hostname <br /> /etc/hosts | hostname (主机名) <br /> ping $(hostname) <br /> reboot
 
 ```sh
 ## 手动配置固定IP参数
-[root@localhost ~]# cat /etc/sysconfig/network-scripts/ifcfg-eno16777736
+man 5 nm-settings-ifcfg-rh  #查看网络配置参数
+[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-eno16777736
 TYPE=Ethernet
 BOOTPROTO=none #启动该网络接口时，使用何种协议？ 如果是手动给予 IP 的环境，请输入 static 或 none ，如果是自动取得 IP 的时候， 请输入 dhcp (不要写错字，因为这是最重要的关键词！)
 DEFROUTE=yes
@@ -3905,6 +3908,65 @@ GATEWAY=192.168.253.2   #代表的是『整个主机系统的 default gateway』
 
 [root@localhost ~]# ip a   #检查ip修改是否成功并生效
 [root@localhost ~]# route -n #检查default gateway修改是否成功并生效
+
+```
+
+
+- [DNS{1,2}](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html)
+- [How to configure static DNS on CentOS or Fedora](http://ask.xmodulo.com/configure-static-dns-centos-fedora.html)
+```sh
+## 修改DNS服务器
+[root@localhost ~]# vim /etc/resolv.conf  #注意：如果打算手动在/etc/resolv.conf中配置DNS,就不要在ifcfg-x文件中配置DNS1，DNS2等参数，以免/etc/resolv.conf被ifcfg-x文件中的配置覆盖
+nameserver 192.168.253.2 #关键字nameserver用于指定DNS服务器,最多指定3个DNS服务器，每个DNS服务器占一行，行的顺序决定了DNS的查询顺序
+nameserver 192.168.253.3
+
+```
+
+- [CentOS 7 主机名的修改](http://www.linuxidc.com/Linux/2014-11/109238.htm)
+```sh
+man hostname
+[root@localhost ~]# vim /etc/hostname
+centos7   #注：务必保持仅有这一行配置，删除其他的配置行(可以保留空白行)
+
+修改完主机名称后，还应该相应的修改/etc/hosts文件,以便让主机能顺利解析到该主机名
+本地域名解析配置文件
+本地域名解析数据库配置文件/etc/hosts,通常也称Host表文件。
+[root@localhost ~]# vim /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.253.132 centos7.vbird centos7
+
+## 重新启动电脑后
+[root@www ~]# hostname
+[root@www ~]# ping centos7
+[root@www ~]# ping centos7.vbird
+
+```
+- [The /etc/host.conf file](http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap5sec39.html)
+- [Managing Hosts](https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-network-config-hosts.html)
+```sh
+vi /etc/host.conf
+##           # Lookup names via DNS first then fall back to /etc/hosts.
+##           order bind,hosts
+##           # We have machines with multiple IP addresses.
+##           multi on
+##           # Check for IP address spoofing.
+##           nospoof on
+
+
+## Warning (/etc/hosts)
+##   Do not remove the localhost entry. Even if the system does not have a network
+##   connection or have a network connection running constantly, some programs need
+##   to connect to the system via the localhost loopback interface.
+
+##Tip (/etc/host.conf)
+##  To change lookup order, edit the /etc/host.conf file. The line order hosts,
+##  bind specifies that /etc/hosts takes precedence over the name servers. Changing
+##  the line to order bind, hosts configures the system to resolve hostnames and IP
+##  addresses using the name servers first. If the IP address cannot be resolved
+##  through the name servers, the system then looks for the IP address in the
+##  /etc/hosts file.
 
 ```
 
