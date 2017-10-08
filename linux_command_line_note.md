@@ -3877,6 +3877,36 @@ IP相关参数 | /etc/sysconfig/network-scripts/ifcfg-eth0 <br /> /etc/init.d/ne
 DNS | /etc/resolv.conf | dig www.google.com
 主机名 | /etc/sysconfig/network <br /> /etc/hosts | hostname (主机名) <br /> ping $(hostname) <br /> reboot
 
+```sh
+## 手动配置固定IP参数
+[root@localhost ~]# cat /etc/sysconfig/network-scripts/ifcfg-eno16777736
+TYPE=Ethernet
+BOOTPROTO=none #启动该网络接口时，使用何种协议？ 如果是手动给予 IP 的环境，请输入 static 或 none ，如果是自动取得 IP 的时候， 请输入 dhcp (不要写错字，因为这是最重要的关键词！)
+DEFROUTE=yes
+PEERDNS=yes
+PEERROUTES=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_PEERDNS=yes
+IPV6_PEERROUTES=yes
+IPV6_FAILURE_FATAL=no
+NAME=eno16777736
+UUID=c47ff46d-5b90-4e24-8d58-bb0f671b88d2
+DEVICE=eno16777736  #这个设定值后面接的装置代号需要与文件名 (ifcfg-eth0) 那个装置代号相同才行！否则可能会造成一些装置名称找不到的困扰。
+ONBOOT=yes
+
+IPADDR=192.168.253.132
+GATEWAY=192.168.253.2   #代表的是『整个主机系统的 default gateway』， 所以，设定这个项目时，请特别留意！不要有重复设定的情况发生喔！也就是当你有 ifcfg-eth0, ifcfg-eth1.... 等多个档案，只要在其中一个档案设定 GATEWAY 即可
+#HWADDR=00:0c:29:86:ec:97  #(只有一张网卡时可以不用设定HWADDR,当多张网卡时必须设定HWADDR) #MAC-address is the hardware address of the Ethernet device in the form AA:BB:CC:DD:EE:FF. This directive must be used in machines containing more than one NIC to ensure that the interfaces are assigned the correct device names regardless of the configured load order for each NIC's module. This directive should not be used in conjunction with MACADDR.
+
+[root@localhost ~]# systemctl restart network.service    #重启network.service,使/etc/sysconfig/network-scripts/ifcfg-eno16777736修改生效
+
+[root@localhost ~]# ip a   #检查ip修改是否成功并生效
+[root@localhost ~]# route -n #检查default gateway修改是否成功并生效
+
+```
 
 
 * install some useful tools
