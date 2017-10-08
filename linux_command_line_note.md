@@ -3846,8 +3846,9 @@ client 端的 port number 就使用随机取一个大于 1024 以上且没有在
 ```
 
 - 网络参数与配置文件对应关系
+
 所需网络参数 | 主要配置文件名 | 重要参数
------------------------------------------------| -------------- | --------------------------
+------------ | -------------- | --------------------------
 IP <br />Netmask<br />DHCP<br />Gateway等  | /etc/sysconfig/network-scripts/ifcfg-eno16777736 | DEVICE=网卡的代号<br /> BOOTPROTO=是否使用 dhcp<br /> HWADDR=是否加入网卡卡号(MAC)<br /> IPADDR=就是IP地址<br /> NETMASK=只网络屏蔽啦<br /> ONBOOT=要不要默认启动此接口<br /> GATEWAY=就是通讯闸啦<br /> NM_CONTROLLED=额外的网管软件<br /> 鸟哥建议取消这个项目！
 主机名 | /etc/sysconfig/network | NETWORKING=要不要有网络<br /> NETWORKING_IPV6=支持IPv6否？<br /> HOSTNAME=你的主机名
 DNS IP | /etc/resolv.conf | nameserver DNS的IP
