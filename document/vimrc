@@ -72,6 +72,7 @@ filetype plugin indent on    " required
 ">> To install from command line: vim +PluginInstall +qall
 
 "===============================================================
+" ------https://github.com/viruschidai/vim-as-nodejs-ide
 " Syntax hightlight "
 syntax on
 
