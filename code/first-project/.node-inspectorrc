@@ -1,0 +1,7 @@
+{
+  "web-port": 3331,
+  "web-host": "192.168.149.128",
+  "debug-port": 3332,
+  "preload": false,
+  "hidden": ["\\.test\\.js$", "node_modules/"]
+}
