@@ -203,6 +203,8 @@ readFileIfRequired(function(err, data) {
 console.log('Reading file...');
 ```
 
+#### [Data URI scheme](https://en.wikipedia.org/wiki/Data_URI_scheme)  --- [Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)
+
 
 
 
