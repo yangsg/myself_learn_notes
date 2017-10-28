@@ -205,7 +205,28 @@ console.log('Reading file...');
 
 #### [Data URI scheme](https://en.wikipedia.org/wiki/Data_URI_scheme)  --- [Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)
 
+#### [util.inherits(constructor, superConstructor)](https://nodejs.org/dist/latest-v6.x/docs/api/util.html#util_util_inherits_constructor_superconstructor)
+```node
+// ES6 example using class and extends
 
+const EventEmitter = require('events');
+
+class MyStream extends EventEmitter {
+  constructor() {
+    super();
+  }
+  write(data) {
+    this.emit('data', data);
+  }
+}
+
+const stream = new MyStream();
+
+stream.on('data', (data) => {
+  console.log(`Received data: "${data}"`);
+});
+stream.write('With ES6');
+```
 
 
 
