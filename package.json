@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "DEBUG=node-jxc-manager:* PORT=3000 NODE_ENV=production node ./bin/www",
+    "start-dev": "DEBUG=node-jxc-manager:* PORT=3000 NODE_ENV=development node ./bin/www",
     "start-debug": "DEBUG=node-jxc-manager:* PORT=3000 NODE_ENV=development node-debug ./bin/www    #npm run start-debug"
   },
   "dependencies": {

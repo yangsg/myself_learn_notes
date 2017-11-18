@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+    h3 File Upload:
+    |     Select a file to upload: 
+    br
+    form(action='/', method='post')
+      div
+        input(type='text', name='name')
+      div
+        input(type='submit', value='add')
