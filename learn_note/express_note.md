@@ -17,6 +17,10 @@ npm install
 
 ```
 
+```bash
+nvm use 6.11.5
+npm install -g node-inspector
+```
 
 
 

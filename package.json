@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "DEBUG=node-jxc-manager:* node ./bin/www",
+    "start-debug":  "DEBUG=node-jxc-manager:* node-debug ./bin/www    #npm run start-debug"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
