@@ -2,7 +2,7 @@ const libutil = require('../lib/libutil.js');
 
 exports.index = index;
 
-function index(req, res, next) {
+function index(req, res) {
   res.send(libutil.getUuid());
 }
 
