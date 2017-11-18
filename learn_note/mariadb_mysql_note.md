@@ -26,6 +26,7 @@ show tables;
 - [How should I store GUID in MySQL tables?](https://stackoverflow.com/questions/412341/how-should-i-store-guid-in-mysql-tables)
 - [mariadb UUID](https://mariadb.com/kb/en/library/uuid/)
 - [GUID/UUID Performance](https://mariadb.com/kb/en/library/guiduuid-performance/)
+- [Read MySQL binary(16) UUID with Java](https://stackoverflow.com/questions/17726682/read-mysql-binary16-uuid-with-java)
 
 
 
