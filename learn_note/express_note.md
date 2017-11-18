@@ -23,6 +23,13 @@ npm install -g node-inspector
 ```
 
 
+- QA
+- [expressjs support for method delete and put without the methodoverride](https://stackoverflow.com/questions/9859287/expressjs-support-for-method-delete-and-put-without-the-methodoverride)
+- [PUT and DELETE with HTML Forms in ExpressJS](http://philipm.at/2017/method-override_in_expressjs.html)
+- [expressjs/method-override](https://github.com/expressjs/method-override)
+
+
+
 
 
 

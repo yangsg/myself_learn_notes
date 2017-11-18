@@ -1,10 +1,8 @@
 extends ../layout
 
 block content
-    h3 File Upload:
-    |     Select a file to upload: 
-    br
-    form(action='/', method='post')
+    h3 add user:
+    form(action='/user/add', method='post')
       div
         input(type='text', name='name')
       div
