@@ -6,11 +6,12 @@
     "node": ">= 6.11.5"
   },
   "scripts": {
-    "start": "DEBUG=node-jxc-manager:* node ./bin/www",
-    "start-debug": "DEBUG=node-jxc-manager:* node-debug ./bin/www    #npm run start-debug"
+    "start": "DEBUG=node-jxc-manager:* PORT=3000 NODE_ENV=production node ./bin/www",
+    "start-debug": "DEBUG=node-jxc-manager:* PORT=3000 NODE_ENV=development node-debug ./bin/www    #npm run start-debug"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "config": "^1.28.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
