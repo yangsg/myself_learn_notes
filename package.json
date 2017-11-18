@@ -2,9 +2,12 @@
   "name": "node-jxc-manager",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">= 6.11.5"
+  },
   "scripts": {
     "start": "DEBUG=node-jxc-manager:* node ./bin/www",
-    "start-debug":  "DEBUG=node-jxc-manager:* node-debug ./bin/www    #npm run start-debug"
+    "start-debug": "DEBUG=node-jxc-manager:* node-debug ./bin/www    #npm run start-debug"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -13,6 +16,7 @@
     "express": "~4.15.5",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "uuid": "^3.1.0"
   }
 }
