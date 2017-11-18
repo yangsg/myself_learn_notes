@@ -1,4 +1,5 @@
 - [pugjs/pug](https://github.com/pugjs/pug)
+- [html2pug online](https://html2pug.herokuapp.com/)
 - [html2pug converter](https://github.com/donpark/html2jade)
 ```bash
 npm install -g html2jade
