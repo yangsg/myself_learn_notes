@@ -1,11 +1,11 @@
-var index = {};
-index.index = index;
+var indexRoute = {};
+indexRoute.index = index;
 
 function index(req, res, next) {
   res.render('index', { title: 'Express' });
 }
 
 module.exports = {
-  index: index,
+  index: indexRoute,
   user: require('./user')
 };
