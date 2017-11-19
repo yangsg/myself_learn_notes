@@ -3,13 +3,13 @@
 const libutil = require('../lib/libutil');
 const dbutil = require('../lib/dbutil');
 
-
 exports.index = index;
 exports.list = list;
 exports.info = info;
 exports.add = add;
 exports.update = update;
 exports.del = del;
+exports.renderAddInputForm = renderAddInputForm;
 
 function index(req, res) {
   res.send(libutil.getUuid());
@@ -29,7 +29,6 @@ function list(req, res, next) {
 
 }
 
-//app.get('/user/update_input_form/:id', routes.user.info);
 function info(req, res, next) {
   var id = req.params.id;
   var conn = dbutil.getConnection();
@@ -47,23 +46,61 @@ function info(req, res, next) {
       return;
     }
 
-    res.render('user/user_input_form', {user: result[0]});
+    res.render('user/user_update_input_form', {user: result[0]});
   });
 }
 
-//app.post('/users/add', routes.user.add);
-function add(req, res) {
-  res.send(libutil.getUuid());
+function renderAddInputForm(req, res) {
+  res.render('user/user_add_input_form');
 }
 
+function add(req, res, next) {
+  var id = libutil.getUuid();
+  var name = req.body.name;
+  var comment = req.body.comment;
 
-//app.put('/users/update', routes.user.update);
-function update(req, res) {
-  res.send(libutil.getUuid());
+  var conn = dbutil.getConnection();
+  var query = 'INSERT INTO user (id, name, comment) VALUES ( ' + conn.escape(id) + ', '+ conn.escape(name) + ',' + conn.escape(comment) + ' )';
+  conn.query(query, function (error) {
+    conn.end();
+    if (error) {
+      next(error);
+      return;
+    }
+
+    res.redirect('/user/list');
+  });
 }
 
-//app.delete('/users/delele', routes.user.delete);
-function del(req, res) {
-  res.send(libutil.getUuid());
+function update(req, res, next) {
+  var conn = dbutil.getConnection();
+  var id = req.params.id;
+  var comment = req.body.comment;
+
+  var query = 'UPDATE user SET comment = ' + conn.escape(comment) + ' WHERE id = ' + conn.escape(id);
+  conn.query(query, function (error) {
+    conn.end();
+    if (error) {
+      next(error);
+      return;
+    }
+
+    res.redirect('/user/list');
+  });
+}
+
+function del(req, res, next) {
+  var id = req.params.id;
+  var conn = dbutil.getConnection();
+  var query = 'DELETE FROM user WHERE id = ' + conn.escape(id); 
+  conn.query(query, function (error) {
+    conn.end();
+    if (error) {
+      next(error);
+      return;
+    }
+
+    res.redirect('/user/list');
+  });
 }
 

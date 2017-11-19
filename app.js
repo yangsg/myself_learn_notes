@@ -1,14 +1,15 @@
 'use strict';
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
-var routes = require('./routes');
+const routes = require('./routes');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,16 +20,26 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride(function (req, res) {//https://github.com/expressjs/method-override
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 app.get('/', routes.index.index);
 app.get('/user/list', routes.user.list);
-app.get('/user/update_input_form/:id', routes.user.info);
+app.get('/user/add_input_form', routes.user.renderAddInputForm);
 app.post('/user/add', routes.user.add);
+app.get('/user/update_input_form/:id', routes.user.info);
 app.put('/user/update/:id', routes.user.update);
-app.delete('/user/del', routes.user.del);
+app.delete('/user/del/:id', routes.user.del);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -24,12 +24,16 @@ block content
         td #{val.name}
         td #{val.comment}
         td
-          a(href='/user/update_input_form/' + val.id) update
+          form(action='/user/update_input_form/' + val.id, method='get')
+            button(type='submit') update
         td
-          a(href='/user/del/' + val.id) del
+          form(action='/user/del/' + val.id, method='post')
+            input(type='hidden', name='_method', value='DELETE')
+            button(type='submit') delete
 
   div 
-    a(href='/user/add') add user
+    form(action='/user/add_input_form', method='get')
+      button(type='submit') add user
 
   script.
     var ab = !{JSON.stringify(results)}

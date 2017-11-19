@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+    h3 add user:
+    form(action='/user/add', method='post')
+      div
+        label(for='name') name: 
+        input(type='text', name='name', id='name')
+      div
+        label(for='comment') comment: 
+        input(type='text', name='comment', id='comment')
+      div
+        input(type='submit', value='add user')
