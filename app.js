@@ -27,7 +27,7 @@ app.get('/', routes.index.index);
 app.get('/user/list', routes.user.list);
 app.get('/user/update_input_form/:id', routes.user.info);
 app.post('/user/add', routes.user.add);
-app.put('/user/update', routes.user.update);
+app.put('/user/update/:id', routes.user.update);
 app.delete('/user/del', routes.user.del);
 
 // catch 404 and forward to error handler

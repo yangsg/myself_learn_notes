@@ -24,9 +24,9 @@ block content
         td #{val.name}
         td #{val.comment}
         td
-          a(href='/user/update') update
+          a(href='/user/update_input_form/' + val.id) update
         td
-          a(href='/user/del') del
+          a(href='/user/del/' + val.id) del
 
   div 
     a(href='/user/add') add user
