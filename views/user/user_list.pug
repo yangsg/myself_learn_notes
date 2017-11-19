@@ -1,0 +1,35 @@
+extends ../layout
+
+block stylesheets
+  style(type="text/css").
+    table {
+      border-collapse:collapse;  
+    }
+    table,tr,td {
+      border:1px solid black;
+    }
+    td {
+      padding:10px 5px 15px 20px;
+    }
+
+block footer-scripts
+
+
+block content
+  h1 user list
+  table
+    each val, index in results
+      tr(style="border:1px solid red;")
+        td #{val.id}
+        td #{val.name}
+        td #{val.comment}
+        td
+          a(href='/user/update') update
+        td
+          a(href='/user/del') del
+
+  div 
+    a(href='/user/add') add user
+
+  script.
+    var ab = !{JSON.stringify(results)}

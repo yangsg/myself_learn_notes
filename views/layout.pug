@@ -5,9 +5,12 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
 
+    block stylesheets
+
   body
     block content
 
     script(src="/bower_components/jquery/dist/jquery.js")
-    block footer-script
+
+    block footer-scripts
 

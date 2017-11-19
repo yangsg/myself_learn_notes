@@ -25,6 +25,8 @@ html2jade --scalate public/*.html
 
 ```
 
+- [Printing (or unescaping JSON) with nodejs and jade](https://stackoverflow.com/questions/10748222/printing-or-unescaping-json-with-nodejs-and-jade)
+
 
 
 

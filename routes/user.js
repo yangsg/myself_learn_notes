@@ -1,15 +1,31 @@
 'use strict';
-const libutil = require('../lib/libutil.js');
+
+const libutil = require('../lib/libutil');
+const dbutil = require('../lib/dbutil');
+
 
 exports.index = index;
+exports.list = list;
+exports.info = info;
+exports.add = add;
+exports.update = update;
+exports.del = del;
 
 function index(req, res) {
   res.send(libutil.getUuid());
 }
 
-//app.get('/users/list', routes.user.index);
 function list(req, res) {
-  res.send(libutil.getUuid());
+  var conn = dbutil.getConnection();
+  conn.query('select id, name, comment from user', function (error, results) {
+    conn.end();
+    if (error) {
+      throw error;
+    }
+
+    res.render('user/user_list', {results: results});
+  });
+
 }
 
 //app.get('/user/update_input_form/:id', routes.user.info);
