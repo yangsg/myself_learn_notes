@@ -3,8 +3,8 @@ var indexRoute = {};
 indexRoute.index = index;
 
 function index(req, res) {
-  //res.render('index', { title: 'Express' });
-  res.render('user/user_insert_form', { title: 'Express' });
+  res.render('index', { title: 'Express' });
+  //res.render('user/user_insert_form', { title: 'Express' });
 }
 
 module.exports = {

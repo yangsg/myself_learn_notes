@@ -29,7 +29,7 @@ function update(req, res) {
 }
 
 //app.delete('/users/delele', routes.user.delete);
-function delete(req, res) {
+function del(req, res) {
   res.send(libutil.getUuid());
 }
 

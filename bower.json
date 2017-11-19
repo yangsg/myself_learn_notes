@@ -1,0 +1,21 @@
+{
+  "name": "node-jxc-manager",
+  "description": "",
+  "main": "",
+  "authors": [
+    "ShangguiYang <2354869793@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/yangsg/myself_learn_notes",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
