@@ -35,11 +35,11 @@ mysql> SELECT NOW(), USER(), VERSION() \G #竖直排列显示结果，每行一�
 
 mysql> SELECT NOW(),
     -> VERSION(),
-    -> \c #clear screen
+    -> \c #type \c to clear (cancel) it
 
 mysql> SELECT NOW(); SELECT USER(); SELECT VERSION();
 
-mysql> mysql myscript.sql
+mysql> mysql < myscript.sql
 
 #1.4.5 创建数据库
 
