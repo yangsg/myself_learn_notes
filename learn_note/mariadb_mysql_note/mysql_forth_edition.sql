@@ -106,6 +106,7 @@ mysql> SHOW FIELDS FROM president;
 
 mysql> DESCRIBE president '%name'; #限制为指定的数据列
 mysql> SHOW COLUMNS FROM president like '%name';
+
 -----------------------------------------------------------
 
 
@@ -115,7 +116,8 @@ mysql> SHOW DATABASES;
 % mysqlshow -u root -p #列出数据库清单
 % mysqlshow sampdb -u root -p #给一个数据库名,则列出数据库里数据表清单
 
-%mysqlshow sampdb president -u root -p
+% mysqlshow sampdb president -u root -p
+mysql> SHOW FULL COLUMNS FROM president;
 
 SELECT student.name, grade_event.date, score.score, grade_event.category
 FROM grade_event INNER JOIN score INNER JOIN student
