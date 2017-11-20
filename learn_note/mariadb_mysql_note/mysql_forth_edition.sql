@@ -49,7 +49,7 @@ mysql> SELECT DATABASE();
 mysql> USE sampdb;
 mysql> SELECT DATABASE();
 
-% mysql -p -u sampadm sampdb
+% mysql -p -u sampadm sampdb    #Another way to select a default database is to name it on the command line when you invoke mysql
 % mysql -h cobra.snake.net -p -u sampadm sampdb
 
 #1.4.6 创建数据表
@@ -112,10 +112,10 @@ mysql> SHOW COLUMNS FROM president like '%name';
 mysql> SHOW TABLES;
 mysql> SHOW DATABASES;
 
-% MYSQLSHOW -u root -p #列出数据库清单
-% MYSQLSHOW sampdb -u root -p #给一个数据库名,则列出数据库里数据表清单
+% mysqlshow -u root -p #列出数据库清单
+% mysqlshow sampdb -u root -p #给一个数据库名,则列出数据库里数据表清单
 
-%MYSQLSHOW sampdb president -u root -p
+%mysqlshow sampdb president -u root -p
 
 SELECT student.name, grade_event.date, score.score, grade_event.category
 FROM grade_event INNER JOIN score INNER JOIN student
