@@ -4,6 +4,16 @@
 - relational database management system[RDBMS]
 - database table row column record
 
+```bash
+mysql -p -u root
+```
+```mysql
+CREATE USER 'sampadm'@'localhost' IDENTIFIED BY 'secret';
+
+GRANT ALL ON sampdb.* TO 'sampadm'@'localhost';
+```
+
+
 
 
 
