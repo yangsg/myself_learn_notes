@@ -468,6 +468,8 @@ mysql> SELECT @today, @one_week_ago;
 #把美国历届总统的出生地所在州不加重复地列举出来：
 mysql> SELECT DISTINCT state FROM president ORDER BY state; #DISTINCT将重复地数据清除掉，只保留一份。
 
+#note: 不能不分使用DISTINCT,DISTINCT关键字应用于所有的列，而不仅仅应用于其后的一列.
+
 mysql> SELECT COUNT(*) FROM member; #整个数据表的行数
 mysql> SELECT COUNT(*) FROM grade_event WHERE category = 'Q'; #WHERE子句匹配了多少个数据行
 
@@ -494,7 +496,7 @@ GROUP BY state ORDER BY count DESC; #为COUNT(*)取一个别名count,再应用�
 
 #在ORDER BY子句里引用输出列的另一种办法是利用它在输出结果中的位置，不过这种方式不被推荐
 mysql> SELECT state, COUNT(*) FROM president GROUP BY state ORDER BY 2 DESC; #不推荐
-
+#note: The syntax of referring to column positions in ORDER BY clauses is no longer part of standard SQL and should be considered deprecated.
 
 
 #!!tip: 类似于ORDER BY子句的情况，如果你打算用GROUP BY子句对一个计算出来的输出列进行归类，
