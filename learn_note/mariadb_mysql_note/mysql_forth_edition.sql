@@ -160,6 +160,8 @@ CREATE TABLE score
   FOREIGN KEY (student_id) REFERENCES student (student_id)
 ) ENGINE=InnoDB;
 
+-- InnoDB存储引擎其实会为出现在外键定义里的数据列自动创建一个索引，但它使用的索引定义不一定是你想要的，由你来明确定义一个索引可以避免这个问题.
+
 -----------------------------------------------------------
 mysql> DESCRIBE student 'sex';
 -----------------------------------------------------------
@@ -255,7 +257,7 @@ mysql> SELECT name, sex, student_id FROM student; #多个数据列用逗号隔�
 #针对数值进行查找
 mysql> SELECT * FROM score WHERE score > 95;
 
-#针对字符串进行查找
+#针对字符串进行查找 (对于默认的字符串设置和排序，字符串的比较操作通常不区分字母的大小写)
 mysql> SELECT last_name, first_name FROM president WHERE last_name='ROOSEVELT';
 mysql> SELECT last_name, first_name FROM president WHERE last_name='roosevelt';
 
@@ -327,7 +329,7 @@ ORDER BY death DESC LIMIT 5; #LIMIT 5为count上限
 
 #从查询结果的中间部分抽出一部分数据记录
 mysql> SELECT last_name, first_name, death FROM president
-ORDER BY death DESC LIMIT 10, 5; #10为跳过的记录数,也是index
+ORDER BY death DESC LIMIT 10, 5; #10为跳过的记录数,也是index(index从0开始)
 
 #随机抽取出一条或一组数据记录,可以联合使用LIMIT和ORDER BY RAND()子句
 mysql> SELECT last_name, first_name FROM president
@@ -371,7 +373,7 @@ FROM president
 WHERE death>='1970-01-01' AND death<'1980-01-01';
 
 
-#年、月、日3部分可以用函数YEAR()、MONTH()、DAYOFMONTH()分别分离出来.
+#日其中的年、月、日3部分可以用函数YEAR()、MONTH()、DAYOFMONTH()分别分离出来.
 mysql> SELECT last_name, first_name, birth
 FROM president WHERE MONTH(birth)=3;
 
@@ -383,6 +385,7 @@ FROM president
 WHERE MONTH(birth)=3 AND DAYOFMONTH(birth)=29; #MONTH() 和 DAYOFMONTH()函数结合起来使用
 
 
+## CURDATE()函数返回的永远是"今天"的日期值
 #今天出生的总统
 mysql> SELECT last_name, first_name, birth
 FROM president WHERE MONTH(birth)=MONTH(CURDATE())
@@ -414,7 +417,7 @@ AND death< DATE_ADD('1970-1-1', INTERVAL 10 YEAR);
 
 #需要在近期缴纳会费的会员
 mysql> SELECT last_name, first_name, expiration FROM member
-WHERE expiration < DATE_ADD(CURDATE(), INTERVAL 60 DAY);
+WHERE expiration < DATE_ADD(CURDATE(), INTERVAL 60 DAY);  #如果为expiration编织索引，查询效率会更好
 
 #一个关于"那些患者没有参加复查"的查询
 mysql> SELECT last_name, first_name, last_visit FROM patient
