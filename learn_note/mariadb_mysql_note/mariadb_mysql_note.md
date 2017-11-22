@@ -48,7 +48,31 @@ ORDER BY last_name, first_name;
 mysql> source interests.sql  #If you are already running mysql, execute the contents of the file by using a source command.
 ```
 
+- MySQL服务器的sql_mode系统变量
+```mysql
+MariaDB [(none)]> SELECT @@global.sql_mode;
++-------------------------------------------------------------------------------------------+
+| @@global.sql_mode                                                                         |
++-------------------------------------------------------------------------------------------+
+| STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION |
++-------------------------------------------------------------------------------------------+
 
+MariaDB [(none)]> SELECT @@session.sql_mode;
++-------------------------------------------------------------------------------------------+
+| @@session.sql_mode                                                                        |
++-------------------------------------------------------------------------------------------+
+| STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION |
++-------------------------------------------------------------------------------------------+
+
+
+```
+
+- 大小写参考约定：(database, table, column名使用小写，关键字使用大写)
+
+```mysql
+-- CREATE DATABASE db_name CHARACTER SET utf8 COLLATE utf8_bin;
+-- CREATE TABLE student(...)ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+```
 
 
 
