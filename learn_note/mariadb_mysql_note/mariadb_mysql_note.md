@@ -112,6 +112,12 @@ SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
 | \\\       | Single backslash                  |
 | \Z       | Control-Z (Windows EOF character) |
 
+The escape sequences shown in the table are case sensitive, and any character not listed
+in the table is interpreted as itself if preceded by a backslash. For example, \t is a tab, but
+\T is an ordinary ‘T’ character.
+
+
+
 
 
 
