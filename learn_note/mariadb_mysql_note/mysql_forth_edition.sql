@@ -2514,8 +2514,16 @@ mysql> SELECT \N, ISNULL(\N);
 +------+------------+
 
 
+-- 精确值数值数据类型
+INTEGER是INT的一个同义词
+NUMERIC和FIXED都是DECIMAL的同义词
 
+3.2.4.2 Approximate-Value Numeric Data Types
+-- DOUBLE PRECISION is a synonym for DOUBLE.The REAL type is a synonym
+-- for DOUBLE by default. If the REAL_AS_DEFAULT SQL mode is enabled, REAL is a synonym
+-- for FLOAT.
 
+3.2.6 Date and Time Data Types
 
 
 

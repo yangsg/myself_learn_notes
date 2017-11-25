@@ -17,6 +17,7 @@ CREATE USER 'sampadm'@'localhost' IDENTIFIED BY 'secret';
 GRANT ALL ON sampdb.* TO 'sampadm'@'localhost';
 ```
 - 经验：应该在事先对将被保存到数据库里去的数据值做尽可能深入的了解。
+- 生产环境下应该使用严格模式
 
 - MySQL expects dates to be written in 'CCYY-MM-DD’ format, where CC, YY, MM, and DD represent the century, year within the century, month, and day of the month.
 
@@ -125,17 +126,27 @@ in the table is interpreted as itself if preceded by a backslash. For example, \
 
 | Type      | Storage  | Minimum Value        | Maximum Value        |
 | ----      | -------- | ----------------     | -----------------    |
-|        | (Bytes)  | (Signed/Unsigned)    | (Signed/Unsigned)    |
+|           | (Bytes)  | (Signed/Unsigned)    | (Signed/Unsigned)    |
 | TINYINT   | 1        | -128                 | 127                  |
-|        |       | 0                    | 255                  |
+|           |          | 0                    | 255                  |
 | SMALLINT  | 2        | -32768               | 32767                |
-|        |       | 0                    | 65535                |
+|           |          | 0                    | 65535                |
 | MEDIUMINT | 3        | -8388608             | 8388607              |
-|        |       | 0                    | 16777215             |
+|           |          | 0                    | 16777215             |
 | INT       | 4        | -2147483648          | 2147483647           |
-|        |       | 0                    | 4294967295           |
+|           |          | 0                    | 4294967295           |
 | BIGINT    | 8        | -9223372036854775808 | 9223372036854775807  |
-|        |       | 0                    | 18446744073709551615 |
+|           |          | 0                    | 18446744073709551615 |
 
+
+- Table 3.13 Date and Time Data Types
+
+Type      | Specification Range
+--------- | -------------
+DATE      | '1000-01-01' to '9999-12-31'
+TIME      | '-838:59:59' to '838:59:59'
+DATETIME  | '1000-01-01 00:00:00' to '9999-12-31 23:59:59'
+TIMESTAMP | '1970-01-01 00:00:01' to '2038-01-19 03:14:07'
+YEAR[(M)] | 1901 to 2155 for YEAR(4), and 1970 to 2069 for YEAR(2)
 
 
