@@ -124,6 +124,7 @@ in the table is interpreted as itself if preceded by a backslash. For example, \
 - [Integer Types (Exact Value) - INTEGER, INT, SMALLINT, TINYINT, MEDIUMINT, BIGINT](https://dev.mysql.com/doc/refman/5.6/en/integer-types.html)
 
 Type      | Storage  | Minimum Value        | Maximum Value
+----      | -------- | ----------------     | -----------------
           | (Bytes)  | (Signed/Unsigned)    | (Signed/Unsigned)
 ----      | -------- | ----------------     | -----------------
 TINYINT   | 1        | -128                 | 127
