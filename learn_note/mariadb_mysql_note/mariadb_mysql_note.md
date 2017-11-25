@@ -100,7 +100,7 @@ SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
 
 - String Escape Sequences
 | Sequence | Meaning                           |
-| -------- | ----------------------------------|
+| -------- | --------------------------------- |
 | \0       | NUL (zero-valued byte)            |
 | \'       | Single quote                      |
 | \"       | Double quote                      |
