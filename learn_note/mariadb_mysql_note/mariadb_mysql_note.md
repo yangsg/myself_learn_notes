@@ -116,9 +116,26 @@ The escape sequences shown in the table are case sensitive, and any character no
 in the table is interpreted as itself if preceded by a backslash. For example, \t is a tab, but
 \T is an ordinary ‘T’ character.
 
+- [Case Sensitive collation in MySQL](https://stackoverflow.com/questions/4558707/case-sensitive-collation-in-mysql)
+- [mysql, utf-8 column: how to select only case-sensitive?](https://stackoverflow.com/questions/10237129/mysql-utf-8-column-how-to-select-only-case-sensitive)
 
+- [Chapter 11 Data Types](https://dev.mysql.com/doc/refman/5.7/en/data-types.html)
 
+- [Integer Types (Exact Value) - INTEGER, INT, SMALLINT, TINYINT, MEDIUMINT, BIGINT](https://dev.mysql.com/doc/refman/5.6/en/integer-types.html)
 
+Type      | Storage  | Minimum Value        | Maximum Value
+          | (Bytes)  | (Signed/Unsigned)    | (Signed/Unsigned)
+----      | -------- | ----------------     | -----------------
+TINYINT   | 1        | -128                 | 127
+          |          | 0                    | 255
+SMALLINT  | 2        | -32768               | 32767
+          |          | 0                    | 65535
+MEDIUMINT | 3        | -8388608             | 8388607
+          |          | 0                    | 16777215
+INT       | 4        | -2147483648          | 2147483647
+          |          | 0                    | 4294967295
+BIGINT    | 8        | -9223372036854775808 | 9223372036854775807
+          |          | 0                    | 18446744073709551615
 
 
 

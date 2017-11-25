@@ -2425,6 +2425,97 @@ mysql> SELECT b'1001' + 0, CAST(b'1001' AS UNSIGNED);
 -- 3.1.2 String Values
 --	 字符串值： 尽量使用单引号。(reassons: 1. The SQL standard specifies single quotes 2. If the ANSI_QUOTES SQL mode is enabled, MySQL treats the double quote as an identifier-quoting character, not as a string-quoting character.)
 
+mysql> SHOW CHARACTER SET;
+
+mysql> SHOW COLLATION;
+
+
+-- MySQL将根据当前服务器设置来解释那些括在引号里的字符串值。
+MariaDB [sampdb]> SELECT CHARSET('abcd'), COLLATION('abcd');
++-----------------+-------------------+
+| CHARSET('abcd') | COLLATION('abcd') |
++-----------------+-------------------+
+| utf8            | utf8_general_ci   |
++-----------------+-------------------+
+
+-- MySQL treats hexadecimal constants as binary strings by default:
+mysql> SELECT CHARSET(X'0123'), COLLATION(X'0123');
++------------------+--------------------+
+| CHARSET(X'0123') | COLLATION(X'0123') |
++------------------+--------------------+
+| binary           | binary             |
++------------------+--------------------+
+
+
+-- CONVERT(str USING charset);
+mysql> SET @s1 = _ucs2 'ABCD';   --Introducers and CONVERT() are not the same.
+mysql> SET @s2 = CONVERT('ABCD' USING ucs2);
+mysql> SELECT CHAR_LENGTH(@s1), LENGTH(@s1), CHAR_LENGTH(@s2), LENGTH(@s2);
+mysql> SELECT CHAR_LENGTH(@s1), LENGTH(@s1), CHAR_LENGTH(@s2), LENGTH(@s2);
++------------------+-------------+------------------+-------------+
+| CHAR_LENGTH(@s1) | LENGTH(@s1) | CHAR_LENGTH(@s2) | LENGTH(@s2) |
++------------------+-------------+------------------+-------------+
+|                2 |           4 |                4 |           8 |
++------------------+-------------+------------------+-------------+
+
+-- Here’s one way to see the difference between binary and non-binary strings with regard to lettercase.
+mysql> SET @s1 = BINARY 'abcd';
+mysql> SET @s2 = _latin1 'abcd' COLLATE latin1_bin;
+mysql> SELECT UPPER(@s1), UPPER(@s2);
++------------+------------+
+| UPPER(@s1) | UPPER(@s2) |
++------------+------------+
+| abcd       | ABCD       |
++------------+------------+
+
+3.1.2.2 Character Set-Related System Variables
+
+mysql> SHOW VARIABLES LIKE 'character\_set\_%';
+
+mysql> SHOW VARIABLES LIKE 'collation\_%';
+
+-- A client that wants to talk to the server using another character set can change the
+-- communication-related variables. For example, if you want to use utf8, change three
+-- variables:
+mysql> SET character_set_client = utf8;
+mysql> SET character_set_results = utf8;
+mysql> SET character_set_connection = utf8;
+-- However, it’s more convenient to use a SET NAMES statement for this purpose.The following
+-- statement is equivalent to the preceding three SET statements:
+mysql> SET NAMES 'utf8';
+-- Many client programs support a --default-character-set option that produces the
+-- same effect as a SET NAMES statement by informing the server of the desired communication
+-- character set.
+
+3.1.3 Date and Time (Temporal) Values
+Dates and times are values such as '2011-06-17' or '12:30:43'. MySQL also understands
+combined date/time values, such as '2011-06-17 12:30:43'.
+
+--DATE_FORMAT()  STR_TO_DATE() 
+
+3.1.4 Spatial Values
+-- the following statement uses the text representation
+-- of a point value with X and Y coordinates of (10, 20) to create a POINT and assigns
+-- the result to a user-defined variable:
+SET @pt = POINTFROMTEXT('POINT(10 20)');
+
+3.1.5 Boolean Values
+In expressions, zero is considered false and any non-zero, non-NULL value is considered true.
+The special constants TRUE and FALSE evaluate to 1 and 0, respectively.They are not case sensitive.
+
+3.1.6 The NULL Value
+-- The keyword NULL is written without quotes and is not case sensitive. MySQL also
+-- treats a standalone \N (case sensitive) as NULL:
+mysql> SELECT \N, ISNULL(\N);
++------+------------+
+| NULL | ISNULL(\N) |
++------+------------+
+| NULL |          1 |
++------+------------+
+
+
+
+
 
 
 
