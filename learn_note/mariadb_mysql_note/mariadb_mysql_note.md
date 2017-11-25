@@ -126,7 +126,6 @@ in the table is interpreted as itself if preceded by a backslash. For example, \
 Type      | Storage  | Minimum Value        | Maximum Value
 ----      | -------- | ----------------     | -----------------
           | (Bytes)  | (Signed/Unsigned)    | (Signed/Unsigned)
-----      | -------- | ----------------     | -----------------
 TINYINT   | 1        | -128                 | 127
           |          | 0                    | 255
 SMALLINT  | 2        | -32768               | 32767
