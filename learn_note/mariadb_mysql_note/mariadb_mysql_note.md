@@ -109,7 +109,7 @@ SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
 | \n       | Newline (linefeed)                |
 | \r       | Carriage return                   |
 | \t       | Tab                               |
-| \\       | Single backslash                  |
+| \\\       | Single backslash                  |
 | \Z       | Control-Z (Windows EOF character) |
 
 
