@@ -102,9 +102,9 @@ SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
 
 | Sequence | Meaning                           |
 | -------- | --------------------------------- |
-| \0       | NUL (zero-valued byte)            |
-| \'       | Single quote                      |
-| \"       | Double quote                      |
+| \\0       | NUL (zero-valued byte)            |
+| \\'       | Single quote                      |
+| \\"       | Double quote                      |
 | \b       | Backspace                         |
 | \n       | Newline (linefeed)                |
 | \r       | Carriage return                   |
