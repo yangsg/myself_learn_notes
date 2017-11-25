@@ -2260,12 +2260,12 @@ CREATE TABLE parent(
 )ENGINE=InnoDB;
 
 CREATE TABLE child(
-	par_id INT NOT NULL,
-	child_id INT NOT NULL,
-	PRIMARY KEY (par_id, child_id),
-	FOREIGN KEY (par_id) REFERENCES parent (par_id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+  par_id INT NOT NULL,
+  child_id INT NOT NULL,
+  PRIMARY KEY (par_id, child_id),
+  FOREIGN KEY (par_id) REFERENCES parent (par_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 

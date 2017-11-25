@@ -74,6 +74,24 @@ MariaDB [(none)]> SELECT @@session.sql_mode;
 -- CREATE TABLE student(...)ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 ```
 
+- [Save MySQL query results into a text or CSV file](http://www.tech-recipes.com/rx/1475/save-mysql-query-results-into-a-text-or-csv-file/)
+```mysql
+SELECT * FROM student INTO OUTFILE '/tmp/student.txt'; --This will create a tab-separated file, each row on its own line. T
+
+
+SELECT * FROM student
+INTO OUTFILE '/tmp/student.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
+```
+
+- [MySQL query to find all views in a database](https://geeksww.com/tutorials/database_management_systems/mysql/tips_and_tricks/mysql_query_to_find_all_views_in_a_database.php)
+```mysql
+SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
+```
+
 
 
 
