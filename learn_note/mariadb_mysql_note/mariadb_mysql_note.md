@@ -4,6 +4,10 @@
 - relational database management system[RDBMS]
 - database table row column record
 
+- [MySQL Workbench(available on windows, linux, Mac OS X and for MariaDB)](https://dev.mysql.com/downloads/)
+- [如何使用 MySQL workbench 生成 EER 图？](https://www.zhihu.com/question/20680795)
+- [MySQL Workbench, getting started tutorial - Oracle](https://docs.oracle.com/cd/E19078-01/mysql/mysql-workbench/wb-getting-started-tutorial.html)
+
 ```bash
 mysql -p -u root
 ```
@@ -92,6 +96,20 @@ LINES TERMINATED BY '\n';
 SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
 ```
 
+- [How do I see all foreign keys to a table or column?](https://stackoverflow.com/questions/201621/how-do-i-see-all-foreign-keys-to-a-table-or-column)
+
+- String Escape Sequences
+| Sequence | Meaning
+| -------- | ----------------------------------|
+| \0       | NUL (zero-valued byte)            |
+| \'       | Single quote                      |
+| \"       | Double quote                      |
+| \b       | Backspace                         |
+| \n       | Newline (linefeed)                |
+| \r       | Carriage return                   |
+| \t       | Tab                               |
+| \\       | Single backslash                  |
+| \Z       | Control-Z (Windows EOF character) |
 
 
 

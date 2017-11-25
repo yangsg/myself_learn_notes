@@ -2340,6 +2340,48 @@ mysql> SELECT * FROM child;
 |    100 |        3 |
 +--------+----------+
 
+-- ON DELETE SET NULL
+-- ON UPDATE SET NULL
+
+DROP TABLE child;
+DROP TABLE parent;
+
+CREATE TABLE parent(
+	par_id INT NOT NULL,
+	PRIMARY KEY (par_id)
+)ENGINE=InnoDB;
+
+CREATE TABLE child
+(
+  par_id INT NULL,
+  child_id INT NOT NULL,
+  UNIQUE (par_id, child_id),
+  FOREIGN KEY (par_id) REFERENCES parent (par_id)
+  ON DELETE SET NULL
+  ON UPDATE SET NULL
+) ENGINE = INNODB;
+
+mysql> NSERT INTO parent (par_id) VALUES(1), (2), (3);
+mysql> NSERT INTO child (par_id,child_id) VALUES(1,1),(1,2);
+mysql> NSERT INTO child (par_id,child_id) VALUES(2,1),(2,2),(2,3);
+mysql> NSERT INTO child (par_id,child_id) VALUES(3,1);
+mysql> NSERT INTO child (par_id,child_id) VALUES(4,1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`sampdb`.`child`, CONSTRAINT `child_ibfk_1` FOREIGN KEY (`par_id`) REFERENCES `parent` (`par_id`) ON DELETE SET NULL ON UPDATE SET NULL)
+
+mysql> DELETE FROM parent WHERE par_id = 1;
+mysql> SELECT * FROM child;
++--------+----------+
+| par_id | child_id |
++--------+----------+
+|   NULL |        1 |
+|   NULL |        2 |
+|      2 |        1 |
+|      2 |        2 |
+|      2 |        3 |
+|      3 |        1 |
++--------+----------+
+
+mysql> UPDATE parent SET par_id = 100 WHERE par_id = 2;
 mysql> SELECT * FROM child;
 +--------+----------+
 | par_id | child_id |
@@ -2356,6 +2398,9 @@ mysql> SELECT * FROM child;
 如果你在试图创建一个带有外键关系的数据表时遇到问题，可以使用SHOW ENGINE INNODB STATUS语句查看
 完整的出错信息。
 
+SHOW TABLE STATUS LIKE 'child'\G;
+SHOW CREATE TABLE child;
+
  
  第3章  数据类型
  
@@ -2367,8 +2412,19 @@ mysql> SELECT * FROM child;
 3.1 数据值得类别
 	# MySQL能够识别和使用的数据值包括数值、字符串值、日期/时间值、坐标值和空值(NULL)。
 
-	字符串值： 尽量使用单引号。
-	
+-- 3.1.1.2 Bit-Field Values
+--  Bit-field values can be written as b'val' or 0bval, where val consists of one or more
+--  binary digits (0 or 1). For example, b'1001' and 0b1001 represent 9 decimal
+mysql> SELECT b'1001' + 0, CAST(b'1001' AS UNSIGNED);
++-------------+---------------------------+
+| b'1001' + 0 | CAST(b'1001' AS UNSIGNED) |
++-------------+---------------------------+
+|           9 |                         9 |
++-------------+---------------------------+
+
+-- 3.1.2 String Values
+--	 字符串值： 尽量使用单引号。(reassons: 1. The SQL standard specifies single quotes 2. If the ANSI_QUOTES SQL mode is enabled, MySQL treats the double quote as an identifier-quoting character, not as a string-quoting character.)
+
 
 
 
