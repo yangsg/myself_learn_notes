@@ -97,7 +97,6 @@ SHOW FULL TABLES IN sampdb WHERE TABLE_TYPE LIKE 'VIEW';
 ```
 
 - [How do I see all foreign keys to a table or column?](https://stackoverflow.com/questions/201621/how-do-i-see-all-foreign-keys-to-a-table-or-column)
-
 | First Header  | Second Header |
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
