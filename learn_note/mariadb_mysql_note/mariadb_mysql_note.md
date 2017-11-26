@@ -167,6 +167,57 @@ SHOW CREATE PROCEDURE update_expiration\G;
 
 - [Configuring MariaDB with my.cnf](https://mariadb.com/kb/en/library/configuring-mariadb-with-mycnf/)
 
+- [Passing FieldName as Parameter in MySQL Stored Procedure](https://stackoverflow.com/questions/9993908/passing-fieldname-as-parameter-in-mysql-stored-procedure)
+```mysql
+CREATE `VSK_Comments_UpdateAction`(IN FieldName varchar(30),IN FieldValue tinyint,CID bigint)
+BEGIN
+  SET @query = CONCAT('Update comments Set ', FieldName, '=? WHERE commentid=?');
+  PREPARE stmt FROM @query;
+  SET @FieldValue = FieldValue;
+  SET @CID = CID;
+  EXECUTE stmt USING @FieldValue, @CID;
+  DEALLOCATE PREPARE stmt;
+END;
+```
+
+- [use a variable for table name in mysql sproc](https://stackoverflow.com/questions/2754423/use-a-variable-for-table-name-in-mysql-sproc)
+```mysql
+SET @cname:='jello';
+SET @vname:='dwb';
+SET @sql_text = concat('select concept_id,concept_name,',@vname,' from enc2.concept a JOIN enc2.ratings b USING(concept_id) where concept_name like (''%',@cname,'%'') and 3 is not null order by 3 asc');
+
+PREPARE stmt FROM @sql_text;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+```
+
+- [Regular Expressions](https://dev.mysql.com/doc/refman/5.7/en/regexp.html)
+- [Pattern Matching](https://dev.mysql.com/doc/refman/5.7/en/pattern-matching.html)
+```mysql
+SET @result = ('tb_user_pk' REGEXP '^tb_[a-zA-Z-0-9]+_pk$');
+SELECT @result;
+```
+
+- [Schema Object Names](https://dev.mysql.com/doc/refman/5.7/en/identifiers.html)
+The following table describes the maximum length for each type of identifier.
+
+Identifier Type          | Maximum Length (characters)
+---------                | ----------
+Database                 | 64 (NDB storage engine: 63)
+Table                    | 64 (NDB storage engine: 63)
+Column                   | 64
+Index                    | 64
+Constraint               | 64
+Stored Program           | 64
+View                     | 64
+Tablespace               | 64
+Server                   | 64
+Log File Group           | 64
+Alias                    | 256 (see exception following table)
+Compound Statement Label | 16
+User-Defined Variable    | 64
+
+
 
 
 

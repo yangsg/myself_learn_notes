@@ -2544,6 +2544,18 @@ INSERT INTO seq_table VALUES(0);
 UPDATE seq_table SET seq = LAST_INSERT_ID(seq+1);
 SELECT LAST_INSERT_ID();
 
+delimiter $
+CREATE PROCEDURE nextId(IN tb_name VARCHAR(64), OUT next_id int) -- 最好对变量tb_name做一下验证检查,防止sql注入攻击
+BEGIN
+SET @sql_text = concat('UPDATE ', tb_name, ' SET seq = LAST_INSERT_ID(seq+1)');
+PREPARE stmt FROM @sql_text;
+EXECUTE stmt;
+set next_id = LAST_INSERT_ID();
+DEALLOCATE PREPARE stmt;
+END$
+delimiter ;
+
+
 
 --多个计数器
 CREATE TABLE counter
