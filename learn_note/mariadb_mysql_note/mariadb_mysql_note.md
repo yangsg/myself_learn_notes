@@ -149,4 +149,45 @@ DATETIME  | '1000-01-01 00:00:00' to '9999-12-31 23:59:59'
 TIMESTAMP | '1970-01-01 00:00:01' to '2038-01-19 03:14:07'
 YEAR[(M)] | 1901 to 2155 for YEAR(4), and 1970 to 2069 for YEAR(2)
 
+For combined date and time values, it is allowable to specify a ‘T’ character rather than
+a space between the date and time (for example, '2008-12-31T12:00:00').
+
+- [Listing Stored Procedures in a MySQL Database](http://www.mysqltutorial.org/listing-stored-procedures-in-mysql-database.aspx)
+- [List of Stored Procedures/Functions Mysql Command Line](https://stackoverflow.com/questions/733349/list-of-stored-procedures-functions-mysql-command-line)
+```mysql
+-- SHOW PROCEDURE STATUS [LIKE 'pattern' | WHERE expr];
+SHOW PROCEDURE STATUS;
+SHOW FUNCTION STATUS;
+
+SHOW PROCEDURE STATUS WHERE db = 'sampdb';
+SHOW PROCEDURE STATUS WHERE name LIKE '%update_expiration%';
+
+SHOW CREATE PROCEDURE update_expiration\G;
+```
+
+- [Configuring MariaDB with my.cnf](https://mariadb.com/kb/en/library/configuring-mariadb-with-mycnf/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

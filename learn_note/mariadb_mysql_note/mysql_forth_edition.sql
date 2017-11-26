@@ -2525,6 +2525,257 @@ NUMERIC和FIXED都是DECIMAL的同义词
 
 3.2.6 Date and Time Data Types
 
+3.2.6.1 The DATE, TIME, and DATETIME Data Types
+
+mysql> CREATE TABLE t (dt DATETIME, d DATE, t TIME);
+mysql> INSERT INTO t (dt,d,t) VALUES(NOW(), NOW(), NOW());
+mysql> SELECT * FROM t;
+
+-- MySQL treats the time in DATETIME and TIME values slightly different. For DATETIME,
+-- the time part represents a time of day and must be in the range from '00:00:00' to
+-- '23:59:59'.A TIME value, on the other hand, represents elapsed time—that’s why the
+-- range shown in Table 3.13 for TIME columns includes values larger than '23:59:59' and
+-- negative values.
+
+3.4.5 Generating Sequences Without AUTO_INCREMENT
+CREATE TABLE seq_table (seq INT UNSIGNED NOT NULL);
+INSERT INTO seq_table VALUES(0);
+
+UPDATE seq_table SET seq = LAST_INSERT_ID(seq+1);
+SELECT LAST_INSERT_ID();
+
+
+--多个计数器
+CREATE TABLE counter
+(
+name VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
+value INT UNSIGNED,
+PRIMARY KEY (name)
+);
+
+INSERT INTO counter (name, value)
+VALUES('index.html', LAST_INSERT_ID(1))
+ON DUPLICATE KEY UPDATE value = LAST_INSERT_ID(value+1);
+SELECT LAST_INSERT_ID();
+
+
+3.5 Expression Evaluation and Type Conversion
+
+SELECT
+  CONCAT(last_name, ', ', first_name),
+  TIMESTAMPDIFF(YEAR, birth, death)
+FROM president
+WHERE
+  birth > '1900-1-1' AND DEATH IS NOT NULL;
+
+-- Scalar subqueries can be used to provide a single value in an expression.The subquery requires surrounding parentheses:
+SELECT * FROM president WHERE birth = (SELECT MAX(birth) FROM president);
+
+SELECT CONCAT('abc','def'); 
+
+4.1 Compound Statements and Statement Delimiters
+CREATE PROCEDURE sampdb_tables ()
+SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'sampdb' ORDER BY TABLE_NAME;
+
+
+CALL sampdb_tables();
+
+
+delimiter $
+CREATE PROCEDURE greetings ()
+BEGIN
+  # 77 = 16 for username + 60 for hostname + 1 for '@'
+  DECLARE user CHAR(77) CHARACTER SET utf8;
+  SET user = (SELECT CURRENT_USER());
+  IF INSTR(user,'@') > 0 THEN
+    SET user = SUBSTRING_INDEX(user,'@',1);
+  END IF;
+  IF user = '' THEN # anonymous user
+    SET user = 'earthling';
+  END IF;
+  SELECT CONCAT('Greetings, ',user, '!') AS greeting;
+END;
+delimiter ;
+
+CALL greetings();
+
+
+delimiter $
+CREATE PROCEDURE show_times()
+BEGIN
+  SELECT 'Local time is:', CURRENT_TIMESTAMP;
+  SELECT 'UTC time is:', UTC_TIMESTAMP;
+END$
+delimiter ;
+
+CALL show_times();
+
+-- DROP {PROCEDURE | FUNCTION} [IF EXISTS] sp_name
+DROP PROCEDURE IF EXISTS show_times;
+
+-- The delimiter need not be $, and it need not be a single character:
+delimiter EOF
+CREATE PROCEDURE show_times()
+BEGIN
+  SELECT 'Local time is:', CURRENT_TIMESTAMP;
+  SELECT 'UTC time is:', UTC_TIMESTAMP;
+END EOF
+delimiter ;
+
+CALL show_times();
+
+-- A compound statement need not be used only for complex stored programs.You can
+-- use one even if a program body consists of a single statement, or even no statements:
+
+delimiter EOF
+CREATE PROCEDURE do_little ()
+BEGIN
+  DO SLEEP(1);
+END;
+delimiter ;
+
+
+delimiter EOF
+CREATE PROCEDURE do_nothing ()
+BEGIN
+END;
+delimiter ;
+
+
+4.2 Stored Functions and Procedures
+
+delimiter $
+CREATE FUNCTION count_born_in_year(p_year INT)
+RETURNS INT
+READS SQL DATA
+BEGIN
+  RETURN (SELECT COUNT(*) FROM president WHERE YEAR(birth) = p_year);
+END$
+delimiter ;
+
+mysql> SELECT count_born_in_year(1908);
+mysql> SELECT count_born_in_year(1913);
+
+
+delimiter $
+CREATE PROCEDURE show_born_in_year(p_year INT)
+BEGIN
+  SELECT first_name, last_name, birth, death
+  FROM president
+  WHERE YEAR(birth) = p_year;
+END$
+delimiter ;
+
+-- Unlike stored functions, stored procedures are not used in expressions.They are invoked
+-- using the CALL statement:
+
+mysql> CALL show_born_in_year(1908);
+mysql> CALL show_born_in_year(1913);
+
+-- stored routines also can modify tables
+delimiter $
+CREATE PROCEDURE update_expiration (p_id INT UNSIGNED, p_date DATE)
+BEGIN
+  UPDATE member SET expiration = p_date WHERE member_id = p_id;
+END$
+delimiter ;
+
+mysql> CALL update_expiration(61, CURDATE() + INTERVAL 1 YEAR);
+mysql> CALL update_expiration(87, NULL);
+
+SHOW CREATE PROCEDURE update_expiration\G;
+
+4.2.1 Privileges for Stored Functions and Procedures
+-- If the log_bin_trust_function_creators system variable is not enabled, you
+-- must have the SUPER privilege to be able to create stored functions.Also, each function
+-- that you create should be deterministic and should not modify data.To signal
+-- this, declare it with one of the DETERMINISTIC, NO SQL, or READS SQL DATA characteristics.
+-- For example:
+
+delimiter $
+CREATE FUNCTION half (p_value DOUBLE)
+RETURNS DOUBLE
+DETERMINISTIC
+BEGIN
+  RETURN p_value / 2;
+END$
+delimiter ;
+
+4.2.2 Stored Procedure Parameter Types
+-- To specify a parameter type explicitly, use IN, OUT, or INOUT immediately preceding the
+-- parameter name in the parameter list. Parameters are IN by default if no type is given.
+
+delimiter $
+CREATE PROCEDURE count_students_by_sex (OUT p_male INT, OUT p_female INT)
+BEGIN
+  SELECT COUNT(*) FROM student WHERE sex = 'M' INTO p_male;
+  SELECT COUNT(*) FROM student WHERE sex = 'F' INTO p_female;
+END$
+delimiter ;
+
+mysql> CALL count_students_by_sex(@mcount, @fcount);
+mysql> SELECT 'Number of male students: ', @mcount;
+mysql> SELECT 'Number of female students:', @fcount;
+
+
+-- 4.3 Triggers
+-- Triggers语法
+CREATE TRIGGER trigger_name # the trigger name
+{BEFORE | AFTER} # when the trigger activates
+{INSERT | UPDATE | DELETE} # what statement activates it
+ON tbl_name # the associated table
+FOR EACH ROW trigger_stmt; # what the trigger does
+
+-- trigger_stmt is the trigger body; that is, the statement that executes when the trigger
+-- activates. In a trigger body, the syntax NEW.col_name can be used to refer to columns in
+-- the new row to be inserted or updated in an INSERT or UPDATE trigger. Similarly,
+-- OLD.col_name can be used to refer to columns in the old row to be deleted or updated in
+-- a DELETE or UPDATE trigger.To change a column value within a BEFORE trigger before the
+-- value is stored in the table, use SET NEW.col_name = value.
+
+CREATE TABLE t (percent INT, dt DATETIME);
+delimiter $
+CREATE TRIGGER bi_t BEFORE INSERT ON t
+FOR EACH ROW BEGIN
+  SET NEW.dt = CURRENT_TIMESTAMP;
+  IF NEW.percent < 0 THEN
+    SET NEW.percent = 0;
+  ELSEIF NEW.percent > 100 THEN
+    SET NEW.percent = 100;
+  END IF;
+END$
+delimiter ;
+
+mysql> INSERT INTO t (percent) VALUES(-2); DO SLEEP(2);
+mysql> INSERT INTO t (percent) VALUES(30); DO SLEEP(2);
+mysql> INSERT INTO t (percent) VALUES(120);
+mysql> SELECT * FROM t;
++---------+---------------------+
+| percent | dt                  |
++---------+---------------------+
+|       0 | 2017-11-26 00:26:40 |
+|      30 | 2017-11-26 00:27:00 |
+|     100 | 2017-11-26 00:27:08 |
++---------+---------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
