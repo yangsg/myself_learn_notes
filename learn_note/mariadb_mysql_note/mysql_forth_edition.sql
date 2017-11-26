@@ -2555,6 +2555,9 @@ DEALLOCATE PREPARE stmt;
 END$
 delimiter ;
 
+call nextId('seq_table', @next_id);
+select @next_id;
+
 
 
 --多个计数器
