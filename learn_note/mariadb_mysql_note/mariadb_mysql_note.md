@@ -194,6 +194,9 @@ DEALLOCATE PREPARE stmt;
 - [Regular Expressions](https://dev.mysql.com/doc/refman/5.7/en/regexp.html)
 - [Pattern Matching](https://dev.mysql.com/doc/refman/5.7/en/pattern-matching.html)
 ```mysql
+-- 58 = 64 - 6
+SELECT 'tb_user_pk' REGEXP '^tb_[a-zA-Z-0-9]{1,58}_pk$';
+
 SET @result = ('tb_user_pk' REGEXP '^tb_[a-zA-Z-0-9]+_pk$');
 SELECT @result;
 ```
