@@ -221,8 +221,32 @@ Compound Statement Label | 16
 User-Defined Variable    | 64
 
 
+- [mysql 递归查询](https://www.cnblogs.com/xiaoxi/p/5942805.html)
+- [MySQL: FIND_IN_SET Function](https://www.techonthenet.com/mysql/functions/find_in_set.php)
+```mysql
+MariaDB [(none)]> SELECT FIND_IN_SET('a', 'a,b,c,d,e,f,g');
++-----------------------------------+
+| FIND_IN_SET('a', 'a,b,c,d,e,f,g') |
++-----------------------------------+
+|                                 1 |
++-----------------------------------+
 
+MariaDB [(none)]> SELECT FIND_IN_SET('z', 'a,b,c,d,e,f,g');
++-----------------------------------+
+| FIND_IN_SET('z', 'a,b,c,d,e,f,g') |
++-----------------------------------+
+|                                 0 |
++-----------------------------------+
 
+MariaDB [(none)]> SELECT FIND_IN_SET('A', 'a,b,c,d,e,f,g');
++-----------------------------------+
+| FIND_IN_SET('A', 'a,b,c,d,e,f,g') |
++-----------------------------------+
+|                                 1 |
++-----------------------------------+
+
+```
+- [GROUP_CONCAT(expr)](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html)
 
 
 
