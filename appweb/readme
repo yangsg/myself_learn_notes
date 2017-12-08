@@ -1,0 +1,105 @@
+
+
+
+npm install grunt-contrib-copy       --save-dev
+npm install grunt-contrib-less       --save-dev
+npm install grunt-contrib-jshint     --save-dev
+npm install grunt-contrib-uglify     --save-dev
+npm install grunt-contrib-watch      --save-dev
+npm install grunt-contrib-clean      --save-dev
+npm install grunt-contrib-cssmin     --save-dev
+npm install js-obfuscator            --save-dev
+
+bower install jquery#1.11.3 --save
+bower install jquery-validation --save
+bower install uri.js --save
+
+http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file
+Include a JavaScript file in another JavaScript file?
+function loadScript(url, callback)
+{
+  // Adding the script tag to the head as suggested before
+  var head = document.getElementsByTagName('head')[0];
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = url;
+
+  // Then bind the event to the callback function.
+  // There are several events for cross browser compatibility.
+  script.onreadystatechange = callback;
+  script.onload = callback;
+
+  // Fire the loading
+  head.appendChild(script);
+}
+
+
+http://stackoverflow.com/questions/24568218/grunt-contrib-clean-to-remove-all-folders-files-except-for-one-folder-and-its-co
+clean: {
+  options: {
+    'no-write': true
+  },
+  plugins: ['app/plugins/myplugin/**/*', '!app/plugins/myplugin/assets/**']
+}
+
+
+
+
+======================================================================================
+other resourceS
+======================================================================================
+
+============================
+/*mvneclipseweb01/README*/
+improve performance
+1. enable gzip to compress output
+http://stackoverflow.com/questions/16653642/tomcat-7-gzip-compression-not-working
+
+ <Connector port="8080"
+         compression="on"
+         compressionMinSize="2048"
+         noCompressionUserAgents="gozilla, traviata"
+         compressableMimeType="text/html,text/xml,text/plain,text/css,
+         text/javascript,text/json,application/x-javascript,
+         application/javascript,application/json"/>
+
+
+===================================================================================================
+/*./myJspCompressorTools/README*/
+
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file  \
+    -Dfile=/home/cnyangsg/Downloads/commons-configuration2-2.0-alpha2/commons-configuration2-2.0-alpha2.jar \
+    -DgroupId=commons-configuration \
+    -DartifactId=commons-configuration \
+    -Dversion=2-2.0-alpha2 \
+    -Dpackaging=jar \
+    -DlocalRepositoryPath=/home/cnyangsg/workspace/MYJspCompressorTools/src/test/resources/repo
+
+===================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

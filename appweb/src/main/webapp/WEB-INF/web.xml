@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  id="WebApp_ID" version="3.0">
+  <display-name>web01</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- Load the tiles container -->
+  <!-- https://tiles.apache.org/framework/tutorial/basic/pages.html -->
+  <!-- By default, the definition file is /WEB-INF/tiles.xml. If you're using 
+    CompleteAutoloadTilesListener, tiles will use any file in the webapp that 
+    matches /WEB-INF/tiles*.xml or any file in the classpath that matches /META-INF/tiles*.xml; 
+    if several are found, it will merge them together. -->
+  <listener>
+    <listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
+  </listener>
+
+  <!-- http://stackoverflow.com/questions/18745770/spring-injection-into-servlet -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- This means that any request to an URL ending in ".tiles" will be dispatched 
+    directly to the matching Tiles Definition. -->
+  <servlet>
+    <servlet-name>Tiles-Dispatch-Servlet</servlet-name>
+    <servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Tiles-Dispatch-Servlet</servlet-name>
+    <url-pattern>*.tiles</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>index</servlet-name>
+    <jsp-file>/WEB-INF/views/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>InitServletUtil</servlet-name>
+    <servlet-class>web.InitServletUtil</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <trim-directive-whitespaces>true</trim-directive-whitespaces>
+    </jsp-property-group>
+  </jsp-config>
+  <!-- <error-page> <exception-type>java.lang.NoClassDefFoundError</exception-type> 
+    <location>/WEB-INF/views/error-ncdfe.jsp</location> </error-page> <error-page> 
+    <exception-type>server.HelloException</exception-type> <location>/WEB-INF/views/error-helloex.jsp</location> 
+    </error-page> -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/error-404.jsp</location>
+  </error-page>
+  <error-page>
+    <location>/WEB-INF/views/error-default.jsp</location>
+  </error-page>
+  <session-config>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+</web-app>
