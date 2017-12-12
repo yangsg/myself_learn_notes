@@ -777,6 +777,7 @@ tar -jcv -f /backups/backup-system-20091130.tar.bz2 \
  --exclude=/root/*.bz2 --exclude=/root/*.gz --exclude=/home/loop* \
  /etc /home /var/spool/mail /var/spool/cron /root
 
+tar -zxvf resource.tar.gz --strip-components=1 -C /tmp/resource
 ```
 
 
