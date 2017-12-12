@@ -812,6 +812,12 @@ iconv -f utf8 -t big5 vi.utf8 | iconv -f big5 -t gb2312 | iconv -f gb2312 -t utf
 
 ```
 
+- [Given two directory trees, how can I find out which files differ?](https://stackoverflow.com/questions/4997693/given-two-directory-trees-how-can-i-find-out-which-files-differ)
+```sh
+diff --brief -r  dir1/ dir2/
+diff --brief -Nr dir1/ dir2/
+```
+
 
 ```sh
 ## Display information about command type.
