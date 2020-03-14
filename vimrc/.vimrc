@@ -15,6 +15,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+"注: 单独使用 elzr/vim-json 插件时 配置 `let g:vim_json_syntax_conceal = 0` 可以显示出双引号
 Plugin 'majutsushi/tagbar'
 Plugin 'digitaltoad/vim-pug' "Vim syntax highlighting for Pug (formerly Jade) templates.
 
