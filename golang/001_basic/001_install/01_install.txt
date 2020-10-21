@@ -1,0 +1,71 @@
+
+https://golang.google.cn/doc/
+
+
+
+https://golang.google.cn/doc/install
+
+#下载并安装 go
+[root@localhost ~]# mkdir download
+[root@localhost ~]# mkdir /app
+
+
+[root@localhost ~]# cd download/
+[root@localhost download]# curl -O https://dl.google.com/go/go1.15.3.linux-amd64.tar.gz
+
+[root@localhost download]# tar -C /app/ -xf go1.15.3.linux-amd64.tar.gz
+[root@localhost download]# ls /app/go/
+api  AUTHORS  bin  CONTRIBUTING.md  CONTRIBUTORS  doc  favicon.ico  lib  LICENSE  misc  PATENTS  pkg  README.md  robots.txt  SECURITY.md  src  test  VERSION
+
+
+[root@localhost download]# vim /etc/profile
+
+[root@localhost download]# vim /etc/profile
+export PATH=$PATH:/app/go/bin
+
+[root@localhost download]# source /etc/profile
+
+[root@localhost download]# go version
+go version go1.15.3 linux/amd64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://golang.google.cn/
+https://www.goproxy.io/zh/
+
+
+
