@@ -80,5 +80,63 @@ Use "go help <topic>" for more information about that topic.
 [root@localhost hello]# ./hello
 Hello, World!
 
+//其他一些可能常用的命令:
+
+[root@localhost ~]# go version
+go version go1.15.3 linux/amd64
+
+[root@localhost ~]# go help goproxy   //显示 goproxy 主题
+[root@localhost ~]# go help modules   //显示 modules 主题
+
+[root@localhost ~]# go doc fmt
+[root@localhost ~]# go doc -all fmt
+[root@localhost ~]# go doc -short fmt
+[root@localhost ~]# go doc -src fmt.Println
+
+
+
+
+
+
+[root@localhost ~]# go env
+GO111MODULE=""
+GOARCH="amd64"
+GOBIN=""
+GOCACHE="/root/.cache/go-build"
+GOENV="/root/.config/go/env"
+GOEXE=""
+GOFLAGS=""
+GOHOSTARCH="amd64"
+GOHOSTOS="linux"
+GOINSECURE=""
+GOMODCACHE="/root/go/pkg/mod"
+GONOPROXY=""
+GONOSUMDB=""
+GOOS="linux"
+GOPATH="/root/go"
+GOPRIVATE=""
+GOPROXY="https://proxy.golang.org,direct"
+GOROOT="/app/go"
+GOSUMDB="sum.golang.org"
+GOTMPDIR=""
+GOTOOLDIR="/app/go/pkg/tool/linux_amd64"
+GCCGO="gccgo"
+AR="ar"
+CC="gcc"
+CXX="g++"
+CGO_ENABLED="1"
+GOMOD=""
+CGO_CFLAGS="-g -O2"
+CGO_CPPFLAGS=""
+CGO_CXXFLAGS="-g -O2"
+CGO_FFLAGS="-g -O2"
+CGO_LDFLAGS="-g -O2"
+PKG_CONFIG="pkg-config"
+GOGCCFLAGS="-fPIC -m64 -pthread -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build776556215=/tmp/go-build -gno-record-gcc-switches"
+
+
+
+
+
 
 
