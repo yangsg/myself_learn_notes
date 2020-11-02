@@ -1,0 +1,192 @@
+
+---------------------------------------------------------------------------------------------------
+https://golang.google.cn/doc/tutorial/create-module
+
+
+Go code is grouped into packages, and packages are grouped into modules.
+Your package's module specifies the context Go needs to run the code,
+including the Go version the code is written for and the set of other modules it requires.
+
+Go 代码被分组到 packages 中，而 packages 有被分组到 modules 中。你的 package 的 module 指定了
+go 运行(run) the code 所需要的上下文(context), 包括 the code 所编写的 Go version 和 其需要的 other modules.
+
+
+
+// 创建一个 存放 Go module source code 的目录(此例名为 greetings)
+[root@localhost ~]# mkdir greetings
+[root@localhost ~]# cd greetings/
+
+
+// 使用 go mod init 创建一个 go.mod 文件
+[root@localhost greetings]# go mod init example.com/greetings
+go: creating new go.mod: module example.com/greetings
+
+
+Run the go mod init command, giving it the path of the module your code will be in.
+Here, use example.com/greetings for the module path -- in production code,
+this would be the URL from which your module can be downloaded.
+
+
+[root@localhost greetings]# cat go.mod
+module example.com/greetings  <---module name
+
+go 1.15   <---该 module 所对应的 Go version
+
+
+[root@localhost greetings]# vim greetings.go
+  package greetings
+
+  import "fmt"
+
+  // Hello returns a greeting for the named person.
+  func Hello(name string) string {
+      // Return a greeting that embeds the name in a message.
+      message := fmt.Sprintf("Hi, %v. Welcome!", name)
+      return message
+  }
+
+
+This function takes a name parameter whose type is string,
+and returns a string. In Go, a function whose name starts with
+a capital letter can be called by a function not in the same package.
+This is known in Go as an exported name. //被导出的名字
+
+
+---------------------------------------------------------------------------------------------------
+
+https://golang.google.cn/doc/tutorial/call-module-code
+
+
+[root@localhost greetings]# cd ..
+[root@localhost ~]# mkdir hello
+[root@localhost ~]# cd hello
+
+[root@localhost hello]# vim hello.go
+  package main
+
+  import (
+    "fmt"
+
+    "example.com/greetings"
+  )
+
+  func main() {
+    // Get a greeting message and print it.
+    message := greetings.Hello("Gladys")
+    fmt.Println(message)
+  }
+
+
+[root@localhost hello]# go mod init hello
+go: creating new go.mod: module hello
+
+[root@localhost hello]# cat go.mod
+module hello
+
+go 1.15
+
+
+
+Edit the hello module to use the unpublished greetings module.
+//编辑 hello module 以使用未被发布的 greetings module
+
+
+For production use, you’d publish your modules on a server, either inside your company or on the internet,
+and the Go command will download them from there. For now, you need to
+adapt the caller's module so it can find the greetings code on your local file system.
+
+
+[root@localhost hello]# vim go.mod
+[root@localhost hello]# cat go.mod
+module hello
+
+go 1.15
+
+replace example.com/greetings => ../greetings
+//Here, the replace directive tells Go to replace
+//the module path (the URL example.com/greetings) with a path you specify.
+//In this case, that's a greetings directory next to the hello directory.
+//replace 指令用于告诉 Go 将 模块路径替换为 为你指定的路径(即此例中将 example.com/greetings 替换为 ../greetings).
+
+
+//执行 go build 命令以使 Go 定位到该 module 并将其作为依赖添加到 go.mod 文件中。
+[root@localhost hello]# go build
+go: found example.com/greetings in example.com/greetings v0.0.0-00010101000000-000000000000
+
+
+
+[root@localhost hello]# cat go.mod
+module hello
+
+go 1.15
+
+replace example.com/greetings => ../greetings
+
+//Here, the replace directive tells Go to replace
+//the module path (the URL example.com/greetings) with a path you specify.
+//In this case, that's a greetings directory next to the hello directory.
+
+require example.com/greetings v0.0.0-00010101000000-000000000000
+
+
+
+To build the module, Go found the local code in the ../greetings directory,
+then added a require directive to specify that hello is
+dependent on (requires) example.com/greetings. You created this dependency
+when you imported the greetings package (contained in the greetings module) in hello.go.
+The replace directive tells Go where to find the greetings module, because it isn't published yet.
+
+
+To reference a published module, a go.mod file would
+omit the replace directive and use a require directive with a tagged version number at the end.
+//为了引用一个被发布的 module, 可以在 go.mod 文件中 忽略掉 replace
+//指令并使用 一个在 末尾(end) 带 a tagged version number 的 require 指令, 如:
+require example.com/greetings v1.1.0
+
+
+[root@localhost hello]# ls -l
+total 2008
+-rw-r--r-- 1 root root     335 Nov  2 22:41 go.mod
+-rwxr-xr-x 1 root root 2047473 Nov  2 22:51 hello
+-rw-r--r-- 1 root root     181 Nov  2 22:33 hello.go
+
+[root@localhost hello]# ./hello
+Hi, Gladys. Welcome!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
